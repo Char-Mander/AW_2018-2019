@@ -1,0 +1,88 @@
+@import "https://fonts.googleapis.com/css?family=Indie+Flower";
+
+*{
+    padding: 0;
+    margin: 0;
+    border: solid;
+    border-color: aqua;
+}
+
+body{
+    display: inline-flex;
+}
+
+div.container{
+    font-family: 'Indie Flower';
+    color:white;
+    background-color: black;
+    height: auto;
+}
+
+div.header{
+    background: url(cesped.png);
+    text-align: center;
+    padding-top: 0.5%;
+    width: 100%;
+    position:fixed;
+    left: 0;
+    top: 0;
+    font-size: 27px;
+    z-index: 100;
+}
+
+div.nav{
+    margin-top: 1%;
+    margin-left: 2.5%;  
+    position:fixed;
+    width: 70%;
+    left: 0;
+    top: 13%;
+}
+
+div.nav a{
+    background-image: linear-gradient(green, greenyellow, green);
+    background-color: greenyellow;
+    padding-left: 3.5%;
+    padding-right: 3.5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    color: black;
+    font-size: 18px;
+}
+
+div.texto{
+    margin-top: 13%;
+    padding-left: 1.5%;
+    width: 75%;
+}
+
+div.texto ul{
+    padding-left: 5%;
+}
+
+div.texto h1{
+    color: darkgreen;
+}
+
+.personajes{
+    color:yellow;
+}
+
+div.imagenes{
+    width: 20%;
+    position: absolute;
+    top:18%;
+    left: 80%;
+    color:yellow;
+}
+
+div.footer{
+    background-color: rgb(44, 105, 20);
+    padding-top: 1%;
+}
+
+div.footer a{
+    text-decoration: underline;
+    padding-left: 3%;
+}
+
