@@ -9,16 +9,22 @@
     margin: 5%;
 }
 
+.conversaciones{
+    flex-shrink: 6;
+}
+
 .contactos{
     display: flex;
     font-family: Arial, Helvetica, sans-serif;
     flex-direction: column;
     background-color: lightgrey;
     width: 25%;
+    flex-shrink: 2;
 }
 
 .contactos img{
     border-radius: 50%;
+
 }
 
 .contactos ul{
@@ -46,6 +52,12 @@
     border-bottom-style: solid;
     border-bottom-width: 1.7px;
     margin-left: 8%;
+    flex-shrink: 3;
+}
+
+.imagen{
+    align-content: center;
+    flex-shrink: 1;
 }
 
 .nombre :hover{
