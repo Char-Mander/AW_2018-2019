@@ -1,0 +1,120 @@
+@import "https://fonts.googleapis.com/css?family=Oswald";
+
+*{
+    padding:0;
+    margin:0;
+}
+
+.contenedor{
+    font-family: 'Oswald';
+ 
+}
+
+
+.header{
+    width: 100%;
+    height: 10%;
+    position:fixed;
+    left:0;
+    top:0;
+    background-color: darkcyan;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background-size: .12em 100%;
+}
+
+::selection {
+    background: transparent;
+}
+
+h1{
+    color: rgb(95, 93, 93);
+    cursor: default;
+    position: absolute;
+    top: 5px;
+    left: 1%;
+    right: 0;
+    bottom: 10px;
+    margin: auto;
+    display: block;
+    -webkit-animation: bounce .5s ease infinite alternate;
+    width: 500%;
+    height: 100px;
+    line-height: 100px;
+    text-shadow: 0 1px 0 rgb(129, 128, 128),
+               0 2px 0 rgb(129, 128, 128),
+               0 3px 0 rgb(129, 128, 128),
+               0 4px 0 transparent,
+               0 5px 0 transparent,
+               0 6px 0 transparent,
+               0 7px 0 transparent,
+               0 8px 0 transparent,
+               0 9px 0 transparent,
+               0 10px 10px rgba(0, 0, 0, .6);
+  
+}
+
+/*Animación del título*/
+@-webkit-keyframes bounce {
+    100% {
+      top: -30px;
+      text-shadow: 0 1px 0 rgb(223, 218, 218),
+                   0 2px 0 rgb(223, 218, 218),
+                   0 3px 0 rgb(223, 218, 218),
+                   0 4px 0 rgb(223, 218, 218),
+                   0 5px 0 rgb(223, 218, 218),
+                   0 6px 0 rgb(223, 218, 218),
+                   0 7px 0 rgb(223, 218, 218),
+                   0 8px 0 rgb(223, 218, 218),
+                   0 9px 0 rgb(223, 218, 218),
+                   0 30px 30px rgba(0, 0, 0, .3);
+    }
+}
+  
+.Logo{
+    background: url(logo.png);
+}
+
+.login{
+    float:right;
+    padding-right: 2%;
+}
+
+.h1{
+    width: 200%;
+
+}
+
+.cuerpo{
+    background-image: url(logo.png);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedorb{
+    width: 70%;
+    height: 70%;
+    flex-wrap: wrap;
+}
+
+.Correo a:hover{
+    color: rgb(134, 62, 62);
+    cursor: pointer;
+}
+
+.tareas {
+    width: 50%;
+    height: 60%;
+    border: solid;
+}
+
+.Añadir, .Eliminar{
+    width: 25%;
+    height: 10%;
+    border: solid;
+}
