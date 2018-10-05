@@ -1,39 +1,45 @@
-@import "https://fonts.google.com/specimen/Reenie+Beanie";
+@import url('https://fonts.googleapis.com/css?family=Reenie+Beanie');
 
 *{
     padding: 0;
     margin: 0;
-    border:solid;
 } 
 
 .contenedor {
-    width: 53%;
-    padding: 2%;
-    margin: 5%;
-    display: grid;
+    width: 59%;
+    margin-top: 2%;
+    margin-left: 2%;
+    border: solid;
+    padding: 1.5%;
     background-color: rgb(43, 88, 22);
+    display: grid;
     grid-template-rows: 200px 200px;
-    grid-template-columns: 200px 200px 200px 200px;
-
-    font-style: 'Reenie Beanie';
-   
-    
+    grid-template-columns: 200px 200px 200px 200px;   
 }
-.elemento {
-    font-size: 30px;
-    background-color: white;
-    background-size: 100%;
-    font-style: 'Reenie Beanie';
+
+.elemento p{
+    overflow: hidden;
+    width: 60%;
+    height: 70%;
+    margin-top: 15%;
+    margin-left: 15%;
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 18px;
+    text-align: center;
 }
 
 #uno, #cuatro, #siete{
     background: url(p_beige.png);
+    background-size: cover;
 }
 
 #dos, #cinco, #ocho{
     background: url(p_amarillo.png);
+    background-size: cover;
 }
 
 #tres, #seis{
     background: url(p_verde.png);
+    background-size: cover;
 }
+
