@@ -1,19 +1,23 @@
 *{
     border:0;
     margin:0;
+    padding: 0;
 }
 
 .contenedor{
+    margin: 2cm;
     margin-top: 5%;
     margin-left: 5%;
+   font-family: Arial, Helvetica, sans-serif;
 }
 
-.login, .añadir, .finalizar, .eliminar{
+.login, .añadir, .finalizar, .eliminar, .title{
     display:none;
 }
 
 h1{
     font-weight: normal;
+    font-size: 18px;
 }
 
 .complete{
@@ -23,9 +27,11 @@ h1{
 
 ul{
     padding:2%;
+    font-size: 12px;
 }
 
 li{
+    margin: 1%;
     padding-bottom: 2%;
 }
 .st{
