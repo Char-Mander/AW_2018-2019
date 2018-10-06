@@ -3,7 +3,6 @@
 *{
     padding:0;
     margin:0;
-    border:solid;
 }
 
 body{
@@ -109,16 +108,12 @@ div.Img_user{
 }
 
 div.Interacción {
-    font-size: small;
+    font-size: 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     margin-left: 2%;
     align-items: flex-end;
-}
-
-div.Interacción a:hover{
-    color:  rgb(134, 62, 62);
 }
 
 div.cuerpo{
@@ -302,7 +297,7 @@ div.eliminar a:hover{
     
 }
 
-div.añadir a:hover, div.finalizar a:hover, div.eliminar a:hover{
+a:hover{
     cursor: pointer;
 }
 
