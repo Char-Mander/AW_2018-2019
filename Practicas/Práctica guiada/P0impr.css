@@ -4,7 +4,7 @@
     padding: 0;
 }
 
-.contenedor{
+div.contenedor{
     margin-top: 5%;
     margin-left: 5%;
    font-family: Arial, Helvetica, sans-serif;
@@ -33,15 +33,16 @@ li{
     margin: 1%;
     padding-bottom: 2%;
 }
-.st{
+div.st{
     display:flex;
 }
 
-.etiquetas{
+
+div.etiquetas{
     display:flex;
 }
 
-.etiqueta{
+div.etiqueta{
     display:inline-flex;
     text-transform: lowercase;
     margin-left: 20%;
