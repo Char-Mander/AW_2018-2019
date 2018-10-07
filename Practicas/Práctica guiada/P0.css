@@ -44,12 +44,10 @@ div.header h1{
     letter-spacing: 0.3em;
     font-size: -webkit-xxx-large;
     color: rgb(95, 93, 93);
-    cursor: default;
+    cursor: pointer;
     position: absolute;
     top: 10px;
     left: 3%;
-    right: 0;
-    bottom: 15px;
     margin: auto;
     display: block;
     -webkit-animation: bounce .5s ease infinite alternate;
@@ -114,6 +112,10 @@ div.Interacción {
     justify-content: space-evenly;
     margin-left: 2%;
     align-items: flex-end;
+}
+
+div.Interacción a:hover{
+    color:red;
 }
 
 div.cuerpo{
