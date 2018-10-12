@@ -3,7 +3,8 @@
 <head lang="es-ES">
     <meta charset="utf-8" />
     <title>Bienvenido - FaceBluff</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="signin.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="cabecera.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="cuerpo.css" />
     <script src="signin.js"></script>
 </head>
 <body>
@@ -16,8 +17,8 @@
             </div>
 
             <div class="nav">
-                <div class="enlace1"> <a>Entrar</a> </div>
-                <div class="enlace2"> <a>Nuevo usuario</a> </div>
+                <div class="enlace enlace1"> <a>Entrar</a> </div>
+                <div class="enlace enlace2"> <a>Nuevo usuario</a> </div>
             </div>
         </div>
 
@@ -30,19 +31,18 @@
                 </div>
 
                 <div class="contenedor_datos">
-                    <div class="email">
-                        <div class="texto">Email</div>
-                        <div class="input"> <input> </div>
+                    <div class="elem email">
+                        <div class="texto"> <h2>Email</h2> </div>
+                        <input>
                     </div>
 
-                    <div class="contraseña">
-                        <div class="texto">Contraseña</div>
-                        <div class="input"> <input> </div>
+                    <div class="elem contraseña">
+                        <div class="texto"> <h2>Contraseña</h2> </div>
+                        <input type="password">
                     </div>
 
-                    <div class="boton_aceptar">
-                        <a>Conectar</a>
-                    </div>
+                    <button type="button" class="boton_aceptar"> Conectar </button>
+
 
                 </div>
 
