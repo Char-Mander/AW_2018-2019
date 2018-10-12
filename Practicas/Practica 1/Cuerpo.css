@@ -34,27 +34,34 @@ div.contenedor_datos{
 
 div.elem {
     display:flex;
-    width: auto;
+    width: 96%;
     height: auto;
-    margin:2%;
+    margin:1%;
 }
+
 div.texto{
     width: 30%;
-    height: 2vw;
+    height: 2.5vw;
     overflow: hidden;
 }
+
 div.input{
-    width: 70%;
+    width: 100%;
     height: auto;
     justify-content: center;
-
+    align-content: center;
+    align-items: center;
 }
 
+input{
+    border-radius: 3px;
+    width: 95%;
+    align-self: center;
+}
 div.button{
     align-self: center;
     width: 60%;
 }
 
-.input{
-    border-radius: 5px
-}
+
+.boton
