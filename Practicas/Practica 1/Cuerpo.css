@@ -1,0 +1,32 @@
+div.body{
+    color: black;
+    align-self: center;
+    border:solid;
+}
+
+div.contenedor_ventana{
+    width: 100%;
+    height: 100%;
+    margin:4%;
+    justify-content: end;
+    align-items: center;
+}
+
+div.titulo_ventana{
+    align-self: center;
+}
+
+div.contenedor_datos{
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    height: 30vw;
+    background-color: rgb(35, 161, 35);
+    border-radius: 3px;
+    margin: 1%;
+}
+
+div.button{
+    align-self: center;
+    width: 60%;
+}
