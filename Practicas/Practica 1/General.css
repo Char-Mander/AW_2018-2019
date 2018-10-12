@@ -1,9 +1,12 @@
 *{
 margin: 0;
-
+padding:0;
+border:solid;
 }
 
 div.contenedor{
+    width: 100%;
+    height: 100%;;
     display: flex;
     font-family: 'Patrick Hand';
     color: white;
