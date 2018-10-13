@@ -52,7 +52,7 @@ div.nav{
 
 div.enlace{
     width: 12%;
-    height: 100%;
+    height: 70%;
     margin-left:4%;
     overflow:hidden;
     display:flex;
@@ -60,5 +60,6 @@ div.enlace{
 }
 
 div.enlace a:hover{
-    font-size: 110%
+    font-size: 110%;
+    cursor: pointer;
 }

@@ -38,7 +38,6 @@ div.contenedor_datos{
     flex-direction: column;
     width: 100%;
     height: auto;
-    background-color: rgb(35, 161, 35);
     background-image: linear-gradient(to bottom right, rgb(89, 219, 89), rgb(23, 145, 23) );
     border-radius: 5px;
     padding:4%;
@@ -170,6 +169,7 @@ button{
 
 button:hover{
     background-color: rgb(122, 238, 122);
+    cursor: pointer;
 }
 
 button:active{
