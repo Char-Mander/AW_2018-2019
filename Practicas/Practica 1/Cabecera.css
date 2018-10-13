@@ -56,9 +56,9 @@ div.enlace{
     margin-left:4%;
     overflow:hidden;
     display:flex;
-    font-size: x-large;
+    font-size: 150%;
 }
 
 div.enlace a:hover{
-    font-size: 130%
+    font-size: 110%
 }

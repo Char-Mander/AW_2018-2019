@@ -22,29 +22,40 @@
         </div>
         <div class="body">
             <div class="contenedor_ventana">
-                <div class="titulo_ventana"> <h3>Nuevo usuario</h3> </div>
+                <div class="titulo_ventana"> <h2>Nuevo usuario</h2> </div>
                 <div class="contenedor_datos">
                     <div class="elem email">
-                        <div class="texto"> <h3> Email: </h3> </div>
+                        <div class="texto"> <h2> Email: </h2> </div>
                         <input>
                     </div>
                     <div class="elem contraseña">
-                        <div class="texto"> <h3>Contraseña:</h3> </div>
+                        <div class="texto"> <h2> Contraseña: </h2> </div>
                         <input type="password">
                     </div>
                     <div class="elem nombre_completo">
-                       <div class="texto"> <h3> Nombre completo: </h3> </div>
+                       <div class="texto"> <h2> Nombre completo: </h2> </div>
                         <input>
                     </div>
                     <div class="elem sexo">
-                        <div class="texto"> <h3> Sexo: </h3></div>  
-                        <input type="radio" name="eleccion_sexo" value="1"> Hombre
-                        <input type="radio" name="eleccion_sexo" value="2"> Mujer
-                        <input type="radio" name="eleccion_sexo" value="3"> Otro
+                        <div class="texto"> <h2> Sexo: </h2> </div>  
+                        <div class="elecciones">
+                                <label class="eleccion">Hombre
+                                        <input type="radio" checked="checked" name="radio">
+                                        <span class="checkmark"></span>
+                                </label>
+                                <label class="eleccion">Mujer
+                                        <input type="radio" name="radio">
+                                        <span class="checkmark"></span>
+                                </label>
+                                <label class="eleccion">Otro
+                                        <input type="radio" name="radio">
+                                        <span class="checkmark"></span>
+                                </label>
+                        </div>
                     </div>
                     <div class="elem fecha_nacimiento">
-                        <div class="texto"> <h3> Fecha de nacimiento: </h3> </div> 
-                        <input>
+                        <div class="texto"> <h2> Fecha de nacimiento: </h2> </div> 
+                        <input type="date" class="fecha">
                     </div>
                     <button type="button" class="boton_aceptar"> Crear usuario </button>
                 </div>
