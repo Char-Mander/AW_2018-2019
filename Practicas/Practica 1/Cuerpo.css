@@ -27,7 +27,7 @@ div.titulo_ventana{
     display: flex;
     justify-content: center;
     align-self: center;
-    width: 100%; 
+    width: 108%; 
     color:black;
     font-size: x-large;
 }
@@ -51,19 +51,19 @@ div.elem {
 }
 
 div.texto{
-    width: 35%;
+    width: 40%;
     height: 2.5vw;
     overflow: hidden;
 }
 
-div.texto h2{
+div.texto h2, div.texto h3{
     font-weight: normal;
 }
 
 input{
     height: auto;
     border-radius: 3px;
-    width: 95%;
+    width: 80%;
     align-self: center;
 }
 
@@ -73,8 +73,13 @@ button{
     font-family: 'Patrick Hand';
     font-size: medium;
     border-radius:5px;
+    background-color:rgb(172, 240, 172); 
 }
 
 button:hover{
-    font-size: 130%
+    background-color: rgb(122, 238, 122);
+}
+
+button:active{
+    background-color: rgb(98, 228, 98);
 }
