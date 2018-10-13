@@ -1,11 +1,14 @@
 @import "https://fonts.googleapis.com/css?family=Luckiest+Guy";
 @import "https://fonts.googleapis.com/css?family=Patrick+Hand";
 
+*{
+    padding:0;
+    margin:0;
+}
 
 div.header{
     display: flex;
     position: fixed;
-    left:0;
     top:0;
     flex-direction: column;
     justify-content: center;
@@ -13,7 +16,7 @@ div.header{
     width: 100%;
     height: 120px;
     box-shadow: 2px 2px 5px rgb(82, 82, 82);
-    z-index: 100;
+    font-family: 'Patrick Hand';
 }
 
 div.titulo{
@@ -21,21 +24,22 @@ div.titulo{
 }
 
 div.header h1{
-height: 70%;
-font-size: 350%;
-font-family: 'Luckiest Guy';
-text-shadow: 0 1px 0 rgb(0, 0, 0), 
-0 2px 0 rgb(0, 0, 0), 
-0 3px 0 rgb(0, 0, 0), 
-0 4px 0 rgb(0, 0, 0), 
-0 5px 0 rgb(0, 0, 0), 
-0 6px 1px rgb(0, 0, 0), 
-0 0 5px rgb(0, 0, 0), 
-0 1px 3px rgb(0, 0, 0), 
-0 3px 5px rgb(0, 0, 0), 
-0 5px 10px rgb(0, 0, 0), 
-0 10px 10px transparent, 
-0 20px 20px transparent;
+    height: 70%;
+    font-size: 350%;
+    font-family: 'Luckiest Guy';
+    color:white;
+    text-shadow: 0 1px 0 rgb(0, 0, 0), 
+    0 2px 0 rgb(0, 0, 0), 
+    0 3px 0 rgb(0, 0, 0), 
+    0 4px 0 rgb(0, 0, 0), 
+    0 5px 0 rgb(0, 0, 0), 
+    0 6px 1px rgb(0, 0, 0), 
+    0 0 5px rgb(0, 0, 0), 
+    0 1px 3px rgb(0, 0, 0), 
+    0 3px 5px rgb(0, 0, 0), 
+    0 5px 10px rgb(0, 0, 0), 
+    0 10px 10px transparent, 
+    0 20px 20px transparent;
 }
 
 div.nav{
@@ -44,17 +48,17 @@ div.nav{
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    margin-bottom: 10px;
 }
 
 div.enlace{
-    width: 18%;
+    width: 12%;
     height: 100%;
-    margin:1.5%;
+    margin-left:4%;
     overflow:hidden;
+    display:flex;
+    font-size: 130%;
 }
 
-
 div.enlace a:hover{
-    font-size: 130%
+    font-size: 110%
 }

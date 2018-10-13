@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title> Nuevo Usuario - FaceBluff</title>
     
-    <link rel="stylesheet" type="text/css" media="screen" href="General.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="Cabecera.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="Cuerpo.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="general.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="cabecera.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="cuerpo.css" />
     <script src="signUp.js"></script>
 </head>
 <body>
@@ -17,38 +17,47 @@
             </div>
             <div class="nav">
                 <div class="enlace enlace1"> <a> Entrar </a> </div>
-                <div class="enlace enlace2"> <a> Nuevo Usuario </a> </div>
+                <div class="enlace enlace2"> <a> Nuevo usuario </a> </div>
             </div>
         </div>
         <div class="body">
             <div class="contenedor_ventana">
-                <div class="titulo_ventana"> <h2>Nuevo Usuario</h2> </div>
+                <div class="titulo_ventana"> <h2>Nuevo usuario</h2> </div>
                 <div class="contenedor_datos">
                     <div class="elem email">
-                        <div class="texo"> Email: </div>
-                        <div class="input"> <!--Email:--> <input> </div>
+                        <div class="texto"> <h2> Email: </h2> </div>
+                        <input>
                     </div>
                     <div class="elem contraseña">
-                        <div class="texto"> Contraseña: </div>
-                        <div class="input"> <!--Contraseña: --> <input> </div>
+                        <div class="texto"> <h2> Contraseña: </h2> </div>
+                        <input type="password">
                     </div>
                     <div class="elem nombre_completo">
-                       <div class="texto"> Nombre completo: </div>
-                        <div class="input"> <!-- Nombre completo:--> <input> </div>
+                       <div class="texto"> <h2> Nombre completo: </h2> </div>
+                        <input>
                     </div>
                     <div class="elem sexo">
-                        <div class="texto"> Sexo: </div>  
-                        <input type="radio" name="eleccion_sexo" value="1"> Hombre
-                        <input type="radio" name="eleccion_sexo" value="2"> Mujer
-                        <input type="radio" name="eleccion_sexo" value="3"> Otro
+                        <div class="texto"> <h2> Sexo: </h2> </div>  
+                        <div class="elecciones">
+                                <label class="eleccion">Hombre
+                                        <input type="radio" checked="checked" name="radio">
+                                        <span class="checkmark"></span>
+                                </label>
+                                <label class="eleccion">Mujer
+                                        <input type="radio" name="radio">
+                                        <span class="checkmark"></span>
+                                </label>
+                                <label class="eleccion">Otro
+                                        <input type="radio" name="radio">
+                                        <span class="checkmark"></span>
+                                </label>
+                        </div>
                     </div>
                     <div class="elem fecha_nacimiento">
-                        <div class="texto"> Fecha de nacimiento: </div> 
-                        <div class="input"><!-- Fecha de nacimiento: --> <input> </div>   
+                        <div class="texto"> <h2> Fecha de nacimiento: </h2> </div> 
+                        <input type="date" class="fecha">
                     </div>
-                   <!--<div class="boton">--> 
                     <button type="button" class="boton_aceptar"> Crear usuario </button>
-                   <!-- </div> -->
                 </div>
             </div>
         </div>

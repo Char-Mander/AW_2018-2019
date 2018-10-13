@@ -1,9 +1,22 @@
+@import "https://fonts.googleapis.com/css?family=Patrick+Hand";
+
+*{
+    padding:0;
+    margin:0;
+}
+
+div.body{
+    font-family: 'Patrick Hand';
+    background-image: radial-gradient(circle, rgb(172, 240, 172), rgb(252, 252, 252));
+    height: -webkit-fill-available;
+}
+
 div.contenedor_ventana{
     position: relative;
-    left:30%;
+    left:27%;
     top:100px;
     width: 35vw;
-    height: 35vw;
+    height: auto;
     margin:4%;
     justify-content: center;
     align-content: center;
@@ -14,12 +27,10 @@ div.titulo_ventana{
     display: flex;
     justify-content: center;
     align-self: center;
-    width: 100%; 
+    width: 108%; 
     color:black;
-}
-
-div.titulo_ventana h2{
-    font-size: 90%;
+    font-size: 1.8vw;
+    overflow: hidden;
 }
 
 div.contenedor_datos{
@@ -28,8 +39,10 @@ div.contenedor_datos{
     width: 100%;
     height: auto;
     background-color: rgb(35, 161, 35);
-    border-radius: 3px;
-    margin: 1%;
+    background-image: linear-gradient(to bottom right, rgb(89, 219, 89), rgb(23, 145, 23) );
+    border-radius: 5px;
+    padding:4%;
+    box-shadow: 2px 2px 5px rgb(82, 82, 82);
 }
 
 div.elem {
@@ -40,28 +53,125 @@ div.elem {
 }
 
 div.texto{
-    width: 30%;
+    display: flex;
+    align-content: center;
+    width: 38%;
     height: 2.5vw;
     overflow: hidden;
 }
 
-div.input{
-    width: 100%;
-    height: auto;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
+
+div.texto h2{
+    font-weight: normal;
+    font-size: 1.3vw;
+    align-self: center;
+    overflow: hidden;
 }
+
+div.elecciones{
+    width: 62%;
+    display: flex;
+    justify-content: space-between;
+}
+
+/*Botones de selección personalizados*/
+
+ label.eleccion {
+    display: flex;
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    width: 100%;
+    height: 80%;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow:hidden;
+  }
+  
+/*Esconde el botón predeterminado */
+label.eleccion input {
+      display:flex;
+    position: relative;
+    cursor: pointer;
+    margin:1%;
+    height: 0;
+    width: 0;
+}
+  
+  /* Botón personalizado */
+span.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 10px;
+    width: 10px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+  
+label.eleccion:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+  
+ 
+label.eleccion input:checked ~ .checkmark {
+    background-color: rgb(0, 0, 0);
+}
+  
+  
+span.checkmark:after {
+    content: "";
+    position: relative;
+    display: none;
+}
+  
+ 
+label.eleccion input:checked ~ .checkmark:after {
+    display: flex;
+}
+  
+ 
+label.eleccion .checkmark:after {
+    top: 2.6px;
+    left: 2.6px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: white;
+} 
 
 input{
+    height: auto;
     border-radius: 3px;
-    width: 95%;
+    width: 80%;
     align-self: center;
-}
-div.button{
-    align-self: center;
-    width: 60%;
+    justify-content: center;
+    justify-items: center;
 }
 
 
-.boton
+input.fecha{
+width: 43%;
+}
+
+button{
+    align-self: center;
+    width: 25%;
+    font-family: 'Patrick Hand';
+    font-size: 1.5vw;
+    border-radius:5px;
+    background-color:rgb(172, 240, 172); 
+    overflow: hidden;
+}
+
+button:hover{
+    background-color: rgb(122, 238, 122);
+}
+
+button:active{
+    background-color: rgb(98, 228, 98);
+}
