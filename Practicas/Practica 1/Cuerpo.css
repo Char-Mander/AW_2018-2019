@@ -1,9 +1,22 @@
+@import "https://fonts.googleapis.com/css?family=Patrick+Hand";
+
+*{
+    padding:0;
+    margin:0;
+}
+
+div.body{
+    font-family: 'Patrick Hand';
+    background-image: radial-gradient(circle, rgb(172, 240, 172), rgb(252, 252, 252));
+    height: -webkit-fill-available;
+}
+
 div.contenedor_ventana{
     position: relative;
-    left:30%;
+    left:27%;
     top:100px;
     width: 35vw;
-    height: 35vw;
+    height: auto;
     margin:4%;
     justify-content: center;
     align-content: center;
@@ -16,10 +29,7 @@ div.titulo_ventana{
     align-self: center;
     width: 100%; 
     color:black;
-}
-
-div.titulo_ventana h2{
-    font-size: 90%;
+    font-size: x-large;
 }
 
 div.contenedor_datos{
@@ -28,8 +38,9 @@ div.contenedor_datos{
     width: 100%;
     height: auto;
     background-color: rgb(35, 161, 35);
+    background-image: linear-gradient(to bottom right, rgb(89, 219, 89), rgb(23, 145, 23) );
     border-radius: 3px;
-    margin: 1%;
+    padding:4%;
 }
 
 div.elem {
@@ -40,28 +51,30 @@ div.elem {
 }
 
 div.texto{
-    width: 30%;
+    width: 35%;
     height: 2.5vw;
     overflow: hidden;
 }
 
-div.input{
-    width: 100%;
-    height: auto;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
+div.texto h2{
+    font-weight: normal;
 }
 
 input{
+    height: auto;
     border-radius: 3px;
     width: 95%;
     align-self: center;
 }
-div.button{
+
+button{
     align-self: center;
-    width: 60%;
+    width: 25%;
+    font-family: 'Patrick Hand';
+    font-size: medium;
+    border-radius:5px;
 }
 
-
-.boton
+button:hover{
+    font-size: 130%
+}
