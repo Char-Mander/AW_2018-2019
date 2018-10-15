@@ -30,20 +30,32 @@ div.titulo_ventana{
 
 div.contenedor_datos{
     display: flex;
-    flex-direction: column;
     width: 100%;
     height: auto;
-    background-image: linear-gradient(to bottom right, rgb(190, 233, 190), rgb(175, 226, 175) );
+    justify-content: space-evenly;
+    background-image: linear-gradient(to bottom right, rgb(250, 241, 221),rgb(250, 234, 201));
     border-radius: 5px;
     padding:4%;
     box-shadow: 2px 2px 5px rgb(82, 82, 82);
 }
 
-div.elem {
+div.imagen_usuario{
     display:flex;
+    align-self: center;
+    content: url(img.png);
+    width: 15vw;
+    height: 15vw;
+    border-radius: 3px;
+}
+
+div.elem, div.datos{
+    display:flex;
+    flex-direction: column;
     width: 96%;
     height: auto;
     margin:1%;
+    font-size: 1.3vw;
+    align-content: flex-end;
 }
 
 div.texto{
@@ -69,20 +81,21 @@ div.texto h3{
 }
 
 button{
+    align-items: flex-end;
     align-self: center;
-    width: 25%;
+    width: 50%;
     font-family: 'Patrick Hand';
     font-size: 1.5vw;
     border-radius:5px;
-    background-color:rgb(172, 240, 172); 
+    background-color:rgb(145, 233, 211); 
     overflow: hidden;
 }
 
 button:hover{
-    background-color: rgb(122, 238, 122);
+    background-color: rgb(116, 223, 196);
     cursor: pointer;
 }
 
 button:active{
-    background-color: rgb(98, 228, 98);
+    background-color: rgb(63, 212, 175);
 }
