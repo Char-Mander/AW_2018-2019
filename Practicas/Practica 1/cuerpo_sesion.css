@@ -1,0 +1,101 @@
+@import "https://fonts.googleapis.com/css?family=Patrick+Hand";
+
+div.body{
+    font-family: 'Patrick Hand';
+    background-image: radial-gradient(circle, rgb(172, 240, 172), rgb(252, 252, 252));
+    height: -webkit-fill-available;
+    color: black
+}
+
+div.contenedor_ventana{
+    position: relative;
+    left:27%;
+    top:100px;
+    width: 35vw;
+    height: auto;
+    margin:4%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+div.titulo_ventana{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 108%; 
+    font-size: 1.8vw;
+    overflow: hidden;
+}
+
+div.contenedor_datos{
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: space-evenly;
+    background-image: linear-gradient(to bottom right, rgb(250, 241, 221),rgb(250, 234, 201));
+    border-radius: 5px;
+    padding:4%;
+    box-shadow: 2px 2px 5px rgb(82, 82, 82);
+}
+
+div.imagen_usuario{
+    display:flex;
+    align-self: center;
+    content: url(img.png);
+    width: 15vw;
+    height: 15vw;
+    border-radius: 3px;
+}
+
+div.elem, div.datos{
+    display:flex;
+    flex-direction: column;
+    width: 96%;
+    height: auto;
+    margin:1%;
+    font-size: 1.3vw;
+    align-content: flex-end;
+}
+
+div.texto{
+    display: flex;
+    align-content: center;
+    width: 38%;
+    height: 2.5vw;
+    overflow: hidden;
+}
+
+div.texto h2{
+    font-weight: normal;
+    font-size: 1.3vw;
+    align-self: center;
+    overflow: hidden;
+}
+
+div.texto h3{
+    font-weight: normal;
+    font-size: 1.3vw;
+    align-self: center;
+    overflow: hidden;
+}
+
+button{
+    align-items: flex-end;
+    align-self: center;
+    width: 50%;
+    font-family: 'Patrick Hand';
+    font-size: 1.5vw;
+    border-radius:5px;
+    background-color:rgb(145, 233, 211); 
+    overflow: hidden;
+}
+
+button:hover{
+    background-color: rgb(116, 223, 196);
+    cursor: pointer;
+}
+
+button:active{
+    background-color: rgb(63, 212, 175);
+}
