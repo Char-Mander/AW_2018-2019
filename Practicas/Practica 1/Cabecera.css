@@ -52,7 +52,6 @@ div.nav{
 
 div.enlace{
     width: 12%;
-
     height: 70%;
     margin-left:4%;
     overflow:hidden;
@@ -61,14 +60,13 @@ div.enlace{
 }
 
 div.enlace a:hover{
-
     font-size: 110%;
     cursor: pointer;
 }
 
 div.puntuacion{
-display: flex;
-justify-content: space-evenly;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 div.user_icon{
@@ -77,5 +75,5 @@ div.user_icon{
     align-self: center;
     width: 20px;
     height: 20px;
-    border-radius: 3px;
+    border-radius: 104px;
 }

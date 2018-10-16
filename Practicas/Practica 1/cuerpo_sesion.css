@@ -26,6 +26,7 @@ div.titulo_ventana{
     width: 100%; 
     font-size: 1.8vw;
     overflow: hidden;
+    margin-bottom: 5%;
 }
 
 div.contenedor_datos{
@@ -33,7 +34,7 @@ div.contenedor_datos{
     width: 90%;
     height: auto;
     justify-content: space-evenly;
-    background-image: linear-gradient(to bottom right, rgb(250, 241, 221),rgb(250, 234, 201));
+    background-image: linear-gradient(to bottom right, rgb(89, 219, 89),rgb(250, 234, 201));
     border-radius: 5px;
     padding:4%;
     box-shadow: 2px 2px 5px rgb(82, 82, 82);
@@ -45,7 +46,7 @@ div.imagen_usuario{
     content: url(img.png);
     width: 15vw;
     height: 15vw;
-    border-radius: 3px;
+    border-radius: 104px;
 }
 
 div.elem{
@@ -57,6 +58,7 @@ div.elem{
     font-size: 1.3vw;
     align-content: flex-end;
 }
+
 div.datos{
     display:flex;
     flex-direction: column;
@@ -66,7 +68,6 @@ div.datos{
     justify-content: space-between;
     align-items: center;
 }
-
 
 div.texto{
     display: flex;
@@ -89,11 +90,13 @@ div.texto h3{
     align-self: center;
     overflow: hidden;
 }
+
 div.boton{
     align-self: flex-end;
     justify-content: center;
     width: 90%;
 }
+
 button{
     width: 70%;
     font-family: 'Patrick Hand';
