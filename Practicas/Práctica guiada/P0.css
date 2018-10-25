@@ -119,7 +119,6 @@ div.Interacción a:hover{
 }
 
 div.cuerpo{
-   
     width: 100%;
     display: flex;
     align-items: center;
@@ -204,16 +203,23 @@ div.st{
     border: solid;
     border-width: 1px;
     border-color:rgb(66, 41, 20);
+
+
+}
+
+div.nombre h3{
+    overflow: scroll;
+    height: 100%;
 }
 
 div.nombre{
     font-size: 2vw;
     width:100%;
+    height: 90%;
     margin: 0.7%;
     text-align: start;
     align-self: center;
 }
-
 
 div.etiquetas{
     width: 100%;
@@ -262,7 +268,7 @@ div.finalizar a:hover{
 
 div.t{
     width: 98%;
-    height: 15%;
+    height: 20%;
     display: flex;
     margin:1%;
     background-color: rgb(49, 48, 48);
@@ -296,9 +302,7 @@ div.eliminar{
 
 div.eliminar a:hover{
     font-size: 1.7vw;
-    
 }
-
 
 a:hover{
     cursor: pointer;
