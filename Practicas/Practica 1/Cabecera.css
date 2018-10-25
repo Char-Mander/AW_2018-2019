@@ -63,3 +63,17 @@ div.enlace a:hover{
     font-size: 110%;
     cursor: pointer;
 }
+
+div.puntuacion{
+display: flex;
+justify-content: space-evenly;
+}
+
+div.user_icon{
+    content: url(img.png);
+    display:flex;
+    align-self: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+}
