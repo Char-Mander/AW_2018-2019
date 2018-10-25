@@ -18,5 +18,3 @@ function getToDoTasks(tasks){
 
     return resultado;
 }
-
-console.log(getToDoTasks(listaTareas));
