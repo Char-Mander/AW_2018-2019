@@ -8,8 +8,15 @@ let listaTareas=[
 ];
 
 
+let tasks=[
+    {text: "Preparar práctica AW", tags: ["AW", "practica"]},
+    {text: "Mirar fechas congreso", done:true, tags: []},
+    {text: "Ir al supermercado", tags: ["personal"]},
+    {text: "Mudanza", done: false, tags: ["personal"]}
+];
 
-/*Doevuelve un array con los textos de aquellas tareas que estén sin terminar*/
+
+/*Devuelve un array con los textos de aquellas tareas que estén sin terminar*/
 function getToDoTasks(tasks){
     let resultado=[];
     let done= n => !Object.keys(n)==="done" || n["done"]===true;
@@ -18,6 +25,8 @@ function getToDoTasks(tasks){
 
     return resultado;
 }
+
+
 
 /*Devuelve un array con las tareas de "tasks" que contengan en su
 lista de etiquetas, la etiqueta "tag".*/
@@ -37,6 +46,7 @@ function findByTags(tasks, tags){
     return list;
 }
 
+
 /*Crea una tarea con el texto que se le pasa por parámetro*/
 function createTask(texto){
     let task = {
@@ -45,8 +55,8 @@ function createTask(texto){
     };
 
     let array = texto.split(" ");
-    task.texto=array.filter(n=>n[0]!== "@").join(" ");
-    task.tags=array.filter(n=>n[0]=== "@");
+    task.texto=array.filter(n=>n[0] !== "@").join(" ");
+    task.tags=array.filter(n=>n[0] == "@");
 
     return task;
 
