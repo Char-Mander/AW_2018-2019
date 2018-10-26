@@ -17,6 +17,7 @@ div.header{
     height: 120px;
     box-shadow: 2px 2px 5px rgb(82, 82, 82);
     font-family: 'Patrick Hand';
+    z-index: 1;
 }
 
 div.titulo{
