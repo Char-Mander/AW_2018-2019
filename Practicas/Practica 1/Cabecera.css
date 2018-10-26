@@ -17,6 +17,7 @@ div.header{
     height: 120px;
     box-shadow: 2px 2px 5px rgb(82, 82, 82);
     font-family: 'Patrick Hand';
+    z-index: 1;
 }
 
 div.titulo{
@@ -77,3 +78,14 @@ div.user_icon{
     height: 20px;
     border-radius: 104px;
 }
+<<<<<<< HEAD
+=======
+
+a:visited{
+    color:white;
+}
+
+a:active{
+    color: rgb(31, 77, 39);
+}
+>>>>>>> developArtista

@@ -1,0 +1,117 @@
+*{
+    padding:0;
+    margin:0;
+}
+
+div.body{
+    font-family: 'Patrick Hand';
+    background-image: radial-gradient(circle, rgb(172, 240, 172), rgb(252, 252, 252));
+    height: -webkit-fill-available;
+    color: black
+}
+
+div.contenedor_solicitudes{
+    position: relative;
+    left: 1%;
+    top: 150px;
+    width: 100%;
+    height: auto
+}
+
+div.contenedor_busqueda{
+    position: relative;
+    top: 70px;
+    width: 100%;
+    height: auto
+}
+
+div.contenedor_amigos{
+    position: relative;
+    top: 105px;
+    width: 100%;
+    height: auto
+}
+
+div.titulo_solicitudes,div.titulo_busqueda,div.titulo_amigos{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 100%; 
+    font-size: 1.8vw;
+    overflow: hidden;
+    margin-bottom: 1%;
+}
+
+ul.lista_solicitudes, ul.lista_amigos{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    width: 94%;
+    height: auto;
+    justify-content: space-evenly;
+    background-image: linear-gradient(to bottom right, rgb(89, 219, 89),rgb(250, 234, 201));
+    border-radius: 5px;
+    padding:2%;
+    box-shadow: 2px 2px 5px rgb(82, 82, 82);
+}
+
+li{
+    margin: 0.6%;
+}
+
+div.solicitud, div.amigo{
+    display:flex;
+}
+
+div.info_user{
+    display: flex;
+    width: 50%;
+}
+
+div.botones{
+    display: flex;
+    width: 50%;
+    justify-content: flex-end;
+}
+
+div.barra_busqueda{
+    display: flex;
+    width: 96%;
+    height: auto;
+    justify-content: space-evenly;
+    background-image: linear-gradient(to bottom right, rgb(89, 219, 89),rgb(250, 234, 201));
+    border-radius: 5px;
+    padding:1%;
+    box-shadow: 2px 2px 5px rgb(82, 82, 82);
+}
+
+input{
+    width: 60%;
+    height: 35px;
+}
+
+div.busqueda, div.nombre_solicitud, div.nombre_amigo, div.busqueda{
+    font-size: 1.6vw;
+}
+
+button{
+    width: 15%;
+    height: 100%;
+    font-family: 'Patrick Hand';
+    font-size: 1.5vw;
+    border-radius:5px;
+    background-color:rgb(145, 233, 211); 
+    overflow: hidden;
+    align-self: center;
+    margin-left:1%;
+}
+
+div.img{
+    content: url(solicitud1.jpg);
+    display:flex;
+    align-self: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 104px;
+    margin-right: 5%;
+}
