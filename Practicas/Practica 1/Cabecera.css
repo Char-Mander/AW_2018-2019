@@ -65,8 +65,8 @@ div.enlace a:hover{
 }
 
 div.puntuacion{
-display: flex;
-justify-content: space-evenly;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 div.user_icon{
@@ -75,5 +75,5 @@ div.user_icon{
     align-self: center;
     width: 20px;
     height: 20px;
-    border-radius: 3px;
+    border-radius: 104px;
 }

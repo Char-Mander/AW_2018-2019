@@ -59,7 +59,6 @@ div.texto{
     overflow: hidden;
 }
 
-
 div.texto h2{
     font-weight: normal;
     font-size: 1.3vw;
@@ -93,7 +92,7 @@ div.elecciones{
   
 /*Esconde el botón predeterminado */
 label.eleccion input {
-      display:flex;
+    display:flex;
     position: relative;
     cursor: pointer;
     margin:1%;
@@ -115,24 +114,20 @@ span.checkmark {
 label.eleccion:hover input ~ .checkmark {
     background-color: #ccc;
 }
-  
  
 label.eleccion input:checked ~ .checkmark {
     background-color: rgb(0, 0, 0);
 }
   
-  
 span.checkmark:after {
     content: "";
     position: relative;
     display: none;
-}
-  
+} 
  
 label.eleccion input:checked ~ .checkmark:after {
     display: flex;
 }
-  
  
 label.eleccion .checkmark:after {
     top: 2.6px;
@@ -152,9 +147,8 @@ input{
     justify-items: center;
 }
 
-
 input.fecha{
-width: 43%;
+    width: 43%;
 }
 
 button{
