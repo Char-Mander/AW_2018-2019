@@ -1,13 +1,5 @@
 "use strict";
 
-let listaTareas=[
-                {text: "Preparar práctica AW", tags: ["AW", "practica"]},
-                {text: "Mirar fechas congreso", done:true, tags: []},
-                {text: "Ir al supermercado", tags: ["personal"]},
-                {text: "Mudanza", done: false, tags: ["personal"]}
-];
-
-
 let tasks=[
     {text: "Preparar práctica AW", tags: ["AW", "practica"]},
     {text: "Mirar fechas congreso", done:true, tags: []},
@@ -18,14 +10,15 @@ let tasks=[
 
 /*Devuelve un array con los textos de aquellas tareas que estén sin terminar*/
 function getToDoTasks(tasks){
-    let resultado=[];
-    let done= n => !Object.keys(n)==="done" || n["done"]===true;
+    let resultado = [];
+    let done = n => !Object.keys(n)==="done" || n["done"]===true;
 
-    resultado=tasks.filter(n => !done(n));
+    resultado = tasks.filter(n => !done(n));
+
+    resultado = resultado.map(t => t.text);
 
     return resultado;
 }
-
 
 
 /*Devuelve un array con las tareas de "tasks" que contengan en su
@@ -47,7 +40,16 @@ function findByTags(tasks, tags){
 }
 
 
-/*Crea una tarea con el texto que se le pasa por parámetro*/
+/*Devuelve el número de tareas completadas en "tasks".*/
+function countDone(tasks){
+    let list = tasks.filter(t => t.done === true);
+
+    return list.length;
+}
+
+
+/*Crea una tarea con el texto que se le pasa por parámetro, 
+diferenciando entre etiquetas (que empiezan por @) y el texto de la tarea.*/
 function createTask(texto){
     let task = {
         texto: "",
@@ -55,9 +57,9 @@ function createTask(texto){
     };
 
     let array = texto.split(" ");
-    task.texto=array.filter(n=>n[0] !== "@").join(" ");
-    task.tags=array.filter(n=>n[0] == "@");
+    task.texto=array.filter(n => !n.startsWith("@")).join(" ").trim();
+    task.tags=array.filter(n => n.startsWith("@"));
+    task.tags = task.tags.map(t => t.slice(1, t.length));
 
     return task;
-
 }
