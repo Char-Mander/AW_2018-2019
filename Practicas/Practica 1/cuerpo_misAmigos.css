@@ -20,14 +20,14 @@ div.contenedor_busqueda{
     position: relative;
     top: 70px;
     width: 100%;
-    height: auto
+    height: auto;
 }
 
 div.contenedor_amigos{
     position: relative;
     top: 105px;
     width: 100%;
-    height: auto
+    height: 30%;
 }
 
 div.titulo_solicitudes,div.titulo_busqueda,div.titulo_amigos{
@@ -45,7 +45,7 @@ ul.lista_solicitudes, ul.lista_amigos{
     display: flex;
     flex-direction: column;
     width: 94%;
-    height: auto;
+    height: 40%;
     justify-content: space-evenly;
     background-image: linear-gradient(to bottom right, rgb(89, 219, 89),rgb(250, 234, 201));
     border-radius: 5px;
@@ -89,7 +89,7 @@ div.barra_busqueda{
 
 input{
     width: 60%;
-    height: 35px;
+    height: 2vw;
     border-radius: 5px;
 }
 
