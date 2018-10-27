@@ -64,4 +64,4 @@ function createTask(texto){
     return task;
 }
 
-console.log(createTask("ir  al  gym    @per  @salud  por    la      tarde"));
+console.log(createTask("ir       al          gym          @per  @salud           por    la      tarde"));
