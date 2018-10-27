@@ -23,6 +23,7 @@ div.titulo_preguntas, div.titulo_añade_preguntas{
     font-size: 1.8vw;
     overflow: hidden;
     margin-bottom: 1%;
+    margin-top:4%;
 }
 
 ul.lista_preguntas{
@@ -64,6 +65,7 @@ div.contenedor_añadir_pregunta{
 }
 
 div.botones{
+    margin-top:3%;
     display: flex;
     width: 50%;
     height: 50%;
