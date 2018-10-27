@@ -44,7 +44,7 @@ li{
     margin:1%;
 }
 
-a{
+div.pregunta a{
     color: black;
     cursor:pointer;
 }
