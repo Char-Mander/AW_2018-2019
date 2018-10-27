@@ -115,3 +115,13 @@ div.img{
     border-radius: 104px;
     margin-right: 5%;
 }
+
+
+button:hover{
+    background-color: rgb(116, 223, 196);
+    cursor: pointer;
+}
+
+button:active{
+    background-color: rgb(63, 212, 175);
+}
