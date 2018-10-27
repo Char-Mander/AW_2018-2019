@@ -3,7 +3,6 @@ div.body{
     background-image: radial-gradient(circle, rgb(172, 240, 172), rgb(252, 252, 252));
     height: -webkit-fill-available;
     color: black;
-   
 }
 
 div.contenedor_buscar{
