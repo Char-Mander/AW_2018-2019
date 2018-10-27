@@ -52,7 +52,7 @@ div.resultado {
     align-content: center;
     align-items: center;
     align-self: center;
-    background-color:#f0e6d2;
+    background-color:rgb(252, 252, 252);
     border-radius: 5px;
     padding: 0.5%;
 }
