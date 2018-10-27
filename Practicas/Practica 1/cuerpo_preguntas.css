@@ -44,6 +44,19 @@ li{
     margin:1%;
 }
 
+a{
+    color: black;
+    cursor:pointer;
+}
+
+a:hover{
+    color:rgb(83, 83, 83);
+}
+
+a:active{
+    color:rgb(104, 102, 102);
+}
+
 div.pregunta {
     width: 100%;
     height: auto;
