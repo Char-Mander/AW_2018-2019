@@ -11,7 +11,7 @@ let tasks=[
 /*Devuelve un array con los textos de aquellas tareas que estén sin terminar*/
 function getToDoTasks(tasks){
     let resultado = [];
-    let done = n => !Object.keys(n)==="done" || n["done"]===true;
+    let done = n => !Object.keys(n) === "done" || n["done"] === true;
 
     resultado = tasks.filter(n => !done(n));
 
@@ -57,8 +57,8 @@ function createTask(texto){
     };
 
     let array = texto.split(" ");
-    task.texto=array.filter(n => !n.startsWith("@") && n!=="").join(" ").trim();
-    task.tags=array.filter(n => n.startsWith("@"));
+    task.texto = array.filter(n => !n.startsWith("@") && n !== "").join(" ").trim();
+    task.tags = array.filter(n => n.startsWith("@"));
     task.tags = task.tags.map(t => t.slice(1, t.length));
 
     return task;
