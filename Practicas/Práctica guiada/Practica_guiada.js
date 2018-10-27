@@ -57,7 +57,7 @@ function createTask(texto){
     };
 
     let array = texto.split(" ");
-    task.texto=array.filter(n => !n.startsWith("@")).join(" ").trim();
+    task.texto=array.filter(n => !n.startsWith("@") && n!=="").join(" ").trim();
     task.tags=array.filter(n => n.startsWith("@"));
     task.tags = task.tags.map(t => t.slice(1, t.length));
 
