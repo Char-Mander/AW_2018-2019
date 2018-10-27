@@ -4,3 +4,12 @@ div.body{
     height: -webkit-fill-available;
     color: black;
 }
+
+button:hover{
+    background-color: rgb(122, 238, 122);
+    cursor: pointer;
+}
+
+button:active{
+    background-color: rgb(98, 228, 98);
+}
