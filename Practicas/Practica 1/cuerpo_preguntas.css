@@ -49,11 +49,11 @@ div.pregunta a{
     cursor:pointer;
 }
 
-a:hover{
+div.pregunta a:hover{
     color:rgb(83, 83, 83);
 }
 
-a:active{
+div.pregunta a:active{
     color:rgb(104, 102, 102);
 }
 
