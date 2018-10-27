@@ -78,7 +78,7 @@ button{
     font-family: 'Patrick Hand';
     font-size: 1.5vw;
     border-radius:5px;
-    background-color:rgb(145, 233, 211); 
+    background-color:rgb(172, 240, 172); 
     overflow: hidden;
     align-self: center;
 }
@@ -94,12 +94,11 @@ div.img{
 }
 
 
-
 button:hover{
-    background-color: rgb(116, 223, 196);
+    background-color: rgb(122, 238, 122);
     cursor: pointer;
 }
 
 button:active{
-    background-color: rgb(63, 212, 175);
+    background-color: rgb(98, 228, 98);
 }
