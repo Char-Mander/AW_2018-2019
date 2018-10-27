@@ -120,9 +120,6 @@ div.Interacción a:hover{
 
 div.cuerpo{
     width: 100%;
-    position: relative;
-    left: 0;
-    top: 10%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -131,6 +128,9 @@ div.cuerpo{
 }
 
 div.contenedorb{ 
+    position: relative;
+    left: 0;
+    top: 70px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
