@@ -5,7 +5,7 @@ div.body{
     color: black;
 }
 
-div.contenedor_preguntas, div.contenedor_añadir_preguntas, div.contenedor_respuestas{
+div.contenedor_preguntas, div.contenedor_añadir_preguntas, div.contenedor_info_respuestas{
     position: relative;
     left: 25%;
     top: 150px;
@@ -26,7 +26,7 @@ div.titulo_preguntas, div.titulo_añade_preguntas, div.titulo_añadir_preguntas,
     margin-top:4%;
 }
 
-ul.lista_preguntas, ul.lista_añadir_opciones_preguntas, ul.lista_respuesta_amigos{
+ul.lista_preguntas, ul.lista_añadir_opciones_preguntas, div.contenedor_respuestas{
     list-style-type: none;
     display: flex;
     flex-direction: column;
@@ -90,7 +90,7 @@ input{
     align-self: center;
 }
 
-div.contenedor_añadir_pregunta, div.contenedor_añadir_preguntas, div.contenedor_boton_añadir_preguntas{
+div.contenedor_añadir_pregunta, div.contenedor_añadir_preguntas{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -127,9 +127,4 @@ button:hover{
 
 button:active{
     background-color: rgb(32, 83, 32);
-}
-
-h3{
-font-size: 1.5vw;
-font-display: none;
 }

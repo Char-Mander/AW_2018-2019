@@ -1,0 +1,64 @@
+h3{
+    font-size: 1.5vw;
+    font-display: none;
+    font-weight: normal;
+}
+
+ul.lista_respuesta_amigos{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    width: 94%;
+    height: 40%;
+    justify-content: space-evenly;
+    border-radius: 5px;
+    padding:2%;
+}
+
+div.boton_responder_pregunta_propia{
+    width: 50%;
+    height: 50%;
+    align-self: center;
+    justify-content: center;
+    margin:1%;
+}
+
+div.info_respuesta_user{
+    display:flex;
+    justify-content: space-evenly;
+    background-color: white;
+    border-radius: 5px;
+}
+
+div.nombre_solicitud{
+    width: 70%;
+    height: 80%;
+    align-self: center;
+}
+
+div.img{
+    content: url(solicitud1.jpg);
+    display:flex;
+    align-self: center;
+    width: 3vw;
+    height: 3vw;
+    border-radius: 104px;
+    margin-right: 5%;
+}
+
+div.botones_respuesta_amigos, div.pregunta_respondida{
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    align-self: center;
+    width: 50%;
+    height: 70%;
+}
+
+div.info_pregunta_respondida_acertada{
+    color: rgb(46, 214, 46);
+}
+
+div.info_pregunta_respondida_fallada{
+    color:red;
+}
