@@ -17,6 +17,7 @@ div.header{
     height: 120px;
     box-shadow: 2px 2px 5px rgb(82, 82, 82);
     font-family: 'Patrick Hand';
+    z-index: 1;
 }
 
 div.titulo{
@@ -76,4 +77,14 @@ div.user_icon{
     width: 20px;
     height: 20px;
     border-radius: 104px;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+
+a:active{
+    color: rgb(31, 77, 39);
 }
