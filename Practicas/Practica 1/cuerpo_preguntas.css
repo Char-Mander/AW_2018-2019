@@ -107,6 +107,13 @@ div.botones{
     align-self: center;
 }
 
+div.contenedor_boton_añadir_preguntas, div.contenedor_finalizar_formulario{
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+}
+
 
 button{
     width: 70%;
