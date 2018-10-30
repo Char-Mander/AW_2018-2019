@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="general.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="cabecera.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="cuerpo_preguntas.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="cuerpo_responder_pregunta.css"/>
 </head>
 <body>
     
@@ -29,39 +30,60 @@
         <div class="body">
             
             <div class="contenedor_info_respuestas">
-                <div class="titulo_pregunta_a_responder"> ¿Nintendo Switch, PS4, o XBOX One? </div>
-                <div class="info_amigos_pregunta">
-                    <div class="info_respondida"> <h3> Los siguientes amigos han respondido a esta pregunta:</h3> </div>
-                        <ul class="lista_respuesta_amigos">
+                <div class="titulo_pregunta_a_responder"> <h2>¿Nintendo Switch, PS4, o XBOX One? </h2></div>
+                <div class="info_adicional"> 
+                    <span class="respondiendo_a_amigos"><h3> ¿Qué crees que opina Casper María Rodríguez? </h3></span> 
+                </div>
+                <div class="contenedor_respuestas">
+                        <ul class="lista_respuestas">
                             <li>
-                                <div class="info_respuesta_user 1">
-                                    <div class="img"></div>
-                                    <div class="nombre_solicitud"> Bruja Piruja </div>
+                                <div class="respuesta 1">
+                                    <label class="nombre_respuesta"> Nintendo Switch
+                                        <input type="radio" checked="checked" name="radio">
+                                        <span class="checkmark"></span>
+                                    <label class="eleccion">
                                 </div>
                             </li>
                             <li>
-                                <div class="info_respuesta_user 2">
-                                    <div class="img"></div>
-                                    <div class="nombre_solicitud"> Hannibal Gómez </div>                                      
+                                <div class="respuesta 2">
+                                    <label class="nombre_respuesta"> Yo soy más del ZX Spectrum
+                                        <input type="radio" checked="checked" name="radio">
+                                        <span class="checkmark"></span>
+                                    <label class="eleccion">
                                 </div>
                             </li>
                             <li>
-                                <div class="info_respuesta_user 3">
-                                    <div class="img"></div>
-                                    <div class="nombre_solicitud"> Stuart Minion </div>                              
+                                <div class="respuesta 3">
+                                    <label class="nombre_respuesta"> No me interesan los videojuegos
+                                        <input type="radio" checked="checked" name="radio">
+                                        <span class="checkmark"></span>
+                                    <label class="eleccion">                            
                                 </div>
                             </li>
                             <li>
-                                <div class="info_respuesta_user 4">
-                                    <div class="img"></div>
-                                    <div class="nombre_solicitud"> Goomba </div>   
-                                    <div class="pregunta_respondida">
-                                        <div class="info_pregunta_respondida_fallada">Has fallado</button>
-                                    </div>
+                                <div class="respuesta 4">
+                                    <label class="nombre_respuesta"> PS4
+                                        <input type="radio" checked="checked" name="radio">
+                                        <span class="checkmark"></span>
+                                    <label class="eleccion">
                                 </div>
                             </li>
+                            <span class="añadir_opcion_respuesta">
+                            <li>
+                                <div class="respuesta 5">
+                                    <label class="nombre_respuesta"> Otra
+                                        <input type="radio" checked="checked" name="radio">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <input>
+                                </div>
+                            </li>
+                            </span>
                         </ul>
                     </div>
+                    <div class="contenedor_finalizar_formulario">
+                            <div class="botones"> <button class="responder"> Responder </button>
+                        </div>
                 </div>
             </div>
         </div>
