@@ -150,8 +150,12 @@ input{
 input.fecha{
     width: 43%;
 }
-
-button{
+div.imagen_de_perfil{
+    display:flex;
+    justify-content: space-between;
+    align-content: center;
+}
+button.boton_aceptar{
     align-self: center;
     width: 25%;
     font-family: 'Patrick Hand';
@@ -161,11 +165,34 @@ button{
     overflow: hidden;
 }
 
-button:hover{
+div.texto h3{
+    font-weight: normal;
+    font-size: 1vw;
+    align-self: center;
+    overflow: hidden;
+}
+
+button.boton_adjuntar_imagen{
+    align-self: center;
+    width: 50%;
+    height: 20%;
+    border-radius: 3px;
+}
+
+button.boton_aceptar:hover{
     background-color: rgb(122, 238, 122);
     cursor: pointer;
 }
 
-button:active{
+button.boton_adjuntar_imagen:hover{
+    background-color: rgb(192, 188, 188);
+    cursor: pointer;
+}
+
+button.boton_aceptar:active{
     background-color: rgb(98, 228, 98);
+}
+
+button.boton_adjuntar_imagen:active{
+   background-color: rgb(141, 140, 140);
 }
