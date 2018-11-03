@@ -54,6 +54,7 @@ div.elem {
 div.texto{
     display: flex;
     align-content: center;
+    align-self: center;
     width: 38%;
     height: 2.5vw;
     overflow: hidden;
@@ -154,6 +155,8 @@ div.imagen_de_perfil{
     display:flex;
     justify-content: space-between;
     align-content: center;
+    align-items: center;
+    
 }
 button.boton_aceptar{
     align-self: center;
@@ -166,13 +169,16 @@ button.boton_aceptar{
 }
 
 div.texto h3{
+    margin:0.5%;
     font-weight: normal;
-    font-size: 1vw;
+    font-size: 0.9vw;
     align-self: center;
     overflow: hidden;
 }
 
 button.boton_adjuntar_imagen{
+    display:flex;
+    justify-content: center;
     align-self: center;
     width: 50%;
     height: 20%;
