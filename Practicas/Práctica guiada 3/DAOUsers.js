@@ -1,14 +1,5 @@
 "use strict";
 
-const mysql = require('mysql');
-/*
-const pool = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "gestor_tareas"
-}); 
-*/
 class DAOUsers{
     constructor(pool) {
         this.pool=pool;
