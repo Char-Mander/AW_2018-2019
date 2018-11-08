@@ -5,7 +5,7 @@ div.body{
     color: black;
 }
 
-div.contenedor_preguntas, div.contenedor_añadir_preguntas{
+div.contenedor_preguntas, div.contenedor_añadir_preguntas, div.contenedor_info_respuestas{
     position: relative;
     left: 25%;
     top: 150px;
@@ -15,7 +15,7 @@ div.contenedor_preguntas, div.contenedor_añadir_preguntas{
     margin:1%;
 }
 
-div.titulo_preguntas, div.titulo_añade_preguntas, div.titulo_añadir_preguntas{
+div.titulo_preguntas, div.titulo_añade_preguntas, div.titulo_añadir_preguntas, div.titulo_pregunta_a_responder{
     display: flex;
     justify-content: center;
     align-self: center;
@@ -26,7 +26,7 @@ div.titulo_preguntas, div.titulo_añade_preguntas, div.titulo_añadir_preguntas{
     margin-top:4%;
 }
 
-ul.lista_preguntas, ul.lista_añadir_opciones_preguntas{
+ul.lista_preguntas, ul.lista_añadir_opciones_preguntas, div.contenedor_respuestas{
     list-style-type: none;
     display: flex;
     flex-direction: column;
@@ -90,7 +90,7 @@ input{
     align-self: center;
 }
 
-div.contenedor_añadir_pregunta, div.contenedor_añadir_preguntas, div.contenedor_boton_añadir_preguntas{
+div.contenedor_añadir_pregunta, div.contenedor_añadir_preguntas{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -105,6 +105,13 @@ div.botones{
     justify-content: center;
     align-content: center;
     align-self: center;
+}
+
+div.contenedor_boton_añadir_preguntas, div.contenedor_finalizar_formulario{
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
 }
 
 

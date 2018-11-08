@@ -93,7 +93,7 @@ input{
     border-radius: 5px;
 }
 
-div.busqueda, div.nombre_solicitud, div.nombre_amigo, div.busqueda{
+div.busqueda, div.nombre_solicitud, div.nombre_amigo{
     font-size: 1.6vw;
     width: 30%;
 }
@@ -114,8 +114,8 @@ div.img{
     content: url(solicitud1.jpg);
     display:flex;
     align-self: center;
-    width: 35px;
-    height: 35px;
+    width: 3vw;
+    height: 3vw;
     border-radius: 104px;
     margin-right: 5%;
 }
