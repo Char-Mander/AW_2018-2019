@@ -16,7 +16,7 @@ class DAOTasks{
             if(err)
                 callback(new Error("Error de conexión a la base de datos"), null);
             else{
-                const sql = `SELECT id, text, done, tag FROM task JOIN tag WHERE tag.taskId = task.id AND task.id = ?`;
+                const sql = `SELECT task.id, task.text, task.done, tag.tag FROM task JOIN tag ON tag.taskId = task.id AND task.user = ?`;
                 connection.query(sql, [email], function(err, filas){
                     connection.release();
                     if(err)
@@ -32,12 +32,14 @@ class DAOTasks{
 
     tratarTareas(filas, tareas){
         let resultado = [];
+
         for(let f = 0; f < filas.length; f++){
             let tarea = {};
-            if(resultado.some(n => n.id === f.id)){ //Si esa tarea ya se ha insertado 
-                let t = resultado.filter(n => n.id === f.id);   //Se busca en el array
+
+            if(resultado.some(n => n.id === f.id)){ //si esa tarea ya se ha insertado 
+                let t = resultado.filter(n => n.id === f.id);   //se busca en el array
                 t.tags.push(f.tag); //se añade la nueva etiqueta a su array de etiquetas
-            }else{  //Si no está en el array, se crea un objeto nuevo y se inserta
+            }else{  //si no está en el array, se crea un objeto nuevo y se inserta
                 tarea.id = f.id;
                 tarea.text = f.text;
                 tarea.done = f.done;
@@ -47,10 +49,12 @@ class DAOTasks{
 
             resultado.push(tarea);
         }
+
         tareas = resultado;
     }
 
 
+    /*Inserta una tarea en la BD asociándola a un usuario*/
     insertTask(email, task, callback){
         let sqlEtiquetas = "";
         let elems = [];
@@ -59,12 +63,26 @@ class DAOTasks{
                 callback(new Error("Error de conexión a la base de datos"));
             else{
                 const sql = `INSERT INTO task(id, user, text, done) VALUES (?,?,?,?)`;
-                connection.query(sql, [task.id, email, task.text, task.done], function(err, resultado){
+                let elems = [task.id, email, task.text, task.done];
+
+                connection.query(sql, elems, function(err, resultado){
                     connection.release();
                     if(err)
                     callback(new Error("Error de acceso a la base de datos"));
                     else{
-                        elems = construirSentenciaInsercionEtiquetas(task.tags, sqlEtiquetas);
+                        // Esto habría que meterlo en una función
+                        let sqlEtiquetas = `INSERT INTO tag(taskId, tag) VALUES`;
+                        let elems = [];
+
+                        for(let i = 0; i < task.tags.length; i++){
+                            sentencia += `(?,?)`;
+                            elems.push(task.id);
+                            elems.push(task.tags[i]);
+                
+                            if(i < task.tags.length - 1)
+                                sqlEtiquetas += `,`;
+                        }
+
                         connection.query(sqlEtiquetas, elems, function(err, resultado){
                             if(err)
                                 callback(new Error("Error de acceso a la base de datos"));
@@ -79,27 +97,14 @@ class DAOTasks{
     }
 
 
-    construirSentenciaInsercionEtiquetas(tags, sql){
-        sql = `INSERT INTO tag(taskId, tag) VALUES`;
-        let array = [];
-
-        for(let i = 0; i < tags.length; i++){
-            sql += `(?,?)`;
-            array.push(tags[i].id);
-            array.push(tags[i].tag);
-        }
-
-        return array;
-    }
-
-
+    /*Marca la tarea pasada por parámetro como realizada, actualizando la base de datos*/
     markTaskDone(idTask, callback){
         this.pool.getConnection(function(err, connection){
             if(err)
                 callback(new Error("Error de conexión a la base de datos"));
             else{
-                const sql = ``;
-                connection.query(sql, [], function(err, resultado){
+                const sql = `UPDATE task SET done = 1 WHERE task.id = ?`;
+                connection.query(sql, [idTask], function(err, resultado){
                     connection.release();
                     if(err)
                         callback(new Error("Error de acceso a la base de datos"));
@@ -111,6 +116,26 @@ class DAOTasks{
         })
     }
 
+
+    /*Elimina todas las tareas asociadas a un usuario que estén completas*/
+    deleteCompleted(email, callback){
+        this.pool.getConnection(function(err, connection){
+            if(err)
+                callback(new Error("Error de conexión a la base de datos"));
+            else{
+                const sql = `DELETE FROM task WHERE task.user = ? AND task.done = 1`;
+                connection.query(sql, [email], function(err, resultado){
+                    connection.release();
+                    if(err)
+                        callback(new Error("Error de acceso a la base de datos"));
+                    else{
+                        console.log("Tareas finalizadas eliminadas");
+                    }
+                })
+            }
+        })
+    }
+
 }
 
-modules.export = DAOTasks;
+module.exports = DAOTasks;
