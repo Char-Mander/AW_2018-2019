@@ -9,6 +9,7 @@ const pool = mysql.createPool({
     database: "gestor_tareas"
 }); 
 
+
 function cb_isUserCorrect(err, result){
     if(err){
         console.log(err.message);
@@ -31,6 +32,42 @@ function cb_getUserImageName(err, result){
     else{
         console.log(`El fichero donde se encuentra la imagen de perfil es `  + `${result}`);
     }
+}
+
+function cb_getAllTasks(error, tareas){
+    if(error)
+        console.log(`${error.message}`);
+    else
+        console.log("Las tareas a realizar son:\n");
+        
+        for(let t = 0; t < tareas.length; t++){
+            console.log("ID: " + tareas[t].id + "\nTexto: " + tareas[t].text + "\nEtiquetas:\n");
+            for(let e = 0; e < tareas[t].tags.length; e++){
+                console.log("\t" + tareas[t].tags[e] + "\n");
+            }
+        }
+}
+
+function cb_insertarTask(error){
+    if(error)
+        console.log(`${error.message}`);
+    else
+        console.log("Inserción realizada con éxito");
+}
+
+function cb_markTaskDone(error){
+    if(error)
+        console.log(`${error.message}`);
+    else
+        console.log("Tarea marcada como completada");
+}
+
+function cb_deleteCompleted(error){
+    if(error)
+        console.log(`${error.message}`);
+    else
+        console.log("Tareas completadas borradas");
+
 }
 
 
