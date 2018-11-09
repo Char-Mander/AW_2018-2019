@@ -1,15 +1,22 @@
 "use strict";
 
 const mysql = require("mysql");
+const config = require("./config");
+const DAOUsers = require("./DAOUsers");
+const DAOTasks = require("./DAOTasks");
 
 const pool = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "gestor_tareas"
+    host: config.host,
+    user: config.user,
+    password: config.password,
+    database: config.database
 }); 
 
 
+const DAOUsers=require("./DAOUsers.js");
+const DAOTasks=require("./DAOTasks.js")
+
+//--------------------------------------FUNCIONES CALLBACK DEL USUARIO-------------------------------------------
 function cb_isUserCorrect(err, result){
     if(err){
         console.log(err.message);
@@ -34,18 +41,24 @@ function cb_getUserImageName(err, result){
     }
 }
 
+
+//--------------------------------------FUNCIONES CALLBACK DE LAS TAREAS-------------------------------------------
 function cb_getAllTasks(error, tareas){
-    if(error)
+     if(error)
         console.log(`${error.message}`);
-    else
-        console.log("Las tareas a realizar son:\n");
+    else{
+        console.log("Las tareas del usuario son:");
         
         for(let t = 0; t < tareas.length; t++){
-            console.log("ID: " + tareas[t].id + "\nTexto: " + tareas[t].text + "\nEtiquetas:\n");
+            console.log("ID: " + tareas[t].id + "\nTexto: " + tareas[t].text);
+            let etiquetas = "";
             for(let e = 0; e < tareas[t].tags.length; e++){
-                console.log("\t" + tareas[t].tags[e] + "\n");
+                etiquetas += tareas[t].tags[e] + " ";
             }
+
+            console.log("Etiquetas: " + etiquetas + "\n");
         }
+    }
 }
 
 function cb_insertarTask(error){
@@ -71,5 +84,18 @@ function cb_deleteCompleted(error){
 }
 
 
-const DAOUsers=require("./DAOUsers.js");
-const DAOTasks=require("./DAOTasks.js")
+daoTasks = new daoTasks(pool);
+let tarea ={
+    id: 1,
+    text: "Hacer la práctica de AW",
+    done: 0,
+    tags: ["Universidad", "Aw"]
+}
+
+let user = "mario@ucm.es"
+
+daoTasks = new daoTasks(pool);
+daoTasks.insertTask(user, tarea, cb_insertarTask);
+daoTasks.getAllTasks(user, cb_getAllTasks); 
+daoTasks.markTaskDone(1, cb_markTaskDone);
+daoTasks.deleteCompleted(user, cb_deleteCompleted);
