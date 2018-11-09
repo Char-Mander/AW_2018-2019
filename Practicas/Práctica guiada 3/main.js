@@ -2,8 +2,6 @@
 
 const mysql = require("mysql");
 const config = require("./config");
-const DAOUsers = require("./DAOUsers");
-const DAOTasks = require("./DAOTasks");
 
 const pool = mysql.createPool({
     host: config.host,
@@ -23,6 +21,7 @@ function cb_isUserCorrect(err, result){
     }
     else if(result){
         console.log("Usuario y contraseña correctos");
+        console.log(result);
     }
     else{
         console.log("Usuario y/o contraseña incorrectos");
@@ -41,7 +40,14 @@ function cb_getUserImageName(err, result){
     }
 }
 
+let daoUsers = new DAOUsers(pool);
 
+let usr = 'paco@gmail.com';
+let passwrd = '12';
+
+daoUsers.isUserCorrect(usr, passwrd, cb_isUserCorrect);
+daoUsers.getUserImageName(usr, cb_getUserImageName);
+/*
 //--------------------------------------FUNCIONES CALLBACK DE LAS TAREAS-------------------------------------------
 function cb_getAllTasks(error, tareas){
      if(error)
@@ -99,3 +105,4 @@ daoTasks.insertTask(user, tarea, cb_insertarTask);
 daoTasks.getAllTasks(user, cb_getAllTasks); 
 daoTasks.markTaskDone(1, cb_markTaskDone);
 daoTasks.deleteCompleted(user, cb_deleteCompleted);
+*/

@@ -11,8 +11,8 @@ class DAOUsers{
                 cb_isUserCorrect(new Error("Error de conexión a la base de datos"), false);
             }
             else{
-                const sql = `SELECT * FROM user WHERE ? = email AND ? = password`;
-                connection.query(sq, [email, password], function(err, resultado){
+                const sql = `SELECT * FROM user WHERE ? = email AND ? = password;`;
+                connection.query(sql, [email, password], function(err, resultado){
                     connection.release();
                     if(err){
                         cb_isUserCorrect(new Error("Error de acceso a la base de datos"), false);
@@ -34,7 +34,7 @@ class DAOUsers{
             }
             else{
                 const sql = `SELECT img FROM user WHERE ? = email`;
-                connection.query(sq, [email], function(err, fich_img){
+                connection.query(sql, [email], function(err, fich_img){
                     connection.release();
                     if(err){
                         cb_getUserImageName(new Error("Error de acceso a la base de datos"), null);
