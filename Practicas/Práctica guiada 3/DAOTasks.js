@@ -10,14 +10,14 @@ class DAOTasks{
 
 
     /*Devuelve todas las tareas asociadas a un usuario*/
-    // Probada; no devuelve las tareas que no tienen etiquetas.
+    // Probada; en principio funciona bien.
     getAllTasks(email, callback){
 
         this.pool.getConnection(function(err, connection){
             if(err)
                 callback(new Error("Error de conexión a la base de datos"), null);
             else{
-                const sql = `SELECT task.id, task.text, task.done, tag.tag FROM task JOIN tag ON task.user = ? AND tag.taskId = task.id`;
+                const sql = `SELECT task.id, task.text, task.done, tag.tag FROM task LEFT JOIN tag ON task.id = tag.taskId WHERE task.user = ?`;
                 connection.query(sql, [email], function(err, filas){
                     connection.release();
                     if(err)
@@ -38,7 +38,8 @@ class DAOTasks{
                                 tarea.text = filas[f].text;
                                 tarea.done = filas[f].done;
                                 tarea.tags = [];
-                                tarea.tags.push(filas[f].tag);
+                                if(filas[f].tag !== null)
+                                    tarea.tags.push(filas[f].tag);
 
                                 tareas.push(tarea);
                             }
