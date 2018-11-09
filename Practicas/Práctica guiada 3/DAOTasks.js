@@ -8,21 +8,42 @@ class DAOTasks{
         this.pool = pool;
     }
 
+
     /*Devuelve todas las tareas asociadas a un usuario*/
+    // Probada; no devuelve las tareas que no tienen etiquetas.
     getAllTasks(email, callback){
-        let tareas = [];
 
         this.pool.getConnection(function(err, connection){
             if(err)
                 callback(new Error("Error de conexión a la base de datos"), null);
             else{
-                const sql = `SELECT task.id, task.text, task.done, tag.tag FROM task JOIN tag ON tag.taskId = task.id AND task.user = ?`;
+                const sql = `SELECT task.id, task.text, task.done, tag.tag FROM task JOIN tag ON task.user = ? AND tag.taskId = task.id`;
                 connection.query(sql, [email], function(err, filas){
                     connection.release();
                     if(err)
                         callback(new Error("Error de acceso a la base de datos"), null);
                     else{
-                        tratarTareas(filas, tareas);
+                        
+                        /*Aquí debería ir la llamada a "tratarTareas(filas, tareas)"*/
+                        let tareas = [];
+    
+                        for(let f = 0; f < filas.length; f++){
+                            let tarea = {};
+                
+                            if(tareas.some(n => n.id === filas[f].id)){ //si esa tarea ya se ha insertado 
+                                let t = tareas.filter(n => n.id === filas[f].id);   //se busca en el array
+                                t[0].tags.push(filas[f].tag); //se añade la nueva etiqueta a su array de etiquetas
+                            }else{  //si no está en el array, se crea un objeto nuevo y se inserta
+                                tarea.id = filas[f].id;
+                                tarea.text = filas[f].text;
+                                tarea.done = filas[f].done;
+                                tarea.tags = [];
+                                tarea.tags.push(filas[f].tag);
+
+                                tareas.push(tarea);
+                            }
+                        }
+
                         callback(null, tareas);
                     }
                 })
@@ -55,6 +76,7 @@ class DAOTasks{
 
 
     /*Inserta una tarea en la BD asociándola a un usuario*/
+    //  Probada; hay que mover el código de la sentencia de las etiquetas a una función aparte.
     insertTask(email, task, callback){
         let sqlEtiquetas = "";
         let elems = [];
@@ -70,34 +92,51 @@ class DAOTasks{
                     if(err)
                     callback(new Error("Error de acceso a la base de datos"));
                     else{
-                        // Esto habría que meterlo en una función
-                        let sqlEtiquetas = `INSERT INTO tag(taskId, tag) VALUES`;
-                        let elems = [];
+                        
+                        if(task.tags.length > 0){
+                            let sqlEtiquetas = `INSERT INTO tag(taskId, tag) VALUES`;
+                            let elems = [];
 
-                        for(let i = 0; i < task.tags.length; i++){
-                            sentencia += `(?,?)`;
-                            elems.push(task.id);
-                            elems.push(task.tags[i]);
-                
-                            if(i < task.tags.length - 1)
-                                sqlEtiquetas += `,`;
-                        }
+                            /*Aquí debería ir la llamada a "generarSentenciaInsertarEtiquetas(task.tags, sqlEtiquetas, elems)*/
 
-                        connection.query(sqlEtiquetas, elems, function(err, resultado){
-                            if(err)
-                                callback(new Error("Error de acceso a la base de datos"));
-                            else{
-                                console.log("Nueva tarea insertada correctamente");
+                            for(let i = 0; i < task.tags.length; i++){
+                                sqlEtiquetas += `(?,?)`;
+                                elems.push(task.id);
+                                elems.push(task.tags[i]);
+                    
+                                if(i < task.tags.length - 1)
+                                    sqlEtiquetas += `,`;
                             }
-                        })
+
+                            connection.query(sqlEtiquetas, elems, function(err, resultado){
+                                if(err)
+                                    callback(new Error("Error de acceso a la base de datos"));
+                                else{
+                                    console.log("Nueva tarea insertada correctamente");
+                                }
+                            })
+                        }else
+                            console.log("Nueva tarea insertada correctamente");
                     }
                 })
             }
         })
     }
 
+    generarSentenciaInsertarEtiquetas(tags, sqlEtiquetas){
+        for(let i = 0; i < task.tags.length; i++){
+            sqlEtiquetas += `(?,?)`;
+            elems.push(task.id);
+            elems.push(task.tags[i]);
+
+            if(i < task.tags.length - 1)
+                sqlEtiquetas += `,`;
+        }
+    }
+
 
     /*Marca la tarea pasada por parámetro como realizada, actualizando la base de datos*/
+    //  Probada; en principio funciona bien
     markTaskDone(idTask, callback){
         this.pool.getConnection(function(err, connection){
             if(err)
@@ -118,6 +157,7 @@ class DAOTasks{
 
 
     /*Elimina todas las tareas asociadas a un usuario que estén completas*/
+    // Probada; en principio funciona bien
     deleteCompleted(email, callback){
         this.pool.getConnection(function(err, connection){
             if(err)
