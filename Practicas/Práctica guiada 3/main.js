@@ -89,7 +89,7 @@ function cb_deleteCompleted(error){
 }
 
 
-daoTasks = new daoTasks(pool);
+let daoTasks = new DAOTasks(pool);
 let tarea ={
     id: 1,
     text: "Hacer la práctica de AW",
@@ -99,7 +99,7 @@ let tarea ={
 
 let user = "mario@ucm.es"
 
-daoTasks = new daoTasks(pool);
+daoTasks = new DAOTasks(pool);
 daoTasks.insertTask(user, tarea, cb_insertarTask);
 daoTasks.getAllTasks(user, cb_getAllTasks); 
 daoTasks.markTaskDone(1, cb_markTaskDone);
