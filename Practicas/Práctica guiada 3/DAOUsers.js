@@ -11,16 +11,16 @@ class DAOUsers{
                 cb_isUserCorrect(new Error("Error de conexión a la base de datos"), false);
             }
             else{
-                const sql = `SELECT * FROM user WHERE ? = email AND ? = password;`;
+                const sql = `SELECT * FROM user WHERE email = ? AND password = ?`;
                 connection.query(sql, [email, password], function(err, resultado){
-                    connection.release();
+                    connection.release(); 
                     if(err){
                         cb_isUserCorrect(new Error("Error de acceso a la base de datos"), false);
-                    } else if(resultado==null){
-                        cb_isUserCorrect(null, false);
+                    } else if(resultado.length!==0){
+                        cb_isUserCorrect(null, true);
                     }
                     else{
-                        cb_isUserCorrect(null, true);
+                        cb_isUserCorrect(null, false);
                     }
                 })
             }
@@ -39,11 +39,11 @@ class DAOUsers{
                     if(err){
                         cb_getUserImageName(new Error("Error de acceso a la base de datos"), null);
                     }
-                    else if(fich_img == null){
-                        cb_getUserImageName(null, null);
+                    else if(fich_img.length!==0){
+                        cb_getUserImageName(null, fich_img);
                     }
                     else{
-                        cb_getUserImageName(null, fich_img);
+                        cb_getUserImageName(null, null);
                     }
                 })
             }
