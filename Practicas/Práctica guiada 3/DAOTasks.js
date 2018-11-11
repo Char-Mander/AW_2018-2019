@@ -10,7 +10,6 @@ class DAOTasks{
 
 
     /*Devuelve todas las tareas asociadas a un usuario*/
-    // Probada; en principio funciona bien.
     getAllTasks(email, callback){
 
         this.pool.getConnection(function(err, connection){
@@ -77,7 +76,6 @@ class DAOTasks{
 
 
     /*Inserta una tarea en la BD asociándola a un usuario*/
-    //  Probada; hay que mover el código de la sentencia de las etiquetas a una función aparte.
     insertTask(email, task, callback){
         let sqlEtiquetas = "";
         let elems = [];
@@ -137,7 +135,6 @@ class DAOTasks{
 
 
     /*Marca la tarea pasada por parámetro como realizada, actualizando la base de datos*/
-    //  Probada; en principio funciona bien
     markTaskDone(idTask, callback){
         this.pool.getConnection(function(err, connection){
             if(err)
@@ -158,7 +155,6 @@ class DAOTasks{
 
 
     /*Elimina todas las tareas asociadas a un usuario que estén completas*/
-    // Probada; en principio funciona bien
     deleteCompleted(email, callback){
         this.pool.getConnection(function(err, connection){
             if(err)
@@ -175,6 +171,11 @@ class DAOTasks{
                 })
             }
         })
+    }
+
+    /*Cierra el pool de conexiones*/
+    terminarConexion(){
+        this.pool.end();
     }
 
 }

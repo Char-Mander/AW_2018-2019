@@ -11,8 +11,8 @@ const pool = mysql.createPool({
 }); 
 
 
-const DAOUsers=require("./DAOUsers.js");
-const DAOTasks=require("./DAOTasks.js")
+const DAOUsers = require("./DAOUsers.js");
+const DAOTasks = require("./DAOTasks.js")
 
 //--------------------------------------FUNCIONES CALLBACK DEL USUARIO-------------------------------------------
 function cb_isUserCorrect(err, result){
@@ -39,13 +39,26 @@ function cb_getUserImageName(err, result){
     }
 }
 
-let daoUsers = new DAOUsers(pool);
+const daoUsers = new DAOUsers(pool);
 
-let usr = 'paco@gmail.com';
-let passwrd = '12345';
+let usr = "paco@gmail.com";
+let passwrd = "12345";
 
-daoUsers.isUserCorrect(usr, passwrd, cb_isUserCorrect);
-daoUsers.getUserImageName(usr, cb_getUserImageName);
+let usr2 = "mario@ucm.es";
+let passwrd2 = "zanahoria";
+
+let usr3 = "marta@ucm.es";
+let passwrd3 = "45amapola45";
+
+daoUsers.isUserCorrect(usr, passwrd, cb_isUserCorrect); //correcto
+daoUsers.isUserCorrect(usr2, passwrd2, cb_isUserCorrect);   //correcto
+daoUsers.isUserCorrect(usr3, passwrd3, cb_isUserCorrect);   //correcto
+daoUsers.isUserCorrect("marina@ucm.es", "zapatillas", cb_isUserCorrect);    //incorrecto
+
+daoUsers.getUserImageName(usr, cb_getUserImageName);    //correcto
+daoUsers.getUserImageName(usr2, cb_getUserImageName);   //correcto
+daoUsers.getUserImageName(usr3, cb_getUserImageName);   //correcto
+daoUsers.getUserImageName("marina@ucm.es", cb_getUserImageName);    //incorrecto
 
 //--------------------------------------FUNCIONES CALLBACK DE LAS TAREAS-------------------------------------------
 function cb_getAllTasks(error, tareas){
@@ -89,18 +102,52 @@ function cb_deleteCompleted(error){
 }
 
 
-let daoTasks = new DAOTasks(pool);
-let tarea ={
-    id: 1,
-    text: "Hacer la práctica de AW",
-    done: 0,
-    tags: ["Universidad", "Aw"]
-}
+const daoTasks = new DAOTasks(pool);
 
-let user = "mario@ucm.es"
+let tareas = [
+    {   id: 1,
+        text: "Hacer la práctica de AW",
+        done: 0,
+        tags: ["Universidad", "Aw"] 
+    },
+    {
+        id: 2,
+        text: "Reservar cancha para el partido",
+        done: 0,
+        tags: ["Deporte"]
+    },
+    {
+        id: 3,
+        text: "Comprar cerveza para la fiesta",
+        done: 0,
+        tags: ["Fiesta", "Amigos"]
+    },
+    {
+        id: 4,
+        text: "Comprar entradas para los Celtis",
+        done: 1,
+        tags: ["Basket", "Celtics"]
+    },
+    {
+        id: 5,
+        text: "Recoger el cuarto",
+        done: 0,
+        tags: []
+    }]
 
-daoTasks = new DAOTasks(pool);
-daoTasks.insertTask(user, tarea, cb_insertarTask);
-daoTasks.getAllTasks(user, cb_getAllTasks); 
+daoTasks.insertTask(usr, tareas[0], cb_insertarTask);
+daoTasks.insertTask(usr, tareas[1], cb_insertarTask);
+daoTasks.insertTask(usr2, tareas[3], cb_insertarTask);
+daoTasks.insertTask(usr, tareas[4], cb_insertarTask);
+
+daoTasks.getAllTasks(usr, cb_getAllTasks); 
+
+daoTasks.insertTask(usr, tareas[2], cb_insertarTask);
+daoTasks.getAllTasks(usr, cb_getAllTasks);
+daoTasks.getAllTasks(usr2, cb_getAllTasks);
+daoTasks.getAllTasks(usr3, cb_getAllTasks);
 daoTasks.markTaskDone(1, cb_markTaskDone);
-daoTasks.deleteCompleted(user, cb_deleteCompleted);
+daoTasks.deleteCompleted(usr, cb_deleteCompleted);
+
+daoTasks.terminarConexion();
+daoUsers.terminarConexion();

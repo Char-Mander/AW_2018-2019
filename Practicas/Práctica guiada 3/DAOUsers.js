@@ -5,6 +5,7 @@ class DAOUsers{
         this.pool=pool;
     }
 
+    /*Comprueba que es usuario "email" existe en la base de datos, y que su contraseña es "password"*/
     isUserCorrect(email, password, cb_isUserCorrect){
         this.pool.getConnection(function(err, connection){
             if(err){
@@ -27,6 +28,7 @@ class DAOUsers{
         });
     }
 
+    /*Obtiene el nombre del fichero de la imagen del usuario "email"*/
     getUserImageName(email, cb_getUserImageName){
         this.pool.getConnection(function(err, connection){
             if(err){
@@ -48,6 +50,11 @@ class DAOUsers{
                 })
             }
         });
+    }
+
+    /*Cierra el pool de conexiones*/
+    terminarConexion(){
+        this.pool.end();
     }
     
 }
