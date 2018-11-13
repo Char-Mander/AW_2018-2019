@@ -84,14 +84,14 @@ class DAOTasks{
                                 if(i < task.tags.length - 1)
                                     sqlEtiquetas += `,`;
                             }
-
+                            */
                             connection.query(sqlEtiquetas, elems, function(err, resultado){
                                 if(err)
                                     callback(new Error("Error de acceso a la base de datos"));
                                 else{
                                     console.log("Nueva tarea insertada correctamente");
                                 }
-                            })*/
+                            })
                         }else
                             console.log("Nueva tarea insertada correctamente");
                     }
@@ -154,14 +154,14 @@ function tratarTareas(filas){
         let tarea = {};
 
         if(resultado.some(n => n.id === f.id)){ //si esa tarea ya se ha insertado 
-            let t = resultado.filter(n => n.id === f.id);   //se busca en el array
-            t.tags.push(f.tag); //se añade la nueva etiqueta a su array de etiquetas
+            let t = resultado.filter(n => n.id === filas[f].id);   //se busca en el array
+            t[0].tags.push(filas[f].tag); //se añade la nueva etiqueta a su array de etiquetas
         }else{  //si no está en el array, se crea un objeto nuevo y se inserta
-            tarea.id = f.id;
-            tarea.text = f.text;
-            tarea.done = f.done;
+            tarea.id = filas[f].id;
+            tarea.text = filas[f].text;
+            tarea.done = filas[f].done;
             tarea.tags = [];
-            tarea.tags.push(f.tag);
+            tarea.tags.push(filas[f].tag);
         }
 
         resultado.push(tarea);

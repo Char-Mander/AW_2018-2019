@@ -101,9 +101,7 @@ function cb_deleteCompleted(error){
 
 }
 
-<<<<<<< HEAD
-const daoTasks = new DAOTasks(pool);
-=======
+
 
 const daoTasks = new DAOTasks(pool);
 
@@ -139,8 +137,10 @@ let tareas = [
     }]
 
 //daoTasks.insertTask(usr, tareas[0], cb_insertarTask);
-daoTasks.getAllTasks("javier@gmail.com", cb_getAllTasks);
-/*daoTasks.insertTask(usr, tareas[1], cb_insertarTask);
+//daoTasks.insertTask("paco@gmail.com", tareas[1], cb_insertarTask);
+daoTasks.insertTask("paco@gmail.com", tareas[1], cb_insertarTask);
+//daoTasks.getAllTasks(usr, cb_getAllTasks); 
+/*
 daoTasks.insertTask(usr2, tareas[3], cb_insertarTask);
 daoTasks.insertTask(usr, tareas[4], cb_insertarTask);
 
@@ -155,4 +155,3 @@ daoTasks.deleteCompleted(usr, cb_deleteCompleted);
 */
 //daoTasks.terminarConexion();
 //daoUsers.terminarConexion();
->>>>>>> master
