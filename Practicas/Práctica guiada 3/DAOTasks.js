@@ -22,14 +22,9 @@ class DAOTasks{
                     if(err)
                         callback(new Error("Error de acceso a la base de datos"), null);
                     else{
-<<<<<<< HEAD
-                        
-                        let tareas = [];
-=======
             
                        let tareas= tratarTareas(filas);
                        /* let tareas = [];
->>>>>>> master
     
                         for(let f = 0; f < filas.length; f++){
                             let tarea = {};
