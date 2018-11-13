@@ -22,9 +22,9 @@ class DAOTasks{
                     if(err)
                         callback(new Error("Error de acceso a la base de datos"), null);
                     else{
-                        
-                        /*Aquí debería ir la llamada a "tratarTareas(filas, tareas)"*/
-                        let tareas = [];
+            
+                       let tareas= tratarTareas(filas);
+                       /* let tareas = [];
     
                         for(let f = 0; f < filas.length; f++){
                             let tarea = {};
@@ -42,7 +42,7 @@ class DAOTasks{
 
                                 tareas.push(tarea);
                             }
-                        }
+                        } */
 
                         callback(null, tareas);
                     }
@@ -51,29 +51,7 @@ class DAOTasks{
         })
     }
 
-    tratarTareas(filas, tareas){
-        let resultado = [];
-
-        for(let f = 0; f < filas.length; f++){
-            let tarea = {};
-
-            if(resultado.some(n => n.id === f.id)){ //si esa tarea ya se ha insertado 
-                let t = resultado.filter(n => n.id === f.id);   //se busca en el array
-                t.tags.push(f.tag); //se añade la nueva etiqueta a su array de etiquetas
-            }else{  //si no está en el array, se crea un objeto nuevo y se inserta
-                tarea.id = f.id;
-                tarea.text = f.text;
-                tarea.done = f.done;
-                tarea.tags = [];
-                tarea.tags.push(f.tag);
-            }
-
-            resultado.push(tarea);
-        }
-
-        tareas = resultado;
-    }
-
+    
 
     /*Inserta una tarea en la BD asociándola a un usuario*/
     insertTask(email, task, callback){
@@ -96,8 +74,8 @@ class DAOTasks{
                             let sqlEtiquetas = `INSERT INTO tag(taskId, tag) VALUES`;
                             let elems = [];
 
-                            /*Aquí debería ir la llamada a "generarSentenciaInsertarEtiquetas(task.tags, sqlEtiquetas, elems)*/
-
+                            generarSentenciaInsertarEtiquetas(task.tags, sqlEtiquetas, elems);
+                            /*
                             for(let i = 0; i < task.tags.length; i++){
                                 sqlEtiquetas += `(?,?)`;
                                 elems.push(task.id);
@@ -113,24 +91,13 @@ class DAOTasks{
                                 else{
                                     console.log("Nueva tarea insertada correctamente");
                                 }
-                            })
+                            })*/
                         }else
                             console.log("Nueva tarea insertada correctamente");
                     }
                 })
             }
         })
-    }
-
-    generarSentenciaInsertarEtiquetas(tags, sqlEtiquetas){
-        for(let i = 0; i < task.tags.length; i++){
-            sqlEtiquetas += `(?,?)`;
-            elems.push(task.id);
-            elems.push(task.tags[i]);
-
-            if(i < task.tags.length - 1)
-                sqlEtiquetas += `,`;
-        }
     }
 
 
@@ -179,5 +146,40 @@ class DAOTasks{
     }
 
 }
+
+function tratarTareas(filas){
+    let resultado = [];
+
+    for(let f = 0; f < filas.length; f++){
+        let tarea = {};
+
+        if(resultado.some(n => n.id === f.id)){ //si esa tarea ya se ha insertado 
+            let t = resultado.filter(n => n.id === f.id);   //se busca en el array
+            t.tags.push(f.tag); //se añade la nueva etiqueta a su array de etiquetas
+        }else{  //si no está en el array, se crea un objeto nuevo y se inserta
+            tarea.id = f.id;
+            tarea.text = f.text;
+            tarea.done = f.done;
+            tarea.tags = [];
+            tarea.tags.push(f.tag);
+        }
+
+        resultado.push(tarea);
+    }
+
+    return resultado;
+}
+
+function generarSentenciaInsertarEtiquetas(tags, sqlEtiquetas){
+    for(let i = 0; i < task.tags.length; i++){
+        sqlEtiquetas += `(?,?)`;
+        elems.push(task.id);
+        elems.push(task.tags[i]);
+
+        if(i < task.tags.length - 1)
+            sqlEtiquetas += `,`;
+    }
+}
+
 
 module.exports = DAOTasks;

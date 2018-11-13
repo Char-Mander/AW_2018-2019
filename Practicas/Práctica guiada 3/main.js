@@ -49,7 +49,7 @@ let passwrd2 = "zanahoria";
 
 let usr3 = "marta@ucm.es";
 let passwrd3 = "45amapola45";
-
+/*
 daoUsers.isUserCorrect(usr, passwrd, cb_isUserCorrect); //correcto
 daoUsers.isUserCorrect(usr2, passwrd2, cb_isUserCorrect);   //correcto
 daoUsers.isUserCorrect(usr3, passwrd3, cb_isUserCorrect);   //correcto
@@ -59,7 +59,7 @@ daoUsers.getUserImageName(usr, cb_getUserImageName);    //correcto
 daoUsers.getUserImageName(usr2, cb_getUserImageName);   //correcto
 daoUsers.getUserImageName(usr3, cb_getUserImageName);   //correcto
 daoUsers.getUserImageName("marina@ucm.es", cb_getUserImageName);    //incorrecto
-
+*/
 //--------------------------------------FUNCIONES CALLBACK DE LAS TAREAS-------------------------------------------
 function cb_getAllTasks(error, tareas){
      if(error)
@@ -135,8 +135,9 @@ let tareas = [
         tags: []
     }]
 
-daoTasks.insertTask(usr, tareas[0], cb_insertarTask);
-daoTasks.insertTask(usr, tareas[1], cb_insertarTask);
+//daoTasks.insertTask(usr, tareas[0], cb_insertarTask);
+daoTasks.getAllTasks("javier@gmail.com", cb_getAllTasks);
+/*daoTasks.insertTask(usr, tareas[1], cb_insertarTask);
 daoTasks.insertTask(usr2, tareas[3], cb_insertarTask);
 daoTasks.insertTask(usr, tareas[4], cb_insertarTask);
 
@@ -148,6 +149,6 @@ daoTasks.getAllTasks(usr2, cb_getAllTasks);
 daoTasks.getAllTasks(usr3, cb_getAllTasks);
 daoTasks.markTaskDone(1, cb_markTaskDone);
 daoTasks.deleteCompleted(usr, cb_deleteCompleted);
-
-daoTasks.terminarConexion();
-daoUsers.terminarConexion();
+*/
+//daoTasks.terminarConexion();
+//daoUsers.terminarConexion();
