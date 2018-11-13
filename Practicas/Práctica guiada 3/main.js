@@ -138,8 +138,8 @@ let tareas = [
 
 //daoTasks.insertTask(usr, tareas[0], cb_insertarTask);
 //daoTasks.insertTask("paco@gmail.com", tareas[1], cb_insertarTask);
-daoTasks.insertTask("paco@gmail.com", tareas[1], cb_insertarTask);
-//daoTasks.getAllTasks(usr, cb_getAllTasks); 
+//daoTasks.insertTask("paco@gmail.com", tareas[3], cb_insertarTask);
+daoTasks.getAllTasks(usr, cb_getAllTasks); 
 /*
 daoTasks.insertTask(usr2, tareas[3], cb_insertarTask);
 daoTasks.insertTask(usr, tareas[4], cb_insertarTask);

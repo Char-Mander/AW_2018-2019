@@ -56,14 +56,13 @@ class DAOTasks{
     /*Inserta una tarea en la BD asociándola a un usuario*/
     insertTask(email, task, callback){
         let sqlEtiquetas = "";
-        let elems = [];
+       // let elems = [];
         this.pool.getConnection(function(err, connection){
             if(err)
                 callback(new Error("Error de conexión a la base de datos"));
             else{
                 const sql = `INSERT INTO task(id, user, text, done) VALUES (?,?,?,?)`;
                 let elems = [task.id, email, task.text, task.done];
-
                 connection.query(sql, elems, function(err, resultado){
                     connection.release();
                     if(err)
@@ -74,17 +73,17 @@ class DAOTasks{
                             let sqlEtiquetas = `INSERT INTO tag(taskId, tag) VALUES`;
                             let elems = [];
 
-                            generarSentenciaInsertarEtiquetas(task.tags, sqlEtiquetas, elems);
-                            /*
-                            for(let i = 0; i < task.tags.length; i++){
+                            generarSentenciaInsertarEtiquetas(task, sqlEtiquetas, elems);
+                            
+                           /* for(let i = 0; i < task.tags.length; i++){
                                 sqlEtiquetas += `(?,?)`;
                                 elems.push(task.id);
                                 elems.push(task.tags[i]);
                     
                                 if(i < task.tags.length - 1)
                                     sqlEtiquetas += `,`;
-                            }
-                            */
+                            }*/
+                           
                             connection.query(sqlEtiquetas, elems, function(err, resultado){
                                 if(err)
                                     callback(new Error("Error de acceso a la base de datos"));
@@ -153,7 +152,7 @@ function tratarTareas(filas){
     for(let f = 0; f < filas.length; f++){
         let tarea = {};
 
-        if(resultado.some(n => n.id === f.id)){ //si esa tarea ya se ha insertado 
+        if(resultado.some(n => n.id === filas[f].id)){ //si esa tarea ya se ha insertado 
             let t = resultado.filter(n => n.id === filas[f].id);   //se busca en el array
             t[0].tags.push(filas[f].tag); //se añade la nueva etiqueta a su array de etiquetas
         }else{  //si no está en el array, se crea un objeto nuevo y se inserta
@@ -170,7 +169,7 @@ function tratarTareas(filas){
     return resultado;
 }
 
-function generarSentenciaInsertarEtiquetas(tags, sqlEtiquetas){
+function generarSentenciaInsertarEtiquetas(task, sqlEtiquetas, elems){
     for(let i = 0; i < task.tags.length; i++){
         sqlEtiquetas += `(?,?)`;
         elems.push(task.id);
