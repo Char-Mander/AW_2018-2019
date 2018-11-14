@@ -52,7 +52,9 @@ function cb_getAllTasks(error, tareas){
             console.log("ID: " + tareas[t].id + "\nTexto: " + tareas[t].text);
             let etiquetas = "";
             for(let e = 0; e < tareas[t].tags.length; e++){
-                etiquetas += tareas[t].tags[e] + " ";
+                etiquetas += tareas[t].tags[e];
+                if (e < tareas[t].tags.length - 1)
+                    etiquetas += ", ";
             }
 
             console.log("Etiquetas: " + etiquetas + "\n");
