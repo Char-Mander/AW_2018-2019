@@ -1,0 +1,72 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+
+<head lang="es-ES">
+    <meta charset="utf-8" />
+    <title> Gestor de tareas </title>
+    <link rel="shortcut icon" href="../img/icon.png">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/tasks.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="../css/tasksImpr.css" />
+    <script src="P0.js"></script>
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <div class="header">
+
+            <div class="título">
+                <h1> <span> Lista de </span> tareas </h1>
+            </div>
+            <div class="login">
+                <div class="Img_user"> </div>
+                <div class="Interacción">
+                    <div class="correo">
+                        <a> usuario@gmail.com </a>
+                    </div>
+                    <div class="desconectar">
+                        <a> Desconectar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cuerpo">
+
+            <div class="contenedorb">
+
+                <div class="añadir">
+                    <input>
+                    <button class="button"> Añadir </button>
+                </div>
+                <ul>
+                    <% taskList.forEach(function(task){ %>
+                    <li>
+                        <% if (task.done) { %>
+                        <div class="t">
+                        <% } else {  %>
+                        <div class="st">
+                        <% } %>      
+                            <div class = "nombre">
+                                <h3>
+                                    <%= task.text %>
+                                </h3>
+                            </div>
+                            <% task.tags.forEach(function(tag){ %>
+                            <div class="etiquetas">
+                                <div class="etiqueta"> <span>( </span> <%= tag %><span> )</span> </div>
+                            </div>
+                            <% }); %>
+                            <div class="finalizar"> <a>Marcar finalizada</a> </div>
+                        </div>
+                    </li>
+                    <% }); %>
+                </ul>
+                <div class="eliminar"> <a>Eliminar tareas completadas</a> </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

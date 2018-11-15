@@ -21,9 +21,7 @@ class DAOTasks {
                     if (err)
                         callback(new Error("Error de acceso a la base de datos"), null);
                     else {
-
                         let tareas = tratarTareas(filas);
-
                         callback(null, tareas);
                     }
                 })

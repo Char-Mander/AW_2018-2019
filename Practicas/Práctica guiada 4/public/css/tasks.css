@@ -14,7 +14,7 @@ div.contenedor{
     height: 95%;
     display: flex;
     align-items: center;
-    background-image: url(logo.png);
+    background-image: url(../img/logo.png);
     background-size: 10vw;
 }
 
@@ -98,7 +98,7 @@ div.login{
 
 div.Img_user{
     margin:1%;
-    background: url(user.png);
+    background: url(../img/user.png);
     background-size: 100% 100%;
     border-radius: 50%;
     width:75px;
