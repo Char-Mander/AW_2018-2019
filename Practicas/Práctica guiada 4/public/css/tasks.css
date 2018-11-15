@@ -3,6 +3,8 @@
 *{
     padding:0;
     margin:0;
+    border: solid;
+    border-color: black;
 }
 
 body{
@@ -143,6 +145,18 @@ div.contenedorb{
     box-shadow: 2px 2px 5px rgb(82, 82, 82);
 }
 
+
+button{
+    text-transform: uppercase;
+    font-family: 'Oswald';
+    font-size: 1.3vw;
+}
+
+
+button:hover{
+    cursor:pointer;
+}
+
 div.añadir {
     background-color:  darkslategrey;
     width: 90%;
@@ -165,12 +179,12 @@ div.añadir input{
     align-self: stretch;
 }
 
-div.añadir a {
+#botón_añadir_tarea {
     color: white;
     background-color: rgb(78, 133, 133);
     width: 15%;
     border:solid;
-    border-radius: 10px;
+    border-radius: 7px;
     padding-top: 0.5%;
     padding-bottom: 0.5%;
     margin-right: 0.5%;
@@ -182,8 +196,12 @@ div.añadir a {
     font-size: 1.3vw; 
 }
 
-div.añadir a:hover{
-    font-size: 1.5vw;
+#botón_añadir_tarea:hover{
+    background-color: rgb(60, 97, 97);
+}
+
+#botón_añadir_tarea:active{
+    background-color: rgb(101, 172, 172);
 }
 
 ul{
@@ -248,15 +266,15 @@ div.etiqueta{
     font-size: 1vw;
 }
 
-div.finalizar{
-    width: 40%;
+#botón_finalizar_tarea{
+    width: 80%;
     height: 2.3vw;
     display: flex;
     border:solid;
     background-color: rgb(88, 36, 36);
     color: white;
     border-color: rgb(61, 30, 30); 
-    border-radius: 10px;
+    border-radius: 7px;
     margin: 0.5%;
     justify-content: center;
     align-items: center;
@@ -264,9 +282,12 @@ div.finalizar{
     font-size: 1.1vw;
 }
 
-div.finalizar a:hover{
-    font-size: 1.2vw;
-    font-size-adjust: initial;
+#botón_finalizar_tarea:hover{
+    background-color: rgb(66, 27, 27);
+}
+
+#botón_finalizar_tarea:active{
+    background-color: rgb(121, 50, 50);
 }
 
 div.t{
@@ -284,34 +305,35 @@ div.t{
     opacity: 0.6;
 }
 
-div.eliminar{
+#botón_eliminar_tarea{
     color: white;
-    width: 40%;
+    width: 35%;
     height: 2.5vw;
     background-color: darkslategrey;
     margin-top:1%;
     margin-bottom:1%;
-    margin-left: 30%;
-    margin-right: 30%;
     border: solid;
     border-color:black;
     border-width: 1px;
-    border-radius: 10px;
+    border-radius: 7px;
     text-align: center;
-    font-size: 1.5vw;
     align-items: center;
     align-self: center;
 }
 
-div.eliminar a:hover{
-    font-size: 1.7vw;
+#botón_eliminar_tarea:hover{
+    background-color: rgb(30, 49, 49);
+}
+
+#botón_eliminar_tarea:active{
+    background-color: rgb(63, 104, 104);
 }
 
 a:hover{
     cursor: pointer;
 }
 
-div.nombre, div.añadir, div.finalizar, div.eliminar{
+div.nombre, button{
     overflow: hidden;
 }
 

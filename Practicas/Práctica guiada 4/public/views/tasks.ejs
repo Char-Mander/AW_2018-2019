@@ -38,7 +38,7 @@
 
                 <div class="añadir">
                     <input>
-                    <button class="button"> Añadir </button>
+                    <button class="button" id="botón_añadir_tarea"> Añadir </button>
                 </div>
                 <ul>
                     <% taskList.forEach(function(task){ %>
@@ -53,17 +53,19 @@
                                     <%= task.text %>
                                 </h3>
                             </div>
+                            <% if (!task.done) { %>
                             <% task.tags.forEach(function(tag){ %>
                             <div class="etiquetas">
                                 <div class="etiqueta"> <span>( </span> <%= tag %><span> )</span> </div>
                             </div>
                             <% }); %>
-                            <div class="finalizar"> <button>Marcar finalizada</button> </div>
+                            <button class="button" id="botón_finalizar_tarea">Marcar finalizada</button>
+                            <% } %>
                         </div>
                     </li>
                     <% }); %>
                 </ul>
-                <div class="eliminar"> <button>Eliminar tareas completadas</button> </div>
+                 <button class="button" id="botón_eliminar_tarea">Eliminar tareas completadas</button>
             </div>
         </div>
     </div>
