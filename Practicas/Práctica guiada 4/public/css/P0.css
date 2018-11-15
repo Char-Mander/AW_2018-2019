@@ -1,0 +1,317 @@
+@import "https://fonts.googleapis.com/css?family=Oswald";
+
+*{
+    padding:0;
+    margin:0;
+}
+
+body{
+    text-transform: uppercase;
+}
+
+div.contenedor{
+    font-family: 'Oswald';
+    height: 95%;
+    display: flex;
+    align-items: center;
+    background-image: url(logo.png);
+    background-size: 10vw;
+}
+
+span{
+    display:none;
+}
+
+div.header{
+    width: 100%;
+    height: 100px;
+    position:fixed;
+    left:0;
+    top:0;
+    background-color: rgb(85, 204, 204);
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 100;
+}
+
+::selection {
+    background: transparent;
+}
+
+div.header h1{
+    letter-spacing: 0.3em;
+    font-size: -webkit-xxx-large;
+    color: rgb(95, 93, 93);
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 3%;
+    margin: auto;
+    display: block;
+    -webkit-animation: bounce .5s ease infinite alternate;
+    line-height: 75px;
+
+    text-shadow: 0 1px 0 #ddd, 
+                 0 2px 0 #ccc, 
+                 0 3px 0 #bbb, 
+                 0 4px 0 #aaa, 
+                 0 5px 0 #acacac, 
+                 0 6px 1px rgba(0,0,0,0.1), 
+                 0 0 5px rgba(0,0,0,0.1), 
+                 0 1px 3px rgba(0,0,0,0.3), 
+                 0 3px 5px rgba(0,0,0,0.2), 
+                 0 5px 10px rgba(0,0,0,0.25), 
+                 0 10px 10px rgba(0,0,0,0.2), 
+                 0 20px 20px rgba(0,0,0,0.15);
+}
+
+/*Animación del título*/
+@-webkit-keyframes bounce {
+    100% {
+      top: -10px;
+      text-shadow: 0 1px 0 rgb(223, 218, 218),
+                   0 2px 0 rgb(223, 218, 218),
+                   0 3px 0 rgb(223, 218, 218),
+                   0 4px 0 rgb(223, 218, 218),
+                   0 5px 0 rgb(223, 218, 218),
+                   0 6px 0 rgb(223, 218, 218),
+                   0 7px 0 rgb(223, 218, 218),
+                   0 8px 0 rgb(223, 218, 218),
+                   0 9px 0 rgb(223, 218, 218),
+                   0 30px 30px rgba(0, 0, 0, .3);
+    }
+}
+  
+div.login{
+    margin-right: 1%;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px #999;
+    background-color: rgb(175, 241, 233);
+    float:right;
+    padding-right: 2%;
+    display: flex;
+    justify-content: space-evenly;
+    
+}
+
+div.Img_user{
+    margin:1%;
+    background: url(user.png);
+    background-size: 100% 100%;
+    border-radius: 50%;
+    width:75px;
+    height:70px;
+}
+
+div.Interacción {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 2%;
+    align-items: flex-end;
+}
+
+div.Interacción a:hover{
+    color:red;
+}
+
+div.cuerpo{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    align-self:center;
+}
+
+div.contenedorb{ 
+    position: relative;
+    left: 0;
+    top: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 80vw;
+    height: 39vw;
+    background-color: rgb(210, 241, 238);
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgb(82, 82, 82);
+}
+
+div.añadir {
+    background-color:  darkslategrey;
+    width: 90%;
+    height: 10%;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border:solid;
+    border-radius: 10px;
+    margin:1%;
+    border-width: 1px;
+}
+
+div.añadir input{
+    width:70%;
+    margin: 0.5%;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 10px;
+    align-self: stretch;
+}
+
+div.añadir a {
+    color: white;
+    background-color: rgb(78, 133, 133);
+    width: 15%;
+    border:solid;
+    border-radius: 10px;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    margin-right: 0.5%;
+    text-align: center;
+    align-self: stretch;
+    border-width: 1px;
+    border-color:rgb(78, 133, 133);
+    align-self: center;
+    font-size: 1.3vw; 
+}
+
+div.añadir a:hover{
+    font-size: 1.5vw;
+}
+
+ul{
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    width: 100%;
+    height:55%;
+    flex-grow: 2;
+}
+
+div.st{
+    color: rgb(66, 41, 20);
+    height: 20%;
+    display: flex;
+    background-color: rgb(250, 252, 136);
+    margin:1%;
+    border-radius: 10px;
+    border: solid;
+    border-width: 1px;
+    border-color:rgb(66, 41, 20);
+
+
+}
+
+div.nombre h3{
+    overflow: hidden;
+    height: 100%;
+}
+
+div.nombre{
+    font-size: 2vw;
+    width:100%;
+    height: 90%;
+    margin: 0.7%;
+    text-align: start;
+    align-self: center;
+}
+
+div.etiquetas{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
+}
+
+div.etiqueta{
+    width: 100%;
+    height: 2vw;
+    border:solid;
+    border-radius: 10px;
+    height: auto;
+    width:auto;
+    padding-left: 3%;
+    padding-right: 3%;
+    margin: 0.5%;
+    text-align: center;
+    align-self: center;
+    align-items: center;
+    background-color:  rgb(210, 241, 238);
+    font-size: 1vw;
+}
+
+div.finalizar{
+    width: 40%;
+    height: 2.3vw;
+    display: flex;
+    border:solid;
+    background-color: rgb(88, 36, 36);
+    color: white;
+    border-color: rgb(61, 30, 30); 
+    border-radius: 10px;
+    margin: 0.5%;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    font-size: 1.1vw;
+}
+
+div.finalizar a:hover{
+    font-size: 1.2vw;
+    font-size-adjust: initial;
+}
+
+div.t{
+    width: 98%;
+    height: 20%;
+    display: flex;
+    margin:1%;
+    background-color: rgb(49, 48, 48);
+    border-radius: 10px;
+    border: solid;
+    border-color: grey;
+    border-width: 1px;
+    text-decoration: line-through;
+    text-decoration-color: black;
+    opacity: 0.6;
+}
+
+div.eliminar{
+    color: white;
+    width: 40%;
+    height: 2.5vw;
+    background-color: darkslategrey;
+    margin-top:1%;
+    margin-bottom:1%;
+    margin-left: 30%;
+    margin-right: 30%;
+    border: solid;
+    border-color:black;
+    border-width: 1px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.5vw;
+    align-items: center;
+    align-self: center;
+}
+
+div.eliminar a:hover{
+    font-size: 1.7vw;
+}
+
+a:hover{
+    cursor: pointer;
+}
+
+div.nombre, div.añadir, div.finalizar, div.eliminar{
+    overflow: hidden;
+}
+
