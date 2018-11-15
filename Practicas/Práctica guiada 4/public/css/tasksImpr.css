@@ -10,7 +10,7 @@ div.contenedor{
    font-family: Arial, Helvetica, sans-serif;
 }
 
-div.login, div.añadir, div.finalizar, div.eliminar, div.title{
+div.login, div.añadir, #botón_eliminar_tarea, #botón_finalizar_tarea, div.title{
     display:none;
 }
 
@@ -18,7 +18,7 @@ h1{
     font-size: 18px;
 }
 
-.complete{
+div.t{
     text-decoration: line-through;
     text-indent: 3%;
 }
