@@ -77,6 +77,7 @@ class DAOTasks {
                         callback(new Error("Error de acceso a la base de datos"));
                     else {
                         console.log("Tarea marcada como finalizada");
+                        callback(null);
                     }
                 })
             }
@@ -96,6 +97,7 @@ class DAOTasks {
                     if (err)
                         callback(new Error("Error de acceso a la base de datos"));
                     else {
+                        callback(null);
                         console.log("Tareas finalizadas eliminadas");
                     }
                 })

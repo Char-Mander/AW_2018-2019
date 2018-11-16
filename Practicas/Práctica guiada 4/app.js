@@ -18,10 +18,11 @@ const pool = mysql.createPool(config.mysqlConfig);
 // Crear una instancia de DAOTasks
 const daoT = new DAOTasks(pool);
 
+//  Ficheros estáticos
 const ficherosEstaticos =path.join(__dirname, "public");
-
 app.use(express.static(ficherosEstaticos));
 
+//  Listado de tareas
 app.get("/tasks", function(request, response){
     daoT.getAllTasks("usuario@ucm.es", function(error, tareas){
         if(error){
@@ -34,6 +35,35 @@ app.get("/tasks", function(request, response){
     });
    
 });
+
+
+//  Marcar tarea como finalizada
+app.get("/finish/:taskId", function(request, response){
+    daoT.markTaskDone(request.params.taskId, function(error){
+        if(error){
+            response.status(500);
+        }
+        else{
+            response.status(200);
+            response.redirect("/tasks");
+        }
+    });
+});
+
+
+//  Eliminar tareas marcadas
+app.get("/deleteCompleted", function(request, response){
+    daoT.deleteCompleted("usuario@ucm.es", function(error){
+        if(error){
+            response.status(500);
+        }
+        else{
+            response.status(200);
+            response.redirect("/tasks");
+        }
+    });
+});
+
 
 // Arrancar el servidor
 app.listen(config.port, function(err) {

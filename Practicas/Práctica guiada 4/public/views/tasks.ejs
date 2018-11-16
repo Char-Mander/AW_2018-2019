@@ -59,13 +59,13 @@
                                 <div class="etiqueta"> <span>( </span> <%= tag %><span> )</span> </div>
                             </div>
                             <% }); %>
-                            <button class="button" id="botón_finalizar_tarea">Marcar finalizada</button>
+                            <button class="button" id="botón_finalizar_tarea" onclick = location.href="/finish/"+<%= task.id %>+"">Marcar finalizada</button>
                             <% } %>
                         </div>
                     </li>
                     <% }); %>
                 </ul>
-                 <button class="button" id="botón_eliminar_tarea">Eliminar tareas completadas</button>
+                 <button class="button" id="botón_eliminar_tarea" onclick=location.href="/deleteCompleted">Eliminar tareas completadas</button>
             </div>
         </div>
     </div>
