@@ -51,7 +51,13 @@ app.post("/addTask", function(request, response){
 
     daoT.insertTask("usuario@ucm.es", task, function(error){
         if(error){
-            response.status(500);
+            if(error.message === "Tarea vacía"){
+                response.redirect("/tasks");
+            }
+            else{
+                response.status(500);
+            }
+           
         }
         else{
             response.status(200);

@@ -36,29 +36,34 @@ class DAOTasks {
             if (err)
                 callback(new Error("Error de conexión a la base de datos"));
             else {
-                const sql = `INSERT INTO task(id, user, text, done) VALUES (?,?,?,?)`;
-                let elems = [task.id, email, task.text, task.done];
-                connection.query(sql, elems, function (err, resultado) {
-                    connection.release();
-                    if (err)
-                        callback(new Error("Error de acceso a la base de datos"));
-                    else {
+                if(task.text.length==0){
+                    callback(new Error("Tarea vacía"));
+                }
+                else{
+                    const sql = `INSERT INTO task(id, user, text, done) VALUES (?,?,?,?)`;
+                    let elems = [task.id, email, task.text, task.done];
+                    connection.query(sql, elems, function (err, resultado) {
+                        connection.release();
+                        if (err)
+                            callback(new Error("Error de acceso a la base de datos"));
+                        else {
 
-                        if (task.tags.length > 0) {
-                            let elems = [];
-                            let sqlEtiquetas = generarSentenciaInsertarEtiquetas(task, elems);
+                            if (task.tags.length > 0) {
+                                let elems = [];
+                                let sqlEtiquetas = generarSentenciaInsertarEtiquetas(task, elems);
 
-                            connection.query(sqlEtiquetas, elems, function (err, resultado) {
-                                if (err)
-                                    callback(new Error("Error de acceso a la base de datos"));
-                                else {
-                                    console.log("Nueva tarea insertada correctamente");
-                                }
-                            })
-                        } else
-                            console.log("Nueva tarea insertada correctamente");
-                    }
-                })
+                                connection.query(sqlEtiquetas, elems, function (err, resultado) {
+                                    if (err)
+                                        callback(new Error("Error de acceso a la base de datos"));
+                                    else {
+                                        console.log("Nueva tarea insertada correctamente");
+                                    }
+                                })
+                            } else
+                                console.log("Nueva tarea insertada correctamente");
+                        }
+                    })
+                }
             }
         })
     }

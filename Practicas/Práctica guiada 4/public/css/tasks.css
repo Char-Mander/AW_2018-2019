@@ -219,7 +219,7 @@ ul{
 
 div.st{
     color: rgb(66, 41, 20);
-    height: 17%;
+    height: 4.4vw;
     display: flex;
     background-color: rgb(250, 252, 136);
     margin:1%;
@@ -299,7 +299,7 @@ div.etiqueta{
 
 div.t{
     width: 98%;
-    height: 17%;
+    height: 4.4vw;
     display: flex;
     margin:1%;
     background-color: rgb(49, 48, 48);
