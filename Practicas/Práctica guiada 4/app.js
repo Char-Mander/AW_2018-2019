@@ -43,11 +43,13 @@ app.use(bodyParser.urlencoded({ extended : true }));
 app.post("/addTask", function(request, response){
     //se añade la tarea a la base de datos  
 
-    let cuerpo = [];
-    cuerpo.push(request.body.Tarea_añadida);
-    var task = sacarTarea(cuerpo);
+    let cuerpo = request.body.Tarea_añadida;
+    let task=sacarTarea(cuerpo);
+    
+    console.log(task);
+    response.redirect("/tasks");
 
-    daoT.insertTask("usuario@ucm.es", function(error, task){
+    daoT.insertTask("usuario@ucm.es", task, function(error){
         if(error){
             response.status(500);
         }
@@ -56,6 +58,7 @@ app.post("/addTask", function(request, response){
             response.redirect("/tasks");
         }
     });
+   // response.redirect("/tasks");
    
 });
 
@@ -101,16 +104,18 @@ app.listen(config.port, function(err) {
 
 //Sirve para parsear las tareas que se añaden
 function sacarTarea(cuerpo){
-    let tarea=[{
+    let tarea={
         id: "",
-        texto: "",
+        text: "",
         done: 0,
         tags: [] 
-    }];
-    cuerpo[0].split(" ");
-    tarea.texto = cuerpo[0].filter(n => !n.startsWith("@") && n !== "").join(" ").trim();
-    tarea.tags = cuerpo[0].filter(n => n.startsWith("@"));
+    };
+    
+    let array = cuerpo.split(" ");
+    tarea.texto = array.filter(n => !n.startsWith("@") && n !== "").join(" ").trim();
+    tarea.tags = array.filter(n => n.startsWith("@"));
     tarea.tags = tarea.tags.map(t => t.slice(1, t.length));
+    console.log(tarea);
 
     return tarea;
 }
