@@ -37,7 +37,7 @@ class DAOTasks {
                 callback(new Error("Error de conexión a la base de datos"));
             else {
                 
-             /*   if(task.text.length<=0){
+               /* if(task.text<=0){
                     callback(new Error("Tarea vacía"));
                 }
                 else{*/
@@ -49,6 +49,17 @@ class DAOTasks {
                         if (err)
                             callback(new Error("Error de acceso a la base de datos"));
                         else {
+                            sql=`SELECT MAX(id) as id FROM task`;
+                            connection.query(sql, function (err, res) {
+                                connection.release();
+                                console.log("holi holita");
+                                if(err){
+                                    callback(new Error("Error de acceso a la base de datos"));
+                                }
+                                else{
+                                    task.id=res;
+                                }
+                            })
 
                             if (task.tags.length > 0) {
                                 let elems = [];
@@ -65,7 +76,7 @@ class DAOTasks {
                                 console.log("Nueva tarea insertada correctamente");
                         }
                     })
-               // }
+                //}
             }
         })
     }
