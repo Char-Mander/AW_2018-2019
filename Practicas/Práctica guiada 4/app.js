@@ -44,14 +44,15 @@ app.post("/addTask", function(request, response){
 
     let cuerpo = request.body.Tarea_añadida;
     let task=sacarTarea(cuerpo);
-    console.log("Tags antes de entrar: " + task.tags);
+    console.log(task);
+    console.log(task.tags);
     
-    response.redirect("/tasks");
+    
 
     daoT.insertTask("usuario@ucm.es", task, function(error){
         if(error){
             
-            if(error.message==="Tarea vacía"){
+            if(error.message=="Tarea vacía"){
                 response.status(200);
                 response.redirect("/tasks");
             }
@@ -64,7 +65,7 @@ app.post("/addTask", function(request, response){
             response.redirect("/tasks");
         }
     });
-   // response.redirect("/tasks");
+    response.redirect("/tasks");
    
 });
 
@@ -121,6 +122,6 @@ function sacarTarea(cuerpo){
     tarea.text = array.filter(n => !n.startsWith("@") && n !== "").join(" ").trim();
     tarea.tags = array.filter(n => n.startsWith("@"));
     tarea.tags = tarea.tags.map(t => t.slice(1, t.length));
-    console.log(tarea.tags);
+    
     return tarea;
 }

@@ -3,6 +3,8 @@
 *{
     padding:0;
     margin:0;
+   /* border:solid;
+    border-color:black;*/
 }
 
 body{
@@ -238,7 +240,7 @@ div.nombre h3{
 
 div.nombre{
     font-size: 1.8vw;
-    width:100%;
+    width:80vw;
     height: 80%;
     margin: 0.7%;
     text-align: start;
@@ -250,7 +252,7 @@ div.nombre{
 }
 
 div.etiquetas{
-    width: 100%;
+    width: 50vw;
     display: flex;
     justify-content: space-evenly;
     align-content: center;
@@ -274,7 +276,7 @@ div.etiqueta{
 }
 
 #botón_finalizar_tarea{
-    width: 60%;
+    width: 45vw;
     height: 2.5vw;
     display: flex;
     border:solid;

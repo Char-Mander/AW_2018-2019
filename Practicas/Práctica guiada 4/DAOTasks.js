@@ -13,7 +13,7 @@ class DAOTasks {
     getAllTasks(email, callback) {
         this.pool.getConnection(function (err, connection) {
             if (err)
-                callback(new Error("Error de conexión a la base de datos"), null);
+                callback(new Error("Error de conexión a la base de daStos"), null);
             else {
                 const sql = `SELECT task.id, task.text, task.done, tag.tag FROM task LEFT JOIN tag ON task.id = tag.taskId WHERE task.user = ?`;
                 connection.query(sql, [email], function (err, filas) {
@@ -36,8 +36,8 @@ class DAOTasks {
             if (err)
                 callback(new Error("Error de conexión a la base de datos"));
             else {
-                /*
-                if(task.text.length<0){
+                
+             /*   if(task.text.length<=0){
                     callback(new Error("Tarea vacía"));
                 }
                 else{*/
@@ -65,7 +65,7 @@ class DAOTasks {
                                 console.log("Nueva tarea insertada correctamente");
                         }
                     })
-                //}
+               // }
             }
         })
     }
