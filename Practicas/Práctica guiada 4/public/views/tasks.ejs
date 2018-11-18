@@ -35,11 +35,10 @@
         <div class="cuerpo">
 
             <div class="contenedorb">
-
-                <div class="añadir">
-                    <input>
-                    <button class="button" id="botón_añadir_tarea"> Añadir </button>
-                </div>
+                <form class="añadir" method="post" action="/addTask">
+                        <input type="text" name="Tarea_añadida" placeholder="Escriba la tarea y sus etiquetas con un '@'">
+                        <button class="button" id="botón_añadir_tarea" type="submit">Añadir</button>
+                </form>
                 <ul>
                     <% taskList.forEach(function(task){ %>
                     <li>

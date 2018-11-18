@@ -154,8 +154,14 @@ button{
 button:hover{
     cursor:pointer;
 }
+/*
+div.añadir{
+    display:flex;
+    width: 90%;
+    height: 10%;
+}*/
 
-div.añadir {
+form.añadir {
     background-color:  darkslategrey;
     width: 90%;
     height: 10%;
@@ -168,13 +174,14 @@ div.añadir {
     border-width: 1px;
 }
 
-div.añadir input{
+form.añadir input{
     width:70%;
     margin: 0.5%;
     border-color: black;
     border-width: 1px;
     border-radius: 10px;
     align-self: stretch;
+    padding:1%;
 }
 
 #botón_añadir_tarea {
@@ -187,6 +194,8 @@ div.añadir input{
     padding-top: 0.5%;
     padding-bottom: 0.5%;
     margin-right: 1%;
+    justify-content: center;
+    align-content: center;
     text-align: center;
     align-self: stretch;
     border-width: 1px;
