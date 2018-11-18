@@ -36,10 +36,12 @@ class DAOTasks {
             if (err)
                 callback(new Error("Error de conexión a la base de datos"));
             else {
-                if(task.text.length==0){
+                /*
+                if(task.text.length<0){
                     callback(new Error("Tarea vacía"));
                 }
-                else{
+                else{*/
+                    console.log("Etiquetas después de entrar: " + task.tags);
                     const sql = `INSERT INTO task(id, user, text, done) VALUES (?,?,?,?)`;
                     let elems = [task.id, email, task.text, task.done];
                     connection.query(sql, elems, function (err, resultado) {
@@ -63,7 +65,7 @@ class DAOTasks {
                                 console.log("Nueva tarea insertada correctamente");
                         }
                     })
-                }
+                //}
             }
         })
     }

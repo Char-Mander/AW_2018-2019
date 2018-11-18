@@ -41,23 +41,23 @@ app.use(bodyParser.urlencoded({ extended : true }));
 
 //  Añadir la tarea a la lista de tareas
 app.post("/addTask", function(request, response){
-    //se añade la tarea a la base de datos  
 
     let cuerpo = request.body.Tarea_añadida;
     let task=sacarTarea(cuerpo);
+    console.log("Tags antes de entrar: " + task.tags);
     
-    console.log(task);
     response.redirect("/tasks");
 
     daoT.insertTask("usuario@ucm.es", task, function(error){
         if(error){
-            if(error.message === "Tarea vacía"){
+            
+            if(error.message==="Tarea vacía"){
+                response.status(200);
                 response.redirect("/tasks");
             }
             else{
                 response.status(500);
             }
-           
         }
         else{
             response.status(200);
@@ -118,10 +118,9 @@ function sacarTarea(cuerpo){
     };
     
     let array = cuerpo.split(" ");
-    tarea.texto = array.filter(n => !n.startsWith("@") && n !== "").join(" ").trim();
+    tarea.text = array.filter(n => !n.startsWith("@") && n !== "").join(" ").trim();
     tarea.tags = array.filter(n => n.startsWith("@"));
     tarea.tags = tarea.tags.map(t => t.slice(1, t.length));
-    console.log(tarea);
-
+    console.log(tarea.tags);
     return tarea;
 }
