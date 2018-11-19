@@ -36,35 +36,39 @@
 
             <div class="contenedorb">
                 <form class="añadir" method="post" action="/addTask">
-                        <input type="text" name="Tarea_añadida" placeholder="Escriba la tarea y sus etiquetas con un '@'">
-                        <button class="button" id="botón_añadir_tarea" type="submit">Añadir</button>
+                    <input type="text" name="Tarea_añadida" placeholder="Escriba la tarea y sus etiquetas con un '@'">
+                    <button class="button" id="botón_añadir_tarea" type="submit">Añadir</button>
                 </form>
                 <ul>
                     <% taskList.forEach(function(task){ %>
                     <li>
                         <% if (task.done) { %>
                         <div class="t">
-                        <% } else {  %>
-                        <div class="st">
-                        <% } %>      
-                            <div class = "nombre">
-                                <h3>
-                                    <%= task.text %>
-                                </h3>
+                            <% } else {  %>
+                            <div class="st">
+                                <% } %>
+                                <div class="nombre">
+                                    <h3>
+                                        <%= task.text %>
+                                    </h3>
+                                </div>
+                                <% if (!task.done) { %>
+                                <% task.tags.forEach(function(tag){ %>
+                                <div class="etiquetas">
+                                    <div class="etiqueta"> <span>( </span>
+                                        <%= tag %><span> )</span> </div>
+                                </div>
+                                <% }); %>
+                                <div class="marcar">
+                                    <button class="button" id="botón_finalizar_tarea" onclick=location.href="/finish/<%=task.id %>">Marcar finalizada</button>
+                                </div>
+                                <% } %>
                             </div>
-                            <% if (!task.done) { %>
-                            <% task.tags.forEach(function(tag){ %>
-                            <div class="etiquetas">
-                                <div class="etiqueta"> <span>( </span> <%= tag %><span> )</span> </div>
-                            </div>
-                            <% }); %>
-                            <button class="button" id="botón_finalizar_tarea" onclick = location.href="/finish/"+<%= task.id %>+"">Marcar finalizada</button>
-                            <% } %>
-                        </div>
                     </li>
                     <% }); %>
                 </ul>
-                 <button class="button" id="botón_eliminar_tarea" onclick=location.href="/deleteCompleted">Eliminar tareas completadas</button>
+                <button class="button" id="botón_eliminar_tarea" onclick=location.href="/deleteCompleted">Eliminar
+                    tareas completadas</button>
             </div>
         </div>
     </div>

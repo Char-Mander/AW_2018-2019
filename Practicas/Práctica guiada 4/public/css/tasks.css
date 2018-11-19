@@ -95,7 +95,6 @@ div.login{
     padding-right: 2%;
     display: flex;
     justify-content: space-evenly;
-    
 }
 
 div.Img_user{
@@ -146,13 +145,11 @@ div.contenedorb{
     box-shadow: 2px 2px 5px rgb(82, 82, 82);
 }
 
-
 button{
     text-transform: uppercase;
     font-family: 'Oswald';
     font-size: 1.3vw;
 }
-
 
 button:hover{
     cursor:pointer;
@@ -229,8 +226,6 @@ div.st{
     border: solid;
     border-width: 1px;
     border-color:rgb(66, 41, 20);
-
-
 }
 
 div.nombre h3{
@@ -252,21 +247,19 @@ div.nombre{
 }
 
 div.etiquetas{
-    width: 50vw;
+    width: 18vw;
     display: flex;
     justify-content: space-evenly;
     align-content: center;
 }
 
 div.etiqueta{
-    width: 100%;
-    height: 2vw;
     border:solid;
     border-radius: 10px;
     height: auto;
     width:auto;
-    padding-left: 3%;
-    padding-right: 3%;
+    padding-left: 6%;
+    padding-right: 6%;
     margin: 0.5%;
     text-align: center;
     align-self: center;
@@ -275,18 +268,22 @@ div.etiqueta{
     font-size: 1vw;
 }
 
+div.marcar{
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 0.7%;
+}
+
 #botón_finalizar_tarea{
     width: 45vw;
     height: 2.5vw;
-    display: flex;
     border:solid;
     background-color: rgb(88, 36, 36);
     color: white;
     border-color: rgb(61, 30, 30); 
     border-radius: 7px;
     margin-right: 1%;
-    justify-content: center;
-    align-items: center;
     align-self: center;
     font-size: 1.1vw;
 }
