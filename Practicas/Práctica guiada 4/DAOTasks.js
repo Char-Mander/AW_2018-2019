@@ -38,18 +38,17 @@ class DAOTasks {
             else {
 
                 if (task.text.length <= 0) {
-                    callback(new Error("Tarea vacía"));
+                    callback(new Error("Empty task"));
                 }
                 else {
-                    console.log("Etiquetas después de entrar: " + task.tags);
                     const sql = `INSERT INTO task(id, user, text, done) VALUES (?,?,?,?)`;
                     let elems = [task.id, email, task.text, task.done];
                     connection.query(sql, elems, function (err, resultado) {
                         if (err)
                             callback(new Error("Error de acceso a la base de datos"));
                         else {
+
                             if (task.tags.length > 0) {
-                                
                                 connection.query("SELECT MAX(id) as id FROM task", function (err, resultado) {
                                     connection.release();
                                     if (err) {
@@ -64,12 +63,15 @@ class DAOTasks {
                                                 callback(new Error("Error de acceso a la base de datos"));
                                             else {
                                                 console.log("Nueva tarea insertada correctamente");
+                                                callback(null);
                                             }
                                         })
                                     }
                                 })
-                            } else
+                            } else{
                                 console.log("Nueva tarea insertada correctamente");
+                                callback(null);
+                            }
                         }
                     })
                 }
