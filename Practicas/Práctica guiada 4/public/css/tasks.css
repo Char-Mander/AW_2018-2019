@@ -221,6 +221,7 @@ div.st{
     background-color: rgb(250, 252, 136);
     margin:1%;
     border-radius: 10px;
+    justify-content: space-between;
     border: solid;
     border-width: 1px;
     border-color:rgb(66, 41, 20);
@@ -247,21 +248,25 @@ div.nombre{
 div.etiquetas{
     width: 18vw;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-content: center;
+    margin:2%;
 }
 
 div.etiqueta{
     border:solid;
     border-radius: 10px;
-    height: auto;
+    height:2vw;
     width:auto;
     padding-left: 6%;
     padding-right: 6%;
     margin: 0.5%;
+    justify-content: center;
+    justify-items: center;
     text-align: center;
     align-self: center;
     align-items: center;
+    justify-content: center;
     background-color:  rgb(210, 241, 238);
     font-size: 1vw;
 }
@@ -274,7 +279,7 @@ div.marcar{
 }
 
 #botón_finalizar_tarea{
-    width: 45vw;
+    width: 13vw;
     height: 2.5vw;
     border:solid;
     background-color: rgb(88, 36, 36);
