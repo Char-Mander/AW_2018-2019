@@ -13,7 +13,7 @@ class DAOTasks {
     getAllTasks(email, callback) {
         this.pool.getConnection(function (err, connection) {
             if (err)
-                callback(new Error("Error de conexión a la base de datos"), null);
+                callback(new Error("Error de conexión a la base de daStos"), null);
             else {
                 const sql = `SELECT task.id, task.text, task.done, tag.tag FROM task LEFT JOIN tag ON task.id = tag.taskId WHERE task.user = ?`;
                 connection.query(sql, [email], function (err, filas) {
@@ -36,33 +36,48 @@ class DAOTasks {
             if (err)
                 callback(new Error("Error de conexión a la base de datos"));
             else {
-                const sql = `INSERT INTO task(id, user, text, done) VALUES (?,?,?,?)`;
-                let elems = [task.id, email, task.text, task.done];
-                connection.query(sql, elems, function (err, resultado) {
-                    connection.release();
-                    if (err)
-                        callback(new Error("Error de acceso a la base de datos"));
-                    else {
 
-                        if (task.tags.length > 0) {
-                            let elems = [];
-                            let sqlEtiquetas = generarSentenciaInsertarEtiquetas(task, elems);
+                if (task.text.length <= 0) {
+                    callback(new Error("Empty task"));
+                }
+                else {
+                    const sql = `INSERT INTO task(id, user, text, done) VALUES (?,?,?,?)`;
+                    let elems = [task.id, email, task.text, task.done];
+                    connection.query(sql, elems, function (err, resultado) {
+                        if (err)
+                            callback(new Error("Error de acceso a la base de datos"));
+                        else {
 
-                            connection.query(sqlEtiquetas, elems, function (err, resultado) {
-                                if (err)
-                                    callback(new Error("Error de acceso a la base de datos"));
-                                else {
-                                    console.log("Nueva tarea insertada correctamente");
-                                }
-                            })
-                        } else
-                            console.log("Nueva tarea insertada correctamente");
-                    }
-                })
+                            if (task.tags.length > 0) {
+                                connection.query("SELECT MAX(id) as id FROM task", function (err, resultado) {
+                                    connection.release();
+                                    if (err) {
+                                        callback(new Error("Error de acceso a la base de datos"));
+                                    } else {
+                                        task.id = resultado[0].id;
+                                        let elems = [];
+                                        let sqlEtiquetas = generarSentenciaInsertarEtiquetas(task, elems);
+
+                                        connection.query(sqlEtiquetas, elems, function (err, resultado) {
+                                            if (err)
+                                                callback(new Error("Error de acceso a la base de datos"));
+                                            else {
+                                                console.log("Nueva tarea insertada correctamente");
+                                                callback(null);
+                                            }
+                                        })
+                                    }
+                                })
+                            } else{
+                                console.log("Nueva tarea insertada correctamente");
+                                callback(null);
+                            }
+                        }
+                    })
+                }
             }
         })
     }
-
 
     /*Marca la tarea pasada por parámetro como realizada, actualizando la base de datos*/
     markTaskDone(idTask, callback) {
@@ -127,7 +142,7 @@ function tratarTareas(filas) {
                 tarea.tags.push(filas[f].tag);
 
             tareas.push(tarea);
-        }   
+        }
     }
 
     return tareas;

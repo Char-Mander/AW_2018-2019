@@ -6,6 +6,7 @@ const mysql = require("mysql");
 const express = require("express");
 const bodyParser = require("body-parser");
 const fs = require("fs");
+const createTask = require("./P0.js");
 
 // Crear un servidor Express.js
 const app = express();
@@ -20,7 +21,9 @@ const daoT = new DAOTasks(pool);
 
 //  Ficheros estáticos
 const ficherosEstaticos =path.join(__dirname, "public");
+
 app.use(express.static(ficherosEstaticos));
+
 
 //  Listado de tareas
 app.get("/tasks", function(request, response){
@@ -34,6 +37,31 @@ app.get("/tasks", function(request, response){
         }
     });
    
+});
+
+
+app.use(bodyParser.urlencoded({ extended : true }));
+
+//  Añadir la tarea a la lista de tareas
+app.post("/addTask", function(request, response){
+    let cuerpo = request.body.Tarea_añadida;
+    let task = createTask(cuerpo);
+
+    daoT.insertTask("usuario@ucm.es", task, function(error){
+        if(error){
+            if(error.message === "Empty task"){
+                response.status(200);
+                response.redirect("/tasks");
+            }
+            else{
+                response.status(500);
+            }
+        }
+        else{
+            response.status(200);
+            response.redirect("/tasks");
+        }
+    });
 });
 
 
