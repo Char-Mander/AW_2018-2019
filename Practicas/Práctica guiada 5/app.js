@@ -9,7 +9,6 @@ const bodyParser = require("body-parser");
 const createTask = require("./P0.js");
 const mysqlSession = require("express-mysql-session");
 const session = require("express-session");
-const MySQLStore = mysqlSession(session);
 
 // Crear un servidor Express.js
 const app = express();
@@ -17,8 +16,9 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "public", "views"));
 
 
-
 //MYSQL SESSION
+const MySQLStore = mysqlSession(session);
+
 const sessionStore = new MySQLStore({
     host: config.mysqlConfig.host,
     user: config.mysqlConfig.user,
@@ -35,17 +35,18 @@ const middlewareSession = session({
 });
 app.use(middlewareSession);
 
+
 // Crear un pool de conexiones a la base de datos de MySQL
 const pool = mysql.createPool(config.mysqlConfig);
+
 
 // Crear una instancia de DAOTasks y de DAOUsers
 const daoT = new DAOTasks(pool);
 const daoU = new DAOUsers(pool);
 
+
 //  Ficheros estáticos
-
 const ficherosEstaticos = path.join(__dirname, "public");
-
 app.use(express.static(ficherosEstaticos));
 
 
@@ -90,14 +91,9 @@ app.post("/addTask", function (request, response) {
 });
 
 
-//Función del login del usuario
+//  Entrada en el sistema
 app.post("/login", function (request, response) {
-       response.status(500);
-        //reiniciar el proceso de login
-        //response.redirect("/login");
-
-        response.status(200);
-        let user={
+        let user = {
             email: "",
             password: ""
         }
@@ -109,21 +105,44 @@ app.post("/login", function (request, response) {
                 response.render("login", {errorMsg : "Error"});
             }
             else if(res){
-                request.session.currentUser=user.email;
+                response.status(200);
+                request.session.currentUser = user.email;
                 response.redirect("/tasks");
             }
             else{
-                
-                response.render("login", {errorMsg : "Usuario y/o contraseña incorrectos"});
+                response.render("login", {errorMsg : "Dirección de correo y/o contraseña no válidos."});
             }
         });
 });
 
-
 app.get("/login", function(request, response){
-        response.status(200);
-        response.render("login", {errorMsg : null});
-})
+    response.status(200);
+    response.render("login", {errorMsg : null});
+});
+
+
+//  Salida del sistema
+app.get("/logout", function(request, response){
+    response.status(200);
+    request.session.destroy();
+    response.redirect("/login");
+});
+
+
+//  Imagen del usuario
+app.get("/imagenUsuario", function(request, response){
+    daoU.getUserImageName(request.session.currentUser, function(error, userImg){
+        if(error){
+            response.status(500);
+        }else if(userImg){
+            response.status(200);
+            response.sendFile(path.join(__dirname, "profile_imgs", userImg));
+        }else{
+            response.sendFile(path.join(__dirname, "public", "img", "NoPerfil.jpg"));
+        }
+    });
+});     
+
 
 //  Marcar tarea como finalizada
 app.get("/finish/:taskId", function (request, response) {

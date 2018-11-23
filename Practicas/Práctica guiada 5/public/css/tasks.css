@@ -92,12 +92,12 @@ div.login{
     float:right;
     padding-right: 2%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
-div.Img_user{
+img{
     margin:1%;
-    background: url(../img/user.png);
+    background: url(/imagenUsuario);
     background-size: 100% 100%;
     border-radius: 50%;
     width:75px;

@@ -18,7 +18,7 @@ class DAOUsers{
                     connection.release(); 
                     if(err){
                         cb_isUserCorrect(new Error("Error de acceso a la base de datos"), false);
-                    } else if(resultado.length!==0){
+                    } else if(resultado.length !== 0){
                         cb_isUserCorrect(null, true);
                     }
                     else{
@@ -43,8 +43,8 @@ class DAOUsers{
                     if(err){
                         cb_getUserImageName(new Error("Error de acceso a la base de datos"), null);
                     }
-                    else if(fich_img.length!==0){
-                        cb_getUserImageName(null, fich_img);
+                    else if(fich_img.length !== 0){
+                        cb_getUserImageName(null, fich_img[0].img);
                     }
                     else{
                         cb_getUserImageName(null, null);
