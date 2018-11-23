@@ -36,8 +36,10 @@ CREATE TABLE `user` (
 --
 
 CREATE TABLE `aplicacion` (
-  `id_user` int(11) UNSIGNED NOT NULL,
-  `nombre_completo`	varchar(100)	NOT NULL,
+  `id_user1` int(11) UNSIGNED NOT NULL,
+  `id_user2` int(11) UNSIGNED NOT NULL,
+  `status` tinyint(3) UNSIGNED DEFAULT NULL,
+  `action_id_user` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -99,7 +101,10 @@ ALTER TABLE `user`
 -- Indices de la tabla `aplicacion`
 --
 ALTER TABLE `aplicacion`
-  ADD KEY `id_user` (`id_user`);
+  ADD UNIQUE KEY `unique_users_id` (`id_user1`,`id_user2`),
+  ADD KEY `id_user1` (`id_user1`),
+  ADD KEY `id_user2` (`id_user2`),
+  ADD KEY `action_id_user` (`action_user_id`);
 
 
 --
@@ -122,9 +127,6 @@ ALTER TABLE `respuestas_propuestas`
 ALTER TABLE `respuestas_realizadas`
   ADD PRIMARY KEY (`id_respondida`),
   ADD KEY `id_pregunta` (`id_pregunta`);
-
-
-
 
 
 
@@ -156,8 +158,6 @@ ALTER TABLE `respuestas_propuestas`
 
 
 
-
-
 --
 -- Restricciones para tablas volcadas
 --
@@ -185,7 +185,10 @@ ALTER TABLE `respuestas_realizadas`
 -- Filtros para la tabla `aplicacion`
 --
 ALTER TABLE `aplicacion`
-  ADD CONSTRAINT `fk_id_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_id_user1` FOREIGN KEY (`id_user1`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_id_user2` FOREIGN KEY (`id_user2`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_id_users` FOREIGN KEY (`action_id_user) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+    
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
