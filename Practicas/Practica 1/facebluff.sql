@@ -32,14 +32,25 @@ CREATE TABLE `user` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `aplicacion`
+-- Estructura de tabla para la tabla `solicitudes`
 --
 
-CREATE TABLE `aplicacion` (
+CREATE TABLE `solicitudes` (
   `id_user1` int(11) UNSIGNED NOT NULL,
   `id_user2` int(11) UNSIGNED NOT NULL,
-  `status` tinyint(3) UNSIGNED DEFAULT NULL,
+  `status` tinyint(1) UNSIGNED DEFAULT NULL,
   `action_id_user` int(10) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `amigos`
+--
+
+CREATE TABLE `amigos` (
+  `id_user1` int(11) UNSIGNED NOT NULL,
+  `id_user2` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -97,14 +108,21 @@ ALTER TABLE `user`
   ADD UNIQUE KEY (`email`);
 
 --
--- Indices de la tabla `aplicacion`
+-- Indices de la tabla `solicitudes`
 --
-ALTER TABLE `aplicacion`
+ALTER TABLE `solicitudes`
   ADD UNIQUE KEY `unique_users_id` (`id_user1`,`id_user2`),
   ADD KEY `id_user1` (`id_user1`),
   ADD KEY `id_user2` (`id_user2`),
   ADD KEY `action_id_user` (`action_id_user`);
 
+--
+-- Indices de la tabla `amigos`
+--
+ALTER TABLE `amigos`
+  ADD UNIQUE KEY `unique_friends_id` (`id_user1`,`id_user2`),
+  ADD KEY `id_user1` (`id_user1`),
+  ADD KEY `id_user2` (`id_user2`);
 
 --
 -- Indices de la tabla `preguntas`
@@ -166,23 +184,31 @@ ALTER TABLE `respuestas_propuestas`
 -- Filtros para la tabla `respuestas_propuestas`
 --
 ALTER TABLE `respuestas_propuestas`
-    ADD CONSTRAINT `id_pregunta_fk` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+    ADD CONSTRAINT `id_pregunta_fk_propuestas` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `respuestas_realizadas`
 --
 ALTER TABLE `respuestas_realizadas`
-  ADD CONSTRAINT `id_pregunta_fk` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_pregunta_fk_realizadas` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_amigo_fk` FOREIGN KEY (`id_amigo`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_propio_fk` FOREIGN KEY (`id_propio`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `aplicacion`
+-- Filtros para la tabla `solicitudes`
 --
-ALTER TABLE `aplicacion`
-  ADD CONSTRAINT `id_user1_fk` FOREIGN KEY (`id_user1`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_user2_fk` FOREIGN KEY (`id_user2`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_users_fk` FOREIGN KEY (`action_id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `solicitudes`
+  ADD CONSTRAINT `id_user1_fk_solicitudes` FOREIGN KEY (`id_user1`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_user2_fk_solicitudes` FOREIGN KEY (`id_user2`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_users_fk_solicitudes` FOREIGN KEY (`action_id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+--
+-- Filtros para la tabla `amigos`
+--
+ALTER TABLE `amigos`
+  ADD CONSTRAINT `id_user1_fk_amigos` FOREIGN KEY (`id_user1`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_user2_fk_amigos` FOREIGN KEY (`id_user2`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
