@@ -48,7 +48,7 @@
                                 </h3>
                             </div>
                             <div class="elem edad_usuario">
-                                <h4> 33 años </h4>
+                                <h4> <%= user.edad %> años </h4>
                             </div>
                             <div class="elem sexo_usuario">
                                 <h4>
@@ -65,15 +65,6 @@
                     </div>
                 </div>
             </div>
-
-            <% if (errorMsg !== null ) { %>
-            <div class="mensaje_error">
-                <h4>
-                    <%= errorMsg %>
-                </h4>
-            </div>
-            <% } %>
-
         </div>
 </body>
 

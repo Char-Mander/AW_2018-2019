@@ -73,12 +73,12 @@ app.post("/signin", function (request, response) {
         else if (res) {
             response.status(200);
             request.session.currentUser = user.email;
-            daoUsers.getUser(user.email, function(error, user){
-                if(error){
+            daoUsers.getUser(user.email, function (error, user) {
+                if (error) {
                     response.status(500);
-                }else{
-                    console.log(user);
-                    response.render("sesion", { user: user, errorMsg: null });
+                } else {
+                    user.edad = calcularEdad(user.fecha_nacimiento);
+                    response.render("sesion", { user: user });
                 }
             });
         }
@@ -88,7 +88,7 @@ app.post("/signin", function (request, response) {
     });
 });
 
-app.get("/no_profile_pic", function(request, response){
+app.get("/no_profile_pic", function (request, response) {
     response.sendFile(path.join(__dirname, "profile_imgs", "NoPerfil.png"));
 });
 
@@ -102,7 +102,7 @@ app.get("/signout", function (request, response) {
 
 
 //  Registro del usuario
-app.get("/signup", function(request, response){
+app.get("/signup", function (request, response) {
     response.render("signup", { errorMsg: null });
 });
 
@@ -115,23 +115,23 @@ app.post("/signup", multerFactory.single("user_img"), function (request, respons
     user.nombre_completo = request.body.name_user;
     user.sexo = request.body.sexo;
     user.fecha_nacimiento = request.body.fecha;
+    user.edad = calcularEdad(request.body.fecha);
     user.imagen_perfil = null;
 
     if (request.file) {
         user.imagen_perfil = request.file.buffer;
     }
 
-    console.log(user);
-    daoUsers.insertUser(user, function(error, id){
-        if(error){
+    daoUsers.insertUser(user, function (error, id) {
+        if (error) {
             response.status(500);
             console.log(`${error.message}`);
-            response.render("signUp", { errorMsg: "Error en el registro" });
-        }else{
+            response.render("signUp", { errorMsg: "Error en el proceso de registro" });
+        } else {
             user.id_user = id;
             response.status(200);
             request.session.currentUser = user.email;
-            response.render("sesion", { user: user, errorMsg : null });
+            response.render("sesion", { user: user });
         }
     });
 
@@ -168,8 +168,6 @@ function obtenerImagen(id, callback) {
                 if (err) {
                     callback(err);
                 } else {
-                    // Comprobar si existe una persona
-                    // con el Id dado.
                     if (result.length === 0) {
                         callback("No existe");
                     } else {
@@ -179,6 +177,19 @@ function obtenerImagen(id, callback) {
             });
         }
     });
+}
+
+function calcularEdad(fecha) {
+    var hoy = new Date();
+    var cumpleanos = new Date(fecha);
+    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    var m = hoy.getMonth() - cumpleanos.getMonth();
+
+    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
+    }
+
+    return edad;
 }
 
 //  Arranque del servidor
