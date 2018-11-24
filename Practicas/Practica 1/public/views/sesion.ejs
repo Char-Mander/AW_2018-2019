@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="es-ES">
+    <meta charset="utf-8" />
+    <title> Casper María Rodríquez - FaceBluff</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/general.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cabecera.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo_sesion.css" />
+</head>
+
+<body>
+    <div class="contenedor">
+        <div class="header">
+            <div class="titulo">
+                <h1>FaceBluff</h1>
+            </div>
+            <div class="nav">
+                <div class="enlace perfil"> <a href="/sesion"> Perfil </a> </div>
+                <div class="enlace amigos"> <a href="mis_amigos"> Amigos </a> </div>
+                <div class="enlace preguntas"> <a href="preguntas.html"> Preguntas </a> </div>
+                <div class="enlace desconectar"> <a href="/signout"> Desconectar </a> </div>
+                <div class="enlace puntuacion">
+                    <div class="user_icon"></div>
+                    <div class="ptos">50 pts</div>
+                </div>
+            </div>
+        </div>
+        <div class="body">
+            <div class="contenedor_ventana">
+
+                <div class="titulo_ventana">
+                    <h2>Tu perfil</h2>
+                </div>
+
+                <div class="contenedor_datos">
+                    <div class="imagen_usuario">
+                        <% if(user.imagen_perfil !== null){ %>
+                        <img src="/imagen/<%= user.id_user %>" <% } else { %>
+                        <img src="/no_profile_pic">
+                        <% } %>
+                    </div>
+                    <div class="datos">
+                        <div class="datos">
+                            <div class="elem nombre_usuario">
+                                <h3>
+                                    <%= user.nombre_completo %>
+                                </h3>
+                            </div>
+                            <div class="elem edad_usuario">
+                                <h4> 33 años </h4>
+                            </div>
+                            <div class="elem sexo_usuario">
+                                <h4>
+                                    <%= user.sexo %>
+                                </h4>
+                            </div>
+                            <div class="elem puntos_usuario">
+                                <h4> 50 puntos </h4>
+                            </div>
+                        </div>
+                        <div class="boton">
+                            <button type="button" class="boton_aceptar"> Modificar perfil </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <% if (errorMsg !== null ) { %>
+            <div class="mensaje_error">
+                <h4>
+                    <%= errorMsg %>
+                </h4>
+            </div>
+            <% } %>
+
+        </div>
+</body>
+
+</html>

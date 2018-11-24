@@ -33,7 +33,7 @@ div.titulo_ventana{
     overflow: hidden;
 }
 
-div.contenedor_datos{
+form{
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -42,6 +42,10 @@ div.contenedor_datos{
     border-radius: 5px;
     padding:4%;
     box-shadow: 2px 2px 5px rgb(82, 82, 82);
+}
+
+div.mensaje_error{
+    color: red;
 }
 
 div.elem {
