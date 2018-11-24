@@ -36,6 +36,7 @@ const middlewareSession = session({
 app.use(middlewareSession);
 
 
+
 // Crear un pool de conexiones a la base de datos de MySQL
 const pool = mysql.createPool(config.mysqlConfig);
 
@@ -181,3 +182,10 @@ app.listen(config.port, function (err) {
         console.log(`Servidor arrancado en el puerto ${config.port}`);
     }
 });
+
+
+function middlewareLogin(request, response, next){
+    if(request.session.currentUser!==null){
+        response.locals.push()
+    }
+}
