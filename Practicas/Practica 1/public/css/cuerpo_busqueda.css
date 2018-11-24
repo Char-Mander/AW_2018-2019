@@ -85,7 +85,7 @@ button{
 }
 
 div.img{
-    content: url(solicitud1.jpg);
+    content: url(../img/solicitud1.jpg);
     display:flex;
     align-self: center;
     width: 2vw;

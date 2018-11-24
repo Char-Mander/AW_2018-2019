@@ -43,7 +43,7 @@ div.contenedor_datos{
 div.imagen_usuario{
     display:flex;
     align-self: center;
-    content: url(img.png);
+    content: url(../img/img.png);
     width: 15vw;
     height: 15vw;
     border-radius: 104px;

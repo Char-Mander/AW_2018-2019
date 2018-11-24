@@ -71,7 +71,7 @@ div.puntuacion{
 }
 
 div.user_icon{
-    content: url(img.png);
+    content: url(..\img\img.png);
     display:flex;
     align-self: center;
     width: 20px;
