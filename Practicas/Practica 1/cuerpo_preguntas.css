@@ -1,0 +1,137 @@
+div.body{
+    font-family: 'Patrick Hand';
+    background-image: radial-gradient(circle, rgb(172, 240, 172), rgb(252, 252, 252));
+    height: -webkit-fill-available;
+    color: black;
+}
+
+div.contenedor_preguntas, div.contenedor_añadir_preguntas, div.contenedor_info_respuestas{
+    position: relative;
+    left: 25%;
+    top: 150px;
+    width: 50%;
+    height: 70%;
+    font-size: 1.6vw;
+    margin:1%;
+}
+
+div.titulo_preguntas, div.titulo_añade_preguntas, div.titulo_añadir_preguntas, div.titulo_pregunta_a_responder{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 100%; 
+    font-size: 1.8vw;
+    overflow: hidden;
+    margin-bottom: 1%;
+    margin-top:4%;
+}
+
+ul.lista_preguntas, ul.lista_añadir_opciones_preguntas, div.contenedor_respuestas{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    width: 94%;
+    height: 70%;
+    background-image: linear-gradient(to bottom right, rgb(89, 219, 89),#faeac9);
+    border-radius: 5px;
+    padding:2%;
+    box-shadow: 2px 2px 5px rgb(82, 82, 82);
+}
+
+li{
+    height: 16%;
+    align-content: center;
+    margin:1%;
+}
+
+div.pregunta a{
+    color: black;
+    cursor:pointer;
+}
+
+div.pregunta a:hover{
+    color:rgb(83, 83, 83);
+}
+
+div.pregunta a:active{
+    color:rgb(104, 102, 102);
+}
+div.pregunta {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    background-color:rgb(252, 252, 252);
+    border-radius: 5px;
+    padding: 0.5%;
+}
+
+div.nombre_pregunta, div.opcion_respuesta{
+    height: 100%;
+    width: 100%;
+    display:flex;
+    justify-content: space-evenly;
+}
+
+div.info_pregunta{
+    width: 100%;
+    height:100%;    
+    display:flex;
+    justify-content: space-evenly;
+}
+
+input{
+    width: 80%;
+    height: 100%;
+    border-radius: 5px;
+    align-self: center;
+}
+
+div.contenedor_añadir_pregunta, div.contenedor_añadir_preguntas{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: space-between;
+}
+
+div.botones{
+    margin-top:3%;
+    display: flex;
+    width: 50%;
+    height: 50%;
+    justify-content: center;
+    align-content: center;
+    align-self: center;
+}
+
+div.contenedor_boton_añadir_preguntas, div.contenedor_finalizar_formulario{
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+}
+
+
+button{
+    width: 70%;
+    height: 50%;
+    color:white;
+    font-family: 'Patrick Hand';
+    font-size: 1.5vw;
+    border-radius:5px;
+    background-color:rgb(23, 145, 23); 
+    overflow: hidden;
+    align-self: center;
+}
+
+button:hover{
+    background-color: rgb(19, 100, 19);
+    cursor: pointer;
+}
+
+button:active{
+    background-color: rgb(32, 83, 32);
+}

@@ -1,0 +1,105 @@
+
+div.body{
+    font-family: 'Patrick Hand';
+    background-image: radial-gradient(circle, rgb(172, 240, 172), rgb(252, 252, 252));
+    height: -webkit-fill-available;
+    color: black;
+}
+
+div.contenedor_buscar{
+    position: relative;
+    left: 15.5%;
+    top: 150px;
+    width: 70%;
+    height: 70%;
+    font-size: 1.6vw;
+}
+
+div.titulo_buscar{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 100%; 
+    font-size: 1.8vw;
+    overflow: hidden;
+    margin-bottom: 1%;
+}
+
+
+ul.lista_busqueda{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    width: 94%;
+    height: 70%;
+    background-image: linear-gradient(to bottom right, rgb(89, 219, 89),#faeac9);
+    border-radius: 5px;
+    padding:2%;
+    box-shadow: 2px 2px 5px rgb(82, 82, 82);
+}
+
+li{
+    height: 16%;
+    align-content: center;
+    margin:0.5%;
+}
+
+
+div.resultado {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    background-color:rgb(252, 252, 252);
+    border-radius: 5px;
+    padding: 0.5%;
+}
+
+
+div.info_user{
+    display: flex;
+    width: 50%;
+    height: 50%;
+}
+
+div.botones{
+    display: flex;
+    width: 70%;
+    height: 52%;
+    justify-content: flex-end;
+    align-content: center;
+}
+
+button{
+    width: 50%;
+    height: 100%;
+    font-family: 'Patrick Hand';
+    font-size: 1.5vw;
+    border-radius:5px;
+    background-color:rgb(172, 240, 172); 
+    overflow: hidden;
+    align-self: center;
+}
+
+div.img{
+    content: url(solicitud1.jpg);
+    display:flex;
+    align-self: center;
+    width: 2vw;
+    height: 2vw;
+    border-radius: 104px;
+    margin-right: 5%;
+}
+
+
+button:hover{
+    background-color: rgb(122, 238, 122);
+    cursor: pointer;
+}
+
+button:active{
+    background-color: rgb(98, 228, 98);
+}
