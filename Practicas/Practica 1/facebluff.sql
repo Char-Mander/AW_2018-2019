@@ -20,8 +20,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `user` (
-  `id_user` int(11) UNSIGNED NOT NULL,
-	`email`	varchar(100)	NOT NULL,
+  `id_user` int(11) UNSIGNED NOT NULL PRIMARY KEY,
+	`email`	varchar(100)	NOT NULL UNIQUE KEY,
 	`password`	varchar(100)	NOT NULL,
 	`nombre_completo`	varchar(100)	NOT NULL,
 	`sexo`	varchar(6)	NOT NULL,
@@ -32,20 +32,20 @@ CREATE TABLE `user` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `solicitudes`
+-- Estructura de tabla para la tabla `aplicacion`
 --
 
 CREATE TABLE `solicitudes` (
   `id_user1` int(11) UNSIGNED NOT NULL,
   `id_user2` int(11) UNSIGNED NOT NULL,
   `status` tinyint(1) UNSIGNED DEFAULT NULL,
-  `action_id_user` int(10) UNSIGNED DEFAULT NULL
+  `action_id_user` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `amigos`
+-- Estructura de tabla para la tabla `preguntas`
 --
 
 CREATE TABLE `amigos` (
@@ -60,7 +60,7 @@ CREATE TABLE `amigos` (
 --
 
 CREATE TABLE `preguntas` (
-  `id` int(11) UNSIGNED NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL PRIMARY KEY,
   `texto` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -72,7 +72,7 @@ CREATE TABLE `preguntas` (
 
 CREATE TABLE `respuestas_propuestas` (
   `id_pregunta` int(11) UNSIGNED NOT NULL,
-  `id` int(11) UNSIGNED NOT NULL,
+  `id` int(11) UNSIGNED NOT NULL PRIMARY KEY,
   `texto` varchar(200) NOT NULL,
   `correct` tinyint(1) NOT NULL
 
@@ -86,7 +86,7 @@ CREATE TABLE `respuestas_propuestas` (
 
 CREATE TABLE `respuestas_realizadas` (
   `id_pregunta` int(11) UNSIGNED NOT NULL,
-  `id_respondida` int(11) UNSIGNED NOT NULL,
+  `id_respondida` int(11) UNSIGNED NOT NULL PRIMARY KEY,
   `id_amigo` int(11) UNSIGNED NOT NULL,
   `id_propio` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -101,13 +101,6 @@ CREATE TABLE `respuestas_realizadas` (
 --
 
 --
--- Indices de la tabla `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id_user`),
-  ADD UNIQUE KEY (`email`);
-
---
 -- Indices de la tabla `solicitudes`
 --
 ALTER TABLE `solicitudes`
@@ -117,31 +110,23 @@ ALTER TABLE `solicitudes`
   ADD KEY `action_id_user` (`action_id_user`);
 
 --
--- Indices de la tabla `amigos`
+--	Inidices de la tabla `amigos`
 --
 ALTER TABLE `amigos`
-  ADD UNIQUE KEY `unique_friends_id` (`id_user1`,`id_user2`),
-  ADD KEY `id_user1` (`id_user1`),
-  ADD KEY `id_user2` (`id_user2`);
-
---
--- Indices de la tabla `preguntas`
---
-ALTER TABLE `preguntas`
-  ADD PRIMARY KEY (`id`);
-
+	ADD UNIQUE KEY `unique_friends_id` (`id_user1`, `id_user2`),
+	ADD KEY `id_user1` (`id_user1`),
+	ADD KEY `id_user2` (`id_user2`);
+  
 --
 -- Indices de la tabla `respuestas_propuestas`
 --
 ALTER TABLE `respuestas_propuestas`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `id_pregunta` (`id_pregunta`);
 
 --
 -- Indices de la tabla `respuestas_realizadas`
 --
 ALTER TABLE `respuestas_realizadas`
-  ADD PRIMARY KEY (`id_respondida`),
   ADD KEY `id_pregunta` (`id_pregunta`),
   ADD KEY `id_amigo` (`id_amigo`),
   ADD KEY `id_propio` (`id_propio`);
@@ -157,21 +142,21 @@ ALTER TABLE `respuestas_realizadas`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id_user` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas_propuestas`
 --
 ALTER TABLE `respuestas_propuestas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 
 
@@ -195,16 +180,15 @@ ALTER TABLE `respuestas_realizadas`
   ADD CONSTRAINT `id_propio_fk` FOREIGN KEY (`id_propio`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `solicitudes`
+-- Filtros para la tabla `aplicacion`
 --
 ALTER TABLE `solicitudes`
   ADD CONSTRAINT `id_user1_fk_solicitudes` FOREIGN KEY (`id_user1`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_user2_fk_solicitudes` FOREIGN KEY (`id_user2`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_users_fk_solicitudes` FOREIGN KEY (`action_id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-
+  
 --
--- Filtros para la tabla `amigos`
+-- Filtros para la tabla `aplicacion`
 --
 ALTER TABLE `amigos`
   ADD CONSTRAINT `id_user1_fk_amigos` FOREIGN KEY (`id_user1`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
