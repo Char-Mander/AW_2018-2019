@@ -41,11 +41,13 @@ const middlewareSession = session({
 });
 app.use(middlewareSession); //express-mysql-session
 
+
 const multerFactory = multer({ storage: multer.memoryStorage() });  //multer (para la subida y bajada de ficheros)
 
 
 //  Creación de un pool de conexiones a una base de datos MySQL
 const pool = mysql.createPool(config.mysqlConfig);
+
 
 
 //  Creación de una instancia de DAOUsers
@@ -88,31 +90,6 @@ app.post("/signin", function (request, response) {
     });
 });
 
-app.get("/sesion", function(request, response){
-    daoUsers.getUser(request.session.currentUser, function(error, usuario){
-        if(error){
-            response.status(500);
-        }else{
-            response.status(200);
-            usuario.edad = calcularEdad(usuario.fecha_nacimiento);
-            response.render("sesion", { user : usuario });
-        }
-    });
-});
-
-app.get("/no_profile_pic", function (request, response) {
-    response.sendFile(path.join(__dirname, "profile_imgs", "NoPerfil.png"));
-});
-
-
-//  Desconexión del usuario
-app.get("/signout", function (request, response) {
-    response.status(200);
-    request.session.destroy();
-    response.redirect("/signin");
-});
-
-
 //  Registro del usuario
 app.get("/signup", function (request, response) {
     response.render("signup", { errorMsg: null });
@@ -149,7 +126,32 @@ app.post("/signup", multerFactory.single("user_img"), function (request, respons
 
 });
 
-app.get("/imagen/:id", function (request, response) {
+app.get("/sesion", middlewareLogin, function(request, response){
+    daoUsers.getUser(request.session.currentUser, function(error, usuario){
+        if(error){
+            response.status(500);
+        }else{
+            response.status(200);
+            usuario.edad = calcularEdad(usuario.fecha_nacimiento);
+            response.render("sesion", { user : usuario });
+        }
+    });
+});
+
+app.get("/no_profile_pic", middlewareLogin, function (request, response) {
+    response.sendFile(path.join(__dirname, "profile_imgs", "NoPerfil.png"));
+});
+
+
+//  Desconexión del usuario
+app.get("/signout", middlewareLogin, function (request, response) {
+    response.status(200);
+    request.session.destroy();
+    response.redirect("/signin");
+});
+
+
+app.get("/imagen/:id", middlewareLogin, function (request, response) {
     let n = Number(request.params.id);
 
     if (isNaN(n)) {
@@ -167,14 +169,18 @@ app.get("/imagen/:id", function (request, response) {
     }
 });
 
+//Middleware del login, que comprueba que esté en la sesión del usuario
+
+app.use(middlewareLogin);
+
 
 //  Modificación del usuario
-app.get("/modificar_perfil", function(request, response){
+app.get("/modificar_perfil", middlewareLogin, function(request, response){
     response.status(200);
     response.render("modificar_perfil", { errorMsg : null });
 });
 
-app.post("/modificar_perfil", multerFactory.single("user_img"), function(request, response){
+app.post("/modificar_perfil", middlewareLogin, multerFactory.single("user_img"), function(request, response){
     let user = {};
     let nombreFichero = null;
 
@@ -208,6 +214,16 @@ app.post("/modificar_perfil", multerFactory.single("user_img"), function(request
     });
 });
 
+
+function middlewareLogin(request, response, next){
+    if(request.session.currentUser!==undefined){
+        response.locals.userEmail=request.session.currentUser;
+        next();
+    }
+    else{
+        response.redirect("/signin");
+    }
+}
 
 //  Funciones complementarias
 function obtenerImagen(id, callback) {
@@ -254,3 +270,4 @@ app.listen(config.port, function (err) {
         console.log(`Servidor arrancado en el puerto ${config.port}`);
     }
 });
+
