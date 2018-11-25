@@ -77,7 +77,7 @@ function (request, response) {
         }
         else {
             response.status(200);
-            response.render("tasks", { taskList: tareas });
+            response.render("tasks", { taskList: tareas, userEmail: response.locals.userEmail});
         }
     });
 
@@ -198,7 +198,6 @@ app.listen(config.port, function (err) {
 });
 
 function middlewareLogin(request, response, next){
-    console.log(request.session.currentUser);
     if(request.session.currentUser!==undefined){
         response.locals.userEmail=request.session.currentUser;
         next();
