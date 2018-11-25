@@ -26,6 +26,7 @@ CREATE TABLE `user` (
 	`nombre_completo`	varchar(100)	NOT NULL,
 	`sexo`	varchar(6)	NOT NULL,
 	`fecha_nacimiento`	date	NOT NULL,
+  `puntos` int(11) UNSIGNED NOT NULL DEFAULT 0,
 	`imagen_perfil`	varchar(100)	NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

@@ -191,6 +191,7 @@ app.post("/modificar_perfil", middlewareLogin, multerFactory.single("user_img"),
     user.fecha_nacimiento = request.body.fecha;
     user.edad = calcularEdad(request.body.fecha);
     user.imagen_perfil = null;
+    user.puntos=0;
 
     if (request.file) {
         user.imagen_perfil = request.file.buffer;
