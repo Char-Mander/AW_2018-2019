@@ -49,11 +49,13 @@ const daoU = new DAOUsers(pool);
 //  Ficheros estáticos
 const ficherosEstaticos = path.join(__dirname, "public");
 app.use(express.static(ficherosEstaticos));
-
+app.use(middlewareLogin);
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //  Listado de tareas
-app.get("/tasks", function (request, response) {
-    daoT.getAllTasks("usuario@ucm.es", function (error, tareas) {
+app.get("/tasks",  middlewareLogin(request, response, next),
+function (request, response) {
+    daoT.getAllTasks(response.locals.userEmail, function (error, tareas) {
         if (error) {
             response.status(500);
         }
@@ -66,15 +68,17 @@ app.get("/tasks", function (request, response) {
 });
 
 
-app.use(bodyParser.urlencoded({ extended: true }));
+
 
 //  Añadir la tarea a la lista de tareas
-app.post("/addTask", function (request, response) {
+app.post("/addTask", middlewareLogin(request, response, next),
+function (request, response) {
+
     let cuerpo = request.body.Tarea_añadida;
     let task = createTask(cuerpo);
 
 
-    daoT.insertTask("usuario@ucm.es", task, function (error) {
+    daoT.insertTask(response.locals.userEmail, task, function (error) {
         if (error) {
             if (error.message === "Empty task") {
                 response.status(200);
@@ -123,7 +127,8 @@ app.get("/login", function(request, response){
 
 
 //  Salida del sistema
-app.get("/logout", function(request, response){
+app.get("/logout", middlewareLogin(request, response, next),
+function(request, response){
     response.status(200);
     request.session.destroy();
     response.redirect("/login");
@@ -131,7 +136,8 @@ app.get("/logout", function(request, response){
 
 
 //  Imagen del usuario
-app.get("/imagenUsuario", function(request, response){
+app.get("/imagenUsuario", middlewareLogin(request, response, next),
+    function(request, response){
     daoU.getUserImageName(request.session.currentUser, function(error, userImg){
         if(error){
             response.status(500);
@@ -146,7 +152,9 @@ app.get("/imagenUsuario", function(request, response){
 
 
 //  Marcar tarea como finalizada
-app.get("/finish/:taskId", function (request, response) {
+app.get("/finish/:taskId", middlewareLogin(request, response, next),
+function (request, response) {
+   
     daoT.markTaskDone(request.params.taskId, function (error) {
         if (error) {
             response.status(500);
@@ -160,8 +168,9 @@ app.get("/finish/:taskId", function (request, response) {
 
 
 //  Eliminar tareas marcadas
-app.get("/deleteCompleted", function (request, response) {
-    daoT.deleteCompleted("usuario@ucm.es", function (error) {
+app.get("/deleteCompleted", middlewareLogin(request, response, next),
+function (request, response) {
+    daoT.deleteCompleted(response.locals.userEmail, function (error) {
         if (error) {
             response.status(500);
         }
@@ -185,7 +194,12 @@ app.listen(config.port, function (err) {
 
 
 function middlewareLogin(request, response, next){
-    if(request.session.currentUser!==null){
-        response.locals.push()
+    console.log(request.session.currentUser);
+    if(request.session.currentUser!==undefined){
+        response.locals.userEmail=request.session.currentUser;
+        next();
+    }
+    else{
+        response.redirect("/login");
     }
 }
