@@ -125,38 +125,26 @@ class DAOUsers{
 
 function crearSentenciaUpdateUser(user, elems){
     let sql = `UPDATE user SET `;
+    let firstElem=1;
 
-    if(user.password){
-        sql += `password = ?`
-        elems.push(user.password);
+    for(let contador=0; contador<Object.values(user).length; contador++){
+        
+        if(user[`${Object.keys(user)[contador]}`]){
+            if(firstElem!==1){
+               sql+=`, `;
+            }
+            else{
+                firstElem=0;
+            }
+            sql+= `${Object.keys(user)[contador]} = ?`;
+            elems.push(user[`${Object.keys(user)[contador]}`]);
+        }
+      
     }
-
-    if(user.nombre_completo){
-        sql += `nombre_completo = ?`
-        elems.push(user.nombre_completo);
-    }
-
-    if(user.sexo){
-        if(user.nombre_completo) sql += `,`;
-        sql += `sexo = ?`
-        elems.push(user.sexo);
-    }
-
-    if(user.fecha_nacimiento){
-        if(user.sexo) sql += `,`;
-        sql += `fecha_nacimiento = ?`
-        elems.push(user.fecha_nacimiento);
-    }
-
-    if(user.imagen_perfil){
-        if(user.fecha_nacimiento) sql += `,`;
-        sql += `imagen_pefil = ?`
-        elems.push(user.imagen_perfil);
-    }
-
     sql += ` WHERE email = ?`
     elems.push(user.email);
-
+    console.log(sql);
+    console.log(user.fecha_nacimiento);
     return sql;
 }
 
