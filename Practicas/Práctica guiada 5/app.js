@@ -143,7 +143,7 @@ app.post("/login", function (request, response) {
 //  Imagen del usuario
 app.get("/imagenUsuario", middlewareLogin,
     function(request, response){
-    daoU.getUserImageName(request.session.currentUser, function(error, userImg){
+    daoU.getUserImageName(response.locals.userEmail, function(error, userImg){
         if(error){
             response.status(500);
         }else if(userImg){
