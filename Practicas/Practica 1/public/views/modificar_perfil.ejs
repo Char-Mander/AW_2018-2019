@@ -3,7 +3,7 @@
 
 <head lang="es-ES">
     <meta charset="utf-8" />
-    <title> Nuevo Usuario - FaceBluff</title>
+    <title> Modificar perfil - FaceBluff</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../css/General.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../css/Cabecera.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../css/Cuerpo.css" />
@@ -17,25 +17,24 @@
                 <h1>FaceBluff</h1>
             </div>
             <div class="nav">
-
-                <div class="enlace entrar"> <a href="signin"> Entrar </a> </div>
-                <div class="enlace nuevo_usuario"> <a a href="signUp"> Nuevo usuario </a> </div>
+                <div class="enlace perfil"> <a href="/sesion"> Perfil </a> </div>
+                <div class="enlace amigos"> <a href="mis_amigos"> Amigos </a> </div>
+                <div class="enlace preguntas"> <a href="preguntas.html"> Preguntas </a> </div>
+                <div class="enlace desconectar"> <a href="/signout"> Desconectar </a> </div>
+                <div class="enlace puntuacion">
+                    <div class="user_icon"></div>
+                    <div class="ptos">50 pts</div>
+                </div>
             </div>
         </div>
         <div class="body">
             <div class="contenedor_ventana">
                 <div class="titulo_ventana">
-                    <h2>Nuevo usuario</h2>
+                    <h2>Modificar perfil</h2>
                 </div>
                 <div class="contenedor_datos">
 
-                    <form class="signup_user" method="post" action="/signup" enctype="multipart/form-data">
-                        <div class="elem email">
-                            <div class="texto">
-                                <h2> Email: </h2>
-                            </div>
-                            <input type="text" name="email_user">
-                        </div>
+                    <form class="modify_user" method="post" action="/modificar_perfil" enctype="multipart/form-data">
 
                         <div class="elem contraseña">
                             <div class="texto">
@@ -85,7 +84,7 @@
                             <input type="file" name="user_img">
                         </div>
 
-                        <button class="boton_aceptar" type="submit"> Crear usuario </button>
+                        <button class="boton_aceptar" type="submit"> Guardar cambios </button>
                     </form>
 
                     <% if (errorMsg !== null ) { %>

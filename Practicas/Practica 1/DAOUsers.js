@@ -11,6 +11,11 @@ class DAOUsers{
             if(err){
                 callback(new Error("Error de conexión a la base de datos"), null);
             }else{
+
+                if(user.email === "" || user.nombre_completo === "" || user.password === ""){
+                    callback(new Error("Se deben llenar los campos obligatorios"), null);
+                }
+
                 const sql = `INSERT INTO user (id_user, email, password, nombre_completo, sexo, fecha_nacimiento, imagen_perfil)`
                  + `VALUES (?,?,?,?,?,?,?)`;
                  let elems = [user.id_user, user.email, user.password, user.nombre_completo, user.sexo, user.fecha_nacimiento, user.imagen_perfil];
@@ -18,7 +23,7 @@ class DAOUsers{
                  connection.query(sql, elems, function(err, resultado){
                     connection.release();
                     if(err){
-                        callback(new Error("Error de acceso a la base de datos"), null);
+                        callback(new Error("Error en el proceso de registro"), null);
                     }else{
                         callback(null, resultado.insertId);
                     }
@@ -41,6 +46,27 @@ class DAOUsers{
                         callback(new Error("Error de acceso a la base de datos"), null);
                     }else{
                         callback(null, resultado[0]);
+                    }
+                });
+            }
+        });
+    }
+
+    /*Guarda un usuario en la base de datos*/
+    updateUser(user, callback){
+        this.pool.getConnection(function(error, connection){
+            if(error){
+                callback(new Error("Error de conexión a la base de datos"), null);
+            }else{
+                let elems = [];
+                const sql = crearSentenciaUpdateUser(user, elems);
+
+                connection.query(sql, elems, function(error, resultado){
+                    connection.release();
+                    if(error){
+                        callback(new Error("Error de acceso a la base de datos"));
+                    }else{
+                        callback(null);
                     }
                 });
             }
@@ -95,6 +121,43 @@ class DAOUsers{
         });
     }
     
+}
+
+function crearSentenciaUpdateUser(user, elems){
+    let sql = `UPDATE user SET `;
+
+    if(user.password){
+        sql += `password = ?`
+        elems.push(user.password);
+    }
+
+    if(user.nombre_completo){
+        sql += `nombre_completo = ?`
+        elems.push(user.nombre_completo);
+    }
+
+    if(user.sexo){
+        if(user.nombre_completo) sql += `,`;
+        sql += `sexo = ?`
+        elems.push(user.sexo);
+    }
+
+    if(user.fecha_nacimiento){
+        if(user.sexo) sql += `,`;
+        sql += `fecha_nacimiento = ?`
+        elems.push(user.fecha_nacimiento);
+    }
+
+    if(user.imagen_perfil){
+        if(user.fecha_nacimiento) sql += `,`;
+        sql += `imagen_pefil = ?`
+        elems.push(user.imagen_perfil);
+    }
+
+    sql += ` WHERE email = ?`
+    elems.push(user.email);
+
+    return sql;
 }
 
 module.exports = DAOUsers;

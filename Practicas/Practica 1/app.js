@@ -88,6 +88,18 @@ app.post("/signin", function (request, response) {
     });
 });
 
+app.get("/sesion", function(request, response){
+    daoUsers.getUser(request.session.currentUser, function(error, usuario){
+        if(error){
+            response.status(500);
+        }else{
+            response.status(200);
+            usuario.edad = calcularEdad(usuario.fecha_nacimiento);
+            response.render("sesion", { user : usuario });
+        }
+    });
+});
+
 app.get("/no_profile_pic", function (request, response) {
     response.sendFile(path.join(__dirname, "profile_imgs", "NoPerfil.png"));
 });
@@ -126,7 +138,7 @@ app.post("/signup", multerFactory.single("user_img"), function (request, respons
         if (error) {
             response.status(500);
             console.log(`${error.message}`);
-            response.render("signUp", { errorMsg: "Error en el proceso de registro" });
+            response.render("signUp", { errorMsg: `${error.message}` });
         } else {
             user.id_user = id;
             response.status(200);
@@ -153,6 +165,47 @@ app.get("/imagen/:id", function (request, response) {
             }
         });
     }
+});
+
+
+//  Modificación del usuario
+app.get("/modificar_perfil", function(request, response){
+    response.status(200);
+    response.render("modificar_perfil", { errorMsg : null });
+});
+
+app.post("/modificar_perfil", multerFactory.single("user_img"), function(request, response){
+    let user = {};
+    let nombreFichero = null;
+
+    user.email = request.session.currentUser;
+    user.password = request.body.password_user;
+    user.nombre_completo = request.body.name_user;
+    user.sexo = request.body.sexo;
+    user.fecha_nacimiento = request.body.fecha;
+    user.edad = calcularEdad(request.body.fecha);
+    user.imagen_perfil = null;
+
+    if (request.file) {
+        user.imagen_perfil = request.file.buffer;
+    }
+
+    daoUsers.updateUser(user, function (error) {
+        if (error) {
+            response.status(500);
+            console.log(`${error.message}`);
+            response.render("modificar_perfil", { errorMsg: "Error en el proceso de modificación" });
+        } else {
+            daoUsers.getUser(request.session.currentUser, function (error, user) {
+                if (error) {
+                    response.status(500);
+                } else {
+                    user.edad = calcularEdad(user.fecha_nacimiento);
+                    response.render("sesion", { user: user });
+                }
+            });
+        }
+    });
 });
 
 
