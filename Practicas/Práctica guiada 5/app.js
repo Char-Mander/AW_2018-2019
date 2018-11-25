@@ -33,7 +33,7 @@ const middlewareSession = session({
     resave: false,
     store: sessionStore
 });
-app.use(middlewareSession);
+
 
 
 
@@ -49,11 +49,27 @@ const daoU = new DAOUsers(pool);
 //  Ficheros estáticos
 const ficherosEstaticos = path.join(__dirname, "public");
 app.use(express.static(ficherosEstaticos));
-app.use(middlewareLogin);
-app.use(bodyParser.urlencoded({ extended: true }));
+
+
+app.use(middlewareSession);
+
+app.get("/login", function(request, response){
+    response.status(200);
+    response.render("login", {errorMsg : null});
+});
+
+
+//  Salida del sistema
+app.get("/logout", middlewareLogin,
+function(request, response){
+    response.status(200);
+    request.session.destroy();
+    response.redirect("/login");
+});
+
 
 //  Listado de tareas
-app.get("/tasks",  middlewareLogin(request, response, next),
+app.get("/tasks",  middlewareLogin,
 function (request, response) {
     daoT.getAllTasks(response.locals.userEmail, function (error, tareas) {
         if (error) {
@@ -69,9 +85,10 @@ function (request, response) {
 
 
 
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //  Añadir la tarea a la lista de tareas
-app.post("/addTask", middlewareLogin(request, response, next),
+app.post("/addTask", middlewareLogin,
 function (request, response) {
 
     let cuerpo = request.body.Tarea_añadida;
@@ -115,28 +132,16 @@ app.post("/login", function (request, response) {
                 response.redirect("/tasks");
             }
             else{
-                response.render("login", {errorMsg : "Dirección de correo y/o contraseña no válidos."});
+                response.render("login", {errorMsg : "Dirección de correo y/o contraseña no válidos "});
             }
         });
 });
 
-app.get("/login", function(request, response){
-    response.status(200);
-    response.render("login", {errorMsg : null});
-});
 
-
-//  Salida del sistema
-app.get("/logout", middlewareLogin(request, response, next),
-function(request, response){
-    response.status(200);
-    request.session.destroy();
-    response.redirect("/login");
-});
 
 
 //  Imagen del usuario
-app.get("/imagenUsuario", middlewareLogin(request, response, next),
+app.get("/imagenUsuario", middlewareLogin,
     function(request, response){
     daoU.getUserImageName(request.session.currentUser, function(error, userImg){
         if(error){
@@ -152,7 +157,7 @@ app.get("/imagenUsuario", middlewareLogin(request, response, next),
 
 
 //  Marcar tarea como finalizada
-app.get("/finish/:taskId", middlewareLogin(request, response, next),
+app.get("/finish/:taskId", middlewareLogin,
 function (request, response) {
    
     daoT.markTaskDone(request.params.taskId, function (error) {
@@ -168,7 +173,7 @@ function (request, response) {
 
 
 //  Eliminar tareas marcadas
-app.get("/deleteCompleted", middlewareLogin(request, response, next),
+app.get("/deleteCompleted", middlewareLogin,
 function (request, response) {
     daoT.deleteCompleted(response.locals.userEmail, function (error) {
         if (error) {
@@ -191,7 +196,6 @@ app.listen(config.port, function (err) {
         console.log(`Servidor arrancado en el puerto ${config.port}`);
     }
 });
-
 
 function middlewareLogin(request, response, next){
     console.log(request.session.currentUser);
