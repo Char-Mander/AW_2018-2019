@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="es-ES">
+    <meta charset="utf-8" />
+    <title>Bienvenido - FaceBluff</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/general.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cabecera.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo.css" />
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <div class="header">
+            <div class="titulo">
+                <h1>FaceBluff</h1>
+            </div>
+
+            <div class="nav">
+
+                <div class="enlace entrar"> <a href="signin">Entrar</a> </div>
+                <div class="enlace nuevo_usuario"> <a href="signUp">Nuevo usuario</a> </div>
+            </div>
+        </div>
+
+        <div class="body">
+
+            <div class="contenedor_ventana">
+
+                <div class="titulo_ventana">
+                    <h2>Entrar</h2>
+                </div>
+
+                <div class="contenedor_datos">
+
+                    <form class="login_user" method="post" action="/signin">
+                        <div class="elem email">
+                            <div class="texto">
+                                <h2> Email: </h2>
+                                <input type="text" name="email_user" placeholder="Introduzca su email">
+                            </div>
+                        </div>
+
+                        <div class="elem constaseña">
+                            <div class="texto">
+                                <h2> Contraseña: </h2>
+                                <input type="password" name="password_user" placeholder="Introduzca su contraseña">
+                            </div>
+                        </div>
+
+                        <button class="boton_aceptar" type="submit"> Conectar </button>
+                    </form>
+                    
+                    <% if (errorMsg !== null ) { %>
+                    <div class="mensaje_error">
+                        <h4>
+                            <%= errorMsg %>
+                        </h4>
+                    </div>
+                    <% } %>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
