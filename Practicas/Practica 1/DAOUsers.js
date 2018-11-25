@@ -60,7 +60,6 @@ class DAOUsers{
             }else{
                 let elems = [];
                 const sql = crearSentenciaUpdateUser(user, elems);
-
                 connection.query(sql, elems, function(error, resultado){
                     connection.release();
                     if(error){
@@ -129,22 +128,24 @@ function crearSentenciaUpdateUser(user, elems){
 
     for(let contador=0; contador<Object.values(user).length; contador++){
         
-        if(user[`${Object.keys(user)[contador]}`]){
+        if(user[`${Object.keys(user)[contador]}`] && `${Object.keys(user)[contador]}`!=="edad"){
+
             if(firstElem!==1){
                sql+=`, `;
             }
             else{
                 firstElem=0;
             }
+
             sql+= `${Object.keys(user)[contador]} = ?`;
             elems.push(user[`${Object.keys(user)[contador]}`]);
         }
       
     }
+
     sql += ` WHERE email = ?`
     elems.push(user.email);
-    console.log(sql);
-    console.log(user.fecha_nacimiento);
+
     return sql;
 }
 
