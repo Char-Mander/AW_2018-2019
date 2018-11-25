@@ -46,20 +46,24 @@ form{
 
 div.mensaje_error{
     color: red;
+    width: 37.5vw;
+    display: flex;
+    justify-content: center;
 }
 
 div.elem {
     display:flex;
     width: 96%;
     height: auto;
-    margin:1%;
+    margin:2%;
 }
 
 div.texto{
     display: flex;
-    align-content: center;
+    justify-content: space-between;
+    align-content: flex-start;
     align-self: center;
-    width: 38%;
+    width: 35vw;
     height: 2.5vw;
     overflow: hidden;
 }
@@ -72,7 +76,7 @@ div.texto h2{
 }
 
 div.elecciones{
-    width: 62%;
+    width: 60vw;
     display: flex;
     justify-content: space-between;
 }
@@ -146,7 +150,7 @@ label.eleccion .checkmark:after {
 input{
     height: auto;
     border-radius: 3px;
-    width: 80%;
+    width: 23vw;
     align-self: center;
     justify-content: center;
     justify-items: center;
