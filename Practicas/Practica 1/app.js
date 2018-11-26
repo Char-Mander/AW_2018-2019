@@ -41,13 +41,21 @@ const middlewareSession = session({
 });
 app.use(middlewareSession); //express-mysql-session
 
-
 const multerFactory = multer({ storage: multer.memoryStorage() });  //multer (para la subida y bajada de ficheros)
+
+function middlewareLogin(request, response, next){
+    if(request.session.currentUser!==undefined){
+        response.locals.userEmail=request.session.currentUser;
+        next();
+    }
+    else{
+        response.redirect("/signin");
+    }
+}
 
 
 //  Creación de un pool de conexiones a una base de datos MySQL
 const pool = mysql.createPool(config.mysqlConfig);
-
 
 
 //  Creación de una instancia de DAOUsers
@@ -169,9 +177,7 @@ app.get("/imagen/:id", middlewareLogin, function (request, response) {
     }
 });
 
-//Middleware del login, que comprueba que esté en la sesión del usuario
-
-app.use(middlewareLogin);
+app.use(middlewareLogin);   //middelware del login, comprueba que esté en la sesión del usuario
 
 
 //  Modificación del usuario
@@ -216,17 +222,7 @@ app.post("/modificar_perfil", middlewareLogin, multerFactory.single("user_img"),
 });
 
 
-function middlewareLogin(request, response, next){
-    if(request.session.currentUser!==undefined){
-        response.locals.userEmail=request.session.currentUser;
-        next();
-    }
-    else{
-        response.redirect("/signin");
-    }
-}
-
-//  Funciones complementarias
+//  Funciones auxiliares
 function obtenerImagen(id, callback) {
     pool.getConnection(function (err, connection) {
         if (err) {

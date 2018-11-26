@@ -3,7 +3,8 @@
 
 <head lang="es-ES">
     <meta charset="utf-8" />
-    <title> <%= user.nombre_completo %> - FaceBluff</title>
+    <title>
+        <%= user.nombre_completo %> - FaceBluff</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../css/general.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../css/cabecera.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo_sesion.css" />
@@ -21,8 +22,14 @@
                 <div class="enlace preguntas"> <a href="preguntas.html"> Preguntas </a> </div>
                 <div class="enlace desconectar"> <a href="/signout"> Desconectar </a> </div>
                 <div class="enlace puntuacion">
-                    <div class="user_icon"></div>
-                    <div class="ptos"><%= user.puntos %> ptos</div>
+                    <div class="user_icon">
+                       <!-- <% if(user.imagen_perfil !== null){ %>
+                        <img class="icon" src="/imagen/<%= user.id_user %>" <% } else { %>
+                        <img class="icon" src="/no_profile_pic">
+                        <% } %> -->
+                    </div>
+                    <div class="ptos">
+                        <%= user.puntos %> ptos</div>
                 </div>
             </div>
         </div>
@@ -48,7 +55,8 @@
                                 </h3>
                             </div>
                             <div class="elem edad_usuario">
-                                <h4> <%= user.edad %> años </h4>
+                                <h4>
+                                    <%= user.edad %> años </h4>
                             </div>
                             <div class="elem sexo_usuario">
                                 <h4>
@@ -56,11 +64,13 @@
                                 </h4>
                             </div>
                             <div class="elem puntos_usuario">
-                                <h4> <%= user.puntos %> puntos</h4>
+                                <h4>
+                                    <%= user.puntos %> puntos</h4>
                             </div>
                         </div>
                         <div class="boton">
-                            <button class="boton_aceptar" onclick="location.href='/modificar_perfil'"> Modificar perfil </button>
+                            <button class="boton_aceptar" onclick="location.href='/modificar_perfil'"> Modificar perfil
+                            </button>
                         </div>
                     </div>
                 </div>
