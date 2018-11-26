@@ -243,7 +243,7 @@ app.get("/amigos", middlewareLogin, function (request, response) {
                 }
                 else {
                     response.status(200);
-                    response.render("mis_amigos", { amigos: listaAmigo, user: usuario, peticiones: peticiones});
+                    response.render("mis_amigos", { amigos: listaAmigos, user: usuario, peticiones: peticiones});
                 }
             });
         }

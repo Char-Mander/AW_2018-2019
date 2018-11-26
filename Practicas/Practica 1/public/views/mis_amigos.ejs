@@ -29,12 +29,14 @@
         <div class="body">
             <div class="contenedor_solicitudes">
                 <div class="titulo_solicitudes"> Solicitudes de amistad </div>
+                <% if(peticiones.length>0) { %>
                 <ul class="lista_solicitudes">
+                    <% peticiones.forEach(function(solicitud){ %>
                     <li>
-                        <div class="solicitud 1">
+                        <div class="solicitud">
                             <div class="info_user">
                                 <div class="img"></div>
-                                <div class="nombre_solicitud"> Bruja Piruja </div>
+                                <div class="nombre_solicitud"> <%= solicitud.nombre_completo %> </div>
                             </div>
                            <div class="botones">
                                 <button class="aceptar"> Aceptar </button>
@@ -42,20 +44,9 @@
                            </div>
                         </div>
                     </li>
-                    <li>
-                        <div class="solicitud 2">
-                            <div class="info_user">
-                                <div class="img"></div>
-                                <div class="nombre_solicitud"> Stuart Minion </div>
-                            </div>
-                            <div class="botones">
-                                <button class="aceptar"> Aceptar </button>
-                                <button class="rechazar"> Rechazar </button>
-                            </div>
-                        </div>
-                    </li>
+                    <% }); %>
                 </ul>
-
+                <% } %>
                 <div class="contenedor_busqueda">
                     <div class="titulo_busqueda"> Búsqueda de amigos </div>
                     <div class="barra_busqueda">
@@ -67,21 +58,18 @@
 
                 <div class="contenedor_amigos">
                     <div class="titulo_amigos"> Mis amigos </div>
+                    <% if(amigos.length>0) { %>
                     <ul class="lista_amigos">
+                        <% amigos.forEach(function(amigo){ %>
                         <li>
-                            <div class="amigo 1">
+                            <div class="amigo">
                                 <div class="img"></div>
-                                <div class="nombre_amigo"> Mike Wazowski </div>
+                                <div class="nombre_amigo"> <%= amigo.nombre_completo %> </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="amigo 2">
-                                <div class="img"></div>
-                                <div class="nombre_amigo"> Lucía Pinhead </div>
-                            </div>
-                        </li>
+                        <% }); %>
                     </ul>
-                    
+                    <% } %>
                 </div>
             </div>
         </div>
