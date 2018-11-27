@@ -85,7 +85,8 @@ class DAOUsers{
                     if(err){
                         cb_isUserCorrect(new Error("Error de acceso a la base de datos"), false);
                     } else if(resultado.length!==0){
-                        cb_isUserCorrect(null, true);
+                        console.log(resultado[0]);
+                        cb_isUserCorrect(null, true, resultado[0]);
                     }
                     else{
                         cb_isUserCorrect(null, false);

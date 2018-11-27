@@ -45,7 +45,9 @@ const multerFactory = multer({ storage: multer.memoryStorage() });  //multer (pa
 
 function middlewareLogin(request, response, next) {
     if (request.session.currentUser !== undefined) {
-        response.locals.userEmail = request.session.currentUser;
+        response.locals.userId = request.session.currentUserId;
+        response.locals.userEmail = request.session.currentUserEmail;
+        response.locals.userName = request.session.currentUserName;
         next();
     }
     else {
@@ -78,21 +80,18 @@ app.post("/signin", function (request, response) {
     user.email = request.body.email_user;
     user.password = request.body.password_user;
 
-    daoUsers.isUserCorrect(user.email, user.password, function (error, res) {
+    daoUsers.isUserCorrect(user.email, user.password, function (error, res, datos) {
         if (error) {
             response.render("signIn", { errorMsg: "Error" });
         }
         else if (res) {
             response.status(200);
-            request.session.currentUser = user.email;
-            daoUsers.getUser(user.email, function (error, user) {
-                if (error) {
-                    response.status(500);
-                } else {
-                    user.edad = calcularEdad(user.fecha_nacimiento);
-                    response.render("sesion", { user: user });
-                }
-            });
+            request.session.currentUserId = datos.id_user;
+            request.session.currentUserEmail = datos.email;
+            request.session.currentUserName = datos.nombre_completo;
+    
+            datos.edad=calcularEdad(datos.fecha_nacimiento);
+            response.render("sesion", { user: datos });
         }
         else {
             response.render("signIn", { errorMsg: "Dirección de correo y/o contraseña no válidos." });
@@ -107,7 +106,6 @@ app.get("/signup", function (request, response) {
 
 app.post("/signup", multerFactory.single("user_img"), function (request, response) {
     let user = {};
-    let nombreFichero = null;
 
     user.email = request.body.email_user;
     user.password = request.body.password_user;
@@ -237,6 +235,11 @@ app.get("/amigos", middlewareLogin, function (request, response) {
             response.status(500);
         }
         else {
+
+            for(let i=0; i<peticiones.length; i++){
+
+            }
+
             daoUsers.getFriends(response.locals.userEmail, function (error, usuario, listaAmigos) {
                 if (error) {
                     response.status(500);
