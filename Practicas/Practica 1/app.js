@@ -44,10 +44,11 @@ app.use(middlewareSession); //express-mysql-session
 const multerFactory = multer({ storage: multer.memoryStorage() });  //multer (para la subida y bajada de ficheros)
 
 function middlewareLogin(request, response, next) {
-    if (request.session.currentUser !== undefined) {
+    if (request.session.currentUserEmail !== undefined) {
         response.locals.userId = request.session.currentUserId;
         response.locals.userEmail = request.session.currentUserEmail;
         response.locals.userName = request.session.currentUserName;
+        response.locals.userPoints = request.session.currentUserPoints;
         next();
     }
     else {
@@ -89,6 +90,7 @@ app.post("/signin", function (request, response) {
             request.session.currentUserId = datos.id_user;
             request.session.currentUserEmail = datos.email;
             request.session.currentUserName = datos.nombre_completo;
+            request.session.currentUserPoints = datos.puntos;
     
             datos.edad=calcularEdad(datos.fecha_nacimiento);
             response.render("sesion", { user: datos });
@@ -139,7 +141,7 @@ app.post("/signup", multerFactory.single("user_img"), function (request, respons
 
 //VENTANA DE SESIÓN DEL USUARIO
 app.get("/sesion", middlewareLogin, function (request, response) {
-    daoUsers.getUser(response.locals.userEmail, function (error, usuario) {
+    daoUsers.getUser(response.locals.userId, function (error, usuario) {
         if (error) {
             response.status(500);
         } else {
@@ -189,16 +191,15 @@ app.use(middlewareLogin);
 //  Modificación del usuario
 app.get("/modificar_perfil", middlewareLogin, function (request, response) {
     response.status(200);
-    response.render("modificar_perfil", { errorMsg: null });
+    response.render("modificar_perfil", { errorMsg: null, puntos: response.locals.userPoints});
 });
 
 app.post("/modificar_perfil", middlewareLogin, multerFactory.single("user_img"), function (request, response) {
     let user = {};
-    let nombreFichero = null;
 
     user.email = response.locals.userEmail;
     user.password = request.body.password_user;
-    user.nombre_completo = request.body.name_user;
+    user.nombre_completo = response.locals.userName;
     user.sexo = request.body.sexo;
     user.fecha_nacimiento = request.body.fecha;
     user.edad = calcularEdad(request.body.fecha);
@@ -213,13 +214,14 @@ app.post("/modificar_perfil", middlewareLogin, multerFactory.single("user_img"),
         if (error) {
             response.status(500);
             console.log(`${error.message}`);
-            response.render("modificar_perfil", { errorMsg: "Error en el proceso de modificación", user: user });
+            response.render("modificar_perfil", { errorMsg: "Error en el proceso de modificación", puntos: response.locals.userPoints});
         } else {
-            daoUsers.getUser(response.locals.userEmail, function (error, user) {
+            daoUsers.getUser(response.locals.userId, function (error, user) {
                 if (error) {
                     response.status(500);
                 } else {
                     user.edad = calcularEdad(user.fecha_nacimiento);
+                    response.locals.userName=user.nombre_completo;
                     response.render("sesion", { user: user });
                 }
             });
@@ -228,25 +230,24 @@ app.post("/modificar_perfil", middlewareLogin, multerFactory.single("user_img"),
 });
 
 //VENTANA DEL LISTADO DE PETICIONES DE AMISTAD Y AMIGOS DE UN USUARIO
-app.get("/amigos", middlewareLogin, function (request, response) {
+app.get("/mis_amigos", middlewareLogin, function (request, response) {
 
-    daoUsers.getPeticiones(response.locals.userEmail, function (error, peticiones) {
+    daoUsers.getPeticiones(response.locals.userId, function (error, peticiones) {
         if (error) {
             response.status(500);
         }
         else {
-
-            for(let i=0; i<peticiones.length; i++){
-
-            }
-
-            daoUsers.getFriends(response.locals.userEmail, function (error, usuario, listaAmigos) {
+            //Habría que añadir el nombre del usuario en cada elemento del array
+            console.log(peticiones);
+            daoUsers.getAmigos(response.locals.userId, function (error, listaAmigos) {
                 if (error) {
                     response.status(500);
                 }
                 else {
+                    //Habría que añadir el nombre del usuario en cada elemento del array
+                    console.log(listaAmigos);
                     response.status(200);
-                    response.render("mis_amigos", { amigos: listaAmigos, user: usuario, peticiones: peticiones});
+                    response.render("mis_amigos.html", { amigos: listaAmigos, puntos: response.locals.userPoints, peticiones: peticiones});
                 }
             });
         }
@@ -299,4 +300,3 @@ app.listen(config.port, function (err) {
         console.log(`Servidor arrancado en el puerto ${config.port}`);
     }
 });
-

@@ -33,14 +33,14 @@ class DAOUsers{
     }
 
     /*Devuelve todos los datos del usuario cuyo email es el introducido*/
-    getUser(email, callback){
+    getUser(id, callback){
         this.pool.getConnection(function(err, connection){
             if(err){
                 callback(new Error("Error de conexión a la base de datos"), null);
             }else{
-                const sql = `SELECT * FROM user WHERE email = ?`;
+                const sql = `SELECT * FROM user WHERE id_user = ?`;
 
-                connection.query(sql, email, function(err, resultado){
+                connection.query(sql, id, function(err, resultado){
                     connection.release();
                     if(err){
                         callback(new Error("Error de acceso a la base de datos"), null);
@@ -117,6 +117,44 @@ class DAOUsers{
                         cb_getUserImageName(null, null);
                     }
                 })
+            }
+        });
+    }
+
+    getPeticiones(id, cb_getPeticiones){
+        this.pool.getConnection(function(err, connection){
+            if(err){
+                cb_getPeticiones(new Error("Error de conexión a la base de datos"), null);
+            }else{
+                const sql = `SELECT * FROM solicitudes WHERE id_user1 = ? AND status = 0`;
+
+                connection.query(sql, id, function(err, resultado){
+                    connection.release();
+                    if(err){
+                        cb_getPeticiones(new Error("Error de acceso a la base de datos"), null);
+                    }else{
+                        cb_getPeticiones(null, resultado[0]);
+                    }
+                });
+            }
+        });
+    }
+
+    getAmigos(id, cb_getAmigos){
+        this.pool.getConnection(function(err, connection){
+            if(err){
+                cb_getAmigos(new Error("Error de conexión a la base de datos"), null);
+            }else{
+                const sql = `SELECT * FROM amigos WHERE id_user1 = ?`;
+
+                connection.query(sql, id, function(err, resultado){
+                    connection.release();
+                    if(err){
+                        cb_getAmigos(new Error("Error de acceso a la base de datos"), null);
+                    }else{
+                        cb_getAmigos(null, resultado[0]);
+                    }
+                });
             }
         });
     }

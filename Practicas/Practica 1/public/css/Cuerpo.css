@@ -181,6 +181,19 @@ button.boton_aceptar{
     overflow: hidden;
 }
 
+button.boton_aceptar_cambiar_datos{
+    align-self: center;
+    width: 10vw;
+    text-align: center;
+    height: 3vw;
+    font-family: 'Patrick Hand';
+    font-size: 1.5vw;
+    border-radius:5px;
+    background-color:rgb(172, 240, 172); 
+    overflow: hidden;
+
+}
+
 div.texto h3{
     margin:0.5%;
     font-weight: normal;
@@ -198,7 +211,7 @@ button.boton_adjuntar_imagen{
     border-radius: 3px;
 }
 
-button.boton_aceptar:hover{
+button.boton_aceptar:hover, button.boton_aceptar_cambiar_datos:hover{
     background-color: rgb(122, 238, 122);
     cursor: pointer;
 }
@@ -208,7 +221,7 @@ button.boton_adjuntar_imagen:hover{
     cursor: pointer;
 }
 
-button.boton_aceptar:active{
+button.boton_aceptar:active, button.boton_aceptar_cambiar_datos:active{
     background-color: rgb(98, 228, 98);
 }
 
