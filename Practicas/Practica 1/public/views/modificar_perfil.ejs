@@ -23,7 +23,7 @@
                 <div class="enlace desconectar"> <a href="signout"> Desconectar </a> </div>
                 <div class="enlace puntuacion">
                     <div class="user_icon"></div>
-                    <div class="ptos"><%= user.puntos %> ptos</div>
+                    <div class="ptos"> <%= puntos %> ptos</div>
                 </div>
             </div>
         </div>
@@ -84,7 +84,7 @@
                             <input type="file" name="user_img">
                         </div>
 
-                        <button class="boton_aceptar" type="submit"> Guardar cambios </button>
+                        <button class="boton_aceptar_cambiar_datos" type="submit"> Guardar cambios </button>
                     </form>
 
                     <% if (errorMsg !== null ) { %>
