@@ -157,8 +157,13 @@ input{
 }
 
 input.fecha{
-    width: 43%;
+    width: 150px;
 }
+
+div.email_signin input, div.contraseña_signin input{
+    width: 55vw;
+}
+
 div.imagen_de_perfil{
     display:flex;
     justify-content: space-between;
