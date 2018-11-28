@@ -82,12 +82,12 @@ CREATE TABLE `respuestas_propuestas` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `respuestas_realizadas`
+-- Estructura de tabla para la tabla `preguntas_respondidas`
 --
 
-CREATE TABLE `respuestas_realizadas` (
+CREATE TABLE `preguntas_respondidas` (
   `id_pregunta` int(11) UNSIGNED NOT NULL,
-  `id_respondida` int(11) UNSIGNED NOT NULL PRIMARY KEY,
+  `id_respuesta` int(11) UNSIGNED NOT NULL PRIMARY KEY,
   `id_amigo` int(11) UNSIGNED NOT NULL,
   `id_propio` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -125,9 +125,9 @@ ALTER TABLE `respuestas_propuestas`
   ADD KEY `id_pregunta` (`id_pregunta`);
 
 --
--- Indices de la tabla `respuestas_realizadas`
+-- Indices de la tabla `preguntas_respondidas`
 --
-ALTER TABLE `respuestas_realizadas`
+ALTER TABLE `preguntas_respondidas`
   ADD KEY `id_pregunta` (`id_pregunta`),
   ADD KEY `id_amigo` (`id_amigo`),
   ADD KEY `id_propio` (`id_propio`);
@@ -173,9 +173,9 @@ ALTER TABLE `respuestas_propuestas`
     ADD CONSTRAINT `id_pregunta_fk_propuestas` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `respuestas_realizadas`
+-- Filtros para la tabla `preguntas_respondidas`
 --
-ALTER TABLE `respuestas_realizadas`
+ALTER TABLE `preguntas_respondidas`
   ADD CONSTRAINT `id_pregunta_fk_realizadas` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_amigo_fk` FOREIGN KEY (`id_amigo`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_propio_fk` FOREIGN KEY (`id_propio`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
