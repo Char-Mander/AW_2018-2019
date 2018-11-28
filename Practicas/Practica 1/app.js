@@ -240,9 +240,8 @@ app.get("/mis_amigos", middlewareLogin, function (request, response) {
             response.status(500);
         }
         else {
-
             //Array que permite sacar el nombre de los users que han enviado petición de amistad
-            for(let i=0; i<peticiones.length; i++){
+            for(let i=0; peticiones!==undefined && i<peticiones.length; i++){
                 daoUsers.getNombreUser(peticiones.action_id_user, function (error, nombre_user) {
                     if (error) {
                         response.status(500);
@@ -252,17 +251,14 @@ app.get("/mis_amigos", middlewareLogin, function (request, response) {
                     }
                 });
             }
-            console.log(peticiones);
-
             //Sacamos la lista de amigos
             daoAplicacion.getAmigos(response.locals.userId, function (error, listaAmigos) {
                 if (error) {
                     response.status(500);
                 }
                 else {
-
                     //Array que permite sacar el nombre de cada uno de los users que están en la lista de amigos
-                    for(let i=0; i<listaAmigos.length; i++){
+                    for(let i=0; listaAmigos !== undefined && i<listaAmigos.length; i++){
                         daoUsers.getNombreUser(listaAmigos.id_user2, function (error, nombre_user) {
                             if (error) {
                                 response.status(500);
@@ -272,7 +268,6 @@ app.get("/mis_amigos", middlewareLogin, function (request, response) {
                             }
                         });
                     }
-                    console.log(listaAmigos);
                     response.status(200);
                     response.render("mis_amigos", { amigos: listaAmigos, puntos: response.locals.userPoints, peticiones: peticiones});
                 }
