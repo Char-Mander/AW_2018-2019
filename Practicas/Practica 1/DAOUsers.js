@@ -40,7 +40,7 @@ class DAOUsers{
             }else{
                 const sql = `SELECT * FROM user WHERE id_user = ?`;
 
-                connection.query(sql, id, function(err, resultado){
+                connection.query(sql, [id], function(err, resultado){
                     connection.release();
                     if(err){
                         callback(new Error("Error de acceso a la base de datos"), null);
@@ -105,7 +105,6 @@ class DAOUsers{
                     if(err){
                         cb_isUserCorrect(new Error("Error de acceso a la base de datos"), false);
                     } else if(resultado.length!==0){
-                        console.log(resultado[0]);
                         cb_isUserCorrect(null, true, resultado[0]);
                     }
                     else{

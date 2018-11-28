@@ -19,7 +19,6 @@ class DAOAplicacion{
                     if(err){
                         cb_insertPeticiones(new Error("Error de acceso a la base de datos"));
                     }else{
-                        console.log(resultado[0]);
                         cb_insertPeticiones(null);
                     }
                 });
@@ -41,7 +40,6 @@ class DAOAplicacion{
                     if(err){
                         cb_insertPeticiones(new Error("Error de acceso a la base de datos"));
                     }else{
-                        console.log(resultado[0]);
                         cb_insertPeticiones(null);
                     }
                 });
@@ -55,14 +53,13 @@ class DAOAplicacion{
             if(err){
                 cb_getPeticiones(new Error("Error de conexión a la base de datos"), null);
             }else{
-                const sql = `SELECT action_id_user FROM solicitudes WHERE id_user1 = ? AND status = 0`;
-                connection.query(sql, id, function(err, resultado){
+                const sql = `SELECT DISTINCT action_id_user FROM solicitudes WHERE id_user1 = ? AND status = 0`;
+                connection.query(sql, [id], function(err, resultado){
                     connection.release();
                     if(err){
                         cb_getPeticiones(new Error("Error de acceso a la base de datos"), null);
                     }else{
-                        console.log(resultado[0]);
-                        cb_getPeticiones(null, resultado[0]);
+                        cb_getPeticiones(null, resultado);
                     }
                 });
             }
@@ -82,7 +79,6 @@ class DAOAplicacion{
                     if(err){
                         cb_insertAmigos(new Error("Error de acceso a la base de datos"));
                     }else{
-                        console.log(resultado[0]);
                         cb_insertAmigos(null);
                     }
                 });
@@ -96,15 +92,15 @@ class DAOAplicacion{
             if(err){
                 cb_getAmigos(new Error("Error de conexión a la base de datos"), null);
             }else{
-                const sql = `SELECT id_user2 FROM amigos WHERE id_user1 = ?`;
+                const sql = `SELECT * FROM amigos WHERE id_user1 = ? OR id_user2 = ?`;
 
-                connection.query(sql, id, function(err, resultado){
+                connection.query(sql, [id, id], function(err, resultado){
                     connection.release();
                     if(err){
                         cb_getAmigos(new Error("Error de acceso a la base de datos"), null);
                     }else{
-                        console.log(resultado[0]);
-                        cb_getAmigos(null, resultado[0]);
+                        console.log(resultado);
+                        cb_getAmigos(null, resultado);
                     }
                 });
             }

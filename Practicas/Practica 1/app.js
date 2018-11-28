@@ -233,21 +233,23 @@ app.post("/modificar_perfil", middlewareLogin, multerFactory.single("user_img"),
 
 //VENTANA DEL LISTADO DE PETICIONES DE AMISTAD Y AMIGOS DE UN USUARIO
 app.get("/mis_amigos", middlewareLogin, function (request, response) {
-
     //Sacamos la lista de peticiones
     daoAplicacion.getPeticiones(response.locals.userId, function (error, peticiones){
         if (error) {
             response.status(500);
         }
         else {
+            let arrayPeticiones = [];
             //Array que permite sacar el nombre de los users que han enviado petición de amistad
-            for(let i=0; peticiones!==undefined && i<peticiones.length; i++){
-                daoUsers.getNombreUser(peticiones.action_id_user, function (error, nombre_user) {
+            for(let i = 0; peticiones !== undefined && i < peticiones.length; i++){
+
+                daoUsers.getUser(peticiones[i].action_id_user, function (error, user) {
                     if (error) {
                         response.status(500);
                     } else {
                         response.status(200);
-                        peticiones[i].nombre_completo=nombre_user;
+                        arrayPeticiones.push(peticiones[i]);
+                        arrayPeticiones[i].nombre_completo = user.nombre_completo;
                     }
                 });
             }
@@ -257,19 +259,32 @@ app.get("/mis_amigos", middlewareLogin, function (request, response) {
                     response.status(500);
                 }
                 else {
+                    let arrayAmigos = [];
+                    let sacar_amigo;
+                    
                     //Array que permite sacar el nombre de cada uno de los users que están en la lista de amigos
-                    for(let i=0; listaAmigos !== undefined && i<listaAmigos.length; i++){
-                        daoUsers.getNombreUser(listaAmigos.id_user2, function (error, nombre_user) {
+                    for(let i = 0; listaAmigos !== undefined && i < listaAmigos.length; i++){
+                        console.log(`Id del user 1 después de la consulta: ${listaAmigos[i].id_user1}`);
+                        console.log(`Id del user 2 después de la consulta: ${listaAmigos[i].id_user2}`);
+
+                        if(response.locals.userId == listaAmigos[i].id_user1)
+                            sacar_amigo = listaAmigos[i].id_user2;
+                        else
+                            sacar_amigo = listaAmigos[i].id_user1;
+
+                        daoUsers.getUser(sacar_amigo, function (error, user) {
                             if (error) {
                                 response.status(500);
                             } else {
                                 response.status(200);
-                                listaAmigos[i].nombre_completo=nombre_user;
+                                console.log(`Objeto que devuelve la consulta del getUser: ${user}`);
+                                arrayAmigos.push(user);
                             }
                         });
                     }
+                    console.log(`Antes de entrar: ${arrayAmigos}`);
                     response.status(200);
-                    response.render("mis_amigos", { amigos: listaAmigos, puntos: response.locals.userPoints, peticiones: peticiones});
+                    response.render("mis_amigos", { amigos: arrayAmigos, puntos: response.locals.userPoints, peticiones: arrayPeticiones});
                 }
             });
         }
