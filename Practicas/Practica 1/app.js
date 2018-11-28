@@ -8,6 +8,7 @@ const session = require("express-session");
 const mysqlSession = require("express-mysql-session");
 const multer = require("multer");
 const DAOUsers = require("./DAOUsers.js");
+const DAOAplicacion = require("./DAOAplicacion.js");
 const config = require("./config.js");
 
 //  Creación de una aplicación express
@@ -63,6 +64,7 @@ const pool = mysql.createPool(config.mysqlConfig);
 
 //  Creación de una instancia de DAOUsers
 const daoUsers = new DAOUsers(pool);
+const daoAplicacion = new DAOAplicacion(pool);
 
 
 //  Login del usuario
@@ -232,22 +234,47 @@ app.post("/modificar_perfil", middlewareLogin, multerFactory.single("user_img"),
 //VENTANA DEL LISTADO DE PETICIONES DE AMISTAD Y AMIGOS DE UN USUARIO
 app.get("/mis_amigos", middlewareLogin, function (request, response) {
 
-    daoUsers.getPeticiones(response.locals.userId, function (error, peticiones) {
+    //Sacamos la lista de peticiones
+    daoAplicacion.getPeticiones(response.locals.userId, function (error, peticiones){
         if (error) {
             response.status(500);
         }
         else {
-            //Habría que añadir el nombre del usuario en cada elemento del array
+
+            //Array que permite sacar el nombre de los users que han enviado petición de amistad
+            for(let i=0; i<peticiones.length; i++){
+                daoUsers.getNombreUser(peticiones.action_id_user, function (error, nombre_user) {
+                    if (error) {
+                        response.status(500);
+                    } else {
+                        response.status(200);
+                        peticiones[i].nombre_completo=nombre_user;
+                    }
+                });
+            }
             console.log(peticiones);
-            daoUsers.getAmigos(response.locals.userId, function (error, listaAmigos) {
+
+            //Sacamos la lista de amigos
+            daoAplicacion.getAmigos(response.locals.userId, function (error, listaAmigos) {
                 if (error) {
                     response.status(500);
                 }
                 else {
-                    //Habría que añadir el nombre del usuario en cada elemento del array
+
+                    //Array que permite sacar el nombre de cada uno de los users que están en la lista de amigos
+                    for(let i=0; i<listaAmigos.length; i++){
+                        daoUsers.getNombreUser(listaAmigos.id_user2, function (error, nombre_user) {
+                            if (error) {
+                                response.status(500);
+                            } else {
+                                response.status(200);
+                                listaAmigos[i].nombre_completo=nombre_user;
+                            }
+                        });
+                    }
                     console.log(listaAmigos);
                     response.status(200);
-                    response.render("mis_amigos.html", { amigos: listaAmigos, puntos: response.locals.userPoints, peticiones: peticiones});
+                    response.render("mis_amigos", { amigos: listaAmigos, puntos: response.locals.userPoints, peticiones: peticiones});
                 }
             });
         }
