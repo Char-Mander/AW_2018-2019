@@ -277,8 +277,9 @@ app.get("/mis_amigos", middlewareLogin, function (request, response) {
                                 response.status(500);
                             } else {
                                 response.status(200);
-                                console.log(`Objeto que devuelve la consulta del getUser: ${user}`);
-                                arrayAmigos.push(user);
+                                console.log(`Objeto que devuelve la consulta del getUser: ${user.nombre_completo}`);
+                                arrayAmigos.push(listaAmigos[i]);
+                                arrayAmigos[i].nombre_completo=user.nombre_completo;
                             }
                         });
                     }

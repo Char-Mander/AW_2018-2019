@@ -23,10 +23,11 @@
                 <div class="enlace desconectar"> <a href="signout"> Desconectar </a> </div>
                 <div class="enlace puntuacion">
                     <div class="user_icon">
-                       <!-- <% if(user.imagen_perfil !== null){ %>
-                        <img class="icon" src="/imagen/<%= user.id_user %>" <% } else { %>
+                       <% if(user.imagen_perfil !== null){ %>
+                        <img class="icon" src="/imagen/<%= user.id_user %>"> 
+                        <% } else { %>
                         <img class="icon" src="/no_profile_pic">
-                        <% } %> -->
+                        <% } %>
                     </div>
                     <div class="ptos">
                         <%= user.puntos %> ptos</div>
@@ -43,7 +44,7 @@
                 <div class="contenedor_datos">
                     <div class="imagen_usuario">
                         <% if(user.imagen_perfil !== null){ %>
-                        <img src="/imagen/<%= user.id_user %>" <% } else { %>
+                        <img src="/imagen/<%= user.id_user %>"> <% } else { %>
                         <img src="/no_profile_pic">
                         <% } %>
                     </div>

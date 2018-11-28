@@ -48,7 +48,7 @@ div.imagen_usuario{
 }
 
 img{
-    width: auto;
+    width: 15vw;
     height: 15vw;
     border-radius: 104px;
 }
@@ -99,11 +99,13 @@ div.texto h3{
 div.boton{
     align-self: flex-end;
     justify-content: center;
-    width: 90%;
+    width: 15vw;
+    height: 10vw;
 }
 
 button{
-    width: 70%;
+    width: 10vw;
+    height: 2.5vw;
     font-family: 'Patrick Hand';
     font-size: 1.5vw;
     border-radius:5px;
