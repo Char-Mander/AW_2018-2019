@@ -44,6 +44,7 @@ app.use(middlewareSession); //express-mysql-session
 
 const multerFactory = multer({ storage: multer.memoryStorage() });  //multer (para la subida y bajada de ficheros)
 
+//Middleware que limita el acceso a la sesión sin estar loggeado
 function middlewareLogin(request, response, next) {
     if (request.session.currentUserEmail !== undefined) {
         response.locals.userId = request.session.currentUserId;
@@ -56,7 +57,6 @@ function middlewareLogin(request, response, next) {
         response.redirect("/signin");
     }
 }
-
 
 //  Creación de un pool de conexiones a una base de datos MySQL
 const pool = mysql.createPool(config.mysqlConfig);
