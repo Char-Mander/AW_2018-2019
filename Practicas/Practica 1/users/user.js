@@ -43,7 +43,8 @@ users.post("/signin", function (request, response) {
             request.session.currentUserPoints = datos.puntos;
     
             datos.edad=calcularEdad(datos.fecha_nacimiento);
-            response.render("sesion", { user: datos });
+            //response.render("sesion", { user: datos });
+            response.redirect("/users/sesion");
         }
         else {
             response.render("signIn", { errorMsg: "Dirección de correo y/o contraseña no válidos." });
@@ -80,7 +81,9 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
             user.id_user = id;
             response.status(200);
             request.session.currentUser = user.email;
-            response.render("sesion", { user: user });
+            request.session.currenUserId = user.id_user;
+            response.redirect("/users/sesion");
+            //response.render("sesion", { user: user });
         }
     });
 
@@ -88,7 +91,7 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
 
 //VENTANA DE SESIÓN DEL USUARIO
 users.get("/sesion", middlewares.middlewareLogin, function (request, response) {
-    daoUsers.getUser(response.locals.userId, function (error, usuario) {
+    daoUsers.getUser(request.session.currentUserId, function (error, usuario) {
         if (error) {
             response.status(500);
         } else {
@@ -108,7 +111,7 @@ users.get("/no_profile_pic", middlewares.middlewareLogin, function (request, res
 users.get("/signout", middlewares.middlewareLogin, function (request, response) {
     response.status(200);
     request.session.destroy();
-    response.redirect("/signin");
+    response.redirect("/users/signin");
 });
 
 users.get("/imagen/:id", middlewares.middlewareLogin, function (request, response) {
