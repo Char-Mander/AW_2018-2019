@@ -35,8 +35,6 @@ const middlewareSession = session({
 });
 
 
-
-
 // Crear un pool de conexiones a la base de datos de MySQL
 const pool = mysql.createPool(config.mysqlConfig);
 
@@ -53,6 +51,8 @@ app.use(express.static(ficherosEstaticos));
 
 app.use(middlewareSession);
 
+
+//  Entrada en el sistema
 app.get("/login", function(request, response){
     response.status(200);
     response.render("login", {errorMsg : null});
@@ -84,7 +84,6 @@ function (request, response) {
 });
 
 
-
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //  Añadir la tarea a la lista de tareas
@@ -93,7 +92,6 @@ function (request, response) {
 
     let cuerpo = request.body.Tarea_añadida;
     let task = createTask(cuerpo);
-
 
     daoT.insertTask(response.locals.userEmail, task, function (error) {
         if (error) {
@@ -136,8 +134,6 @@ app.post("/login", function (request, response) {
             }
         });
 });
-
-
 
 
 //  Imagen del usuario
