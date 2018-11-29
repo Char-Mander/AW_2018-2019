@@ -32,7 +32,7 @@ function middlewareLogin(request, response, next) {
         next();
     }
     else {
-        response.redirect("/signin");
+        response.redirect("/users/signin");
     }
 }
 
