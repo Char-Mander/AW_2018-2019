@@ -47,8 +47,6 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                     
                     //Array que permite sacar el nombre de cada uno de los users que están en la lista de amigos
                     for(let i = 0; listaAmigos !== undefined && i < listaAmigos.length; i++){
-                        console.log(`Id del user 1 después de la consulta: ${listaAmigos[i].id_user1}`);
-                        console.log(`Id del user 2 después de la consulta: ${listaAmigos[i].id_user2}`);
 
                         if(response.locals.userId == listaAmigos[i].id_user1)
                             sacar_amigo = listaAmigos[i].id_user2;
@@ -60,14 +58,12 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                                 response.status(500);
                             } else {
                                 response.status(200);
-                                console.log(`Objeto que devuelve la consulta del getUser: ${user.nombre_completo}`);
                                 arrayAmigos.push(listaAmigos[i]);
                                 arrayAmigos[i].nombre_completo=user.nombre_completo;
+                                response.render("mis_amigos", { amigos: arrayAmigos, puntos: response.locals.userPoints, peticiones: arrayPeticiones});
                             }
                         });
                     }
-                    response.status(200);
-                    response.render("mis_amigos", { amigos: arrayAmigos, puntos: response.locals.userPoints, peticiones: arrayPeticiones});
                 }
             });
         }

@@ -70,15 +70,6 @@ div.puntuacion{
     justify-content: space-evenly;
 }
 
-/*div.user_icon{
-    /*content: url(..\img\img.png);
-    display:flex;
-    align-self: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 104px;
-}*/
-
 div.user_icon{
     display:flex;
     align-self: center;
