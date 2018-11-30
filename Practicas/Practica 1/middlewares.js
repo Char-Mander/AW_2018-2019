@@ -1,6 +1,5 @@
 "use strict";
 
-const express = require("express");
 const session = require("express-session");
 const mysqlSession = require("express-mysql-session");
 const config = require("./config.js");
@@ -32,6 +31,15 @@ function middlewareLogin(request, response, next) {
     }
     else {
         response.redirect("/users/signin");
+    }
+}
+
+function middlewareLogged(request, response, next){
+    if(request.session.currentUserEmail !== undefined){
+        response.redirect("/users/sesion");
+    }
+    else{
+        next();
     }
 }
 
