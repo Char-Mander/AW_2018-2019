@@ -99,7 +99,7 @@ class DAOAplicacion{
                     if(err){
                         cb_getAmigos(new Error("Error de acceso a la base de datos"), null);
                     }else{
-                        console.log(resultado);
+                        
                         cb_getAmigos(null, resultado);
                     }
                 });

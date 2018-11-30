@@ -66,7 +66,6 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                             }
                         });
                     }
-                    console.log(`Antes de entrar: ${arrayAmigos}`);
                     response.status(200);
                     response.render("mis_amigos", { amigos: arrayAmigos, puntos: response.locals.userPoints, peticiones: arrayPeticiones});
                 }

@@ -39,7 +39,6 @@ users.post("/signin", function (request, response) {
             response.status(200);
             request.session.currentUserId = datos.id_user;
             request.session.currentUserEmail = datos.email;
-            request.session.currentUserName = datos.nombre_completo;
             request.session.currentUserPoints = datos.puntos;
     
             datos.edad=calcularEdad(datos.fecha_nacimiento);
@@ -80,10 +79,10 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
         } else {
             user.id_user = id;
             response.status(200);
-            request.session.currentUser = user.email;
-            request.session.currenUserId = user.id_user;
+            request.session.currentUserEmail = user.email;
+            request.session.currentUserId = user.id_user;
+            request.session.currentUserPoints = user.puntos;
             response.redirect("/users/sesion");
-            //response.render("sesion", { user: user });
         }
     });
 
@@ -103,7 +102,7 @@ users.get("/sesion", middlewares.middlewareLogin, function (request, response) {
 });
 
 users.get("/no_profile_pic", middlewares.middlewareLogin, function (request, response) {
-    response.sendFile(path.join(__dirname, "profile_imgs", "NoPerfil.png"));
+    response.sendFile(path.join(__dirname, "../profile_imgs", "NoPerfil.png"));
 });
 
 
@@ -158,7 +157,7 @@ users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.singl
         if (error) {
             response.status(500);
             console.log(`${error.message}`);
-            response.render("modificar_perfil", { errorMsg: "Error en el proceso de modificación", puntos: response.locals.userPoints});
+            response.redirect("/users/modificar_perfil", { errorMsg: "Error en el proceso de modificación", puntos: response.locals.userPoints});
         } else {
             daoUsers.getUser(response.locals.userId, function (error, user) {
                 if (error) {
