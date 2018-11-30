@@ -47,7 +47,8 @@ const middlewares ={
     MySQLStore: MySQLStore,
     middlewareLogin: middlewareLogin,
     middlewareSession: middlewareSession,
-    sessionStore: sessionStore
+    sessionStore: sessionStore,
+    middlewareLogged: middlewareLogged
 }
 
 module.exports = middlewares;

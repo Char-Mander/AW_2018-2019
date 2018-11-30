@@ -17,7 +17,7 @@ const daoUsers = new DAOUsers(pool);
 const multerFactory = multer({ storage: multer.memoryStorage() });
 
 //  Login del usuario
-users.get("/signin", function (request, response) {
+users.get("/signin", middlewares.middlewareLogged, function (request, response) {
     response.status(200);
     response.render("signIn", { errorMsg: null });
 });
@@ -52,7 +52,7 @@ users.post("/signin", function (request, response) {
 });
 
 //  Registro del usuario
-users.get("/signup", function (request, response) {
+users.get("/signup", middlewares.middlewareLogged, function (request, response) {
     response.render("signup", { errorMsg: null });
 });
 
@@ -137,7 +137,7 @@ users.get("/modificar_perfil", middlewares.middlewareLogin, function (request, r
     response.render("modificar_perfil", { errorMsg: null, puntos: response.locals.userPoints});
 });
 
-users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.single("user_img"), function (request, response) {
+users.post("/modificar_perfil", multerFactory.single("user_img"), function (request, response) {
     let user = {};
 
     user.email = response.locals.userEmail;
