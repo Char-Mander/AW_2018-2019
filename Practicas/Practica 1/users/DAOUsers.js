@@ -52,26 +52,6 @@ class DAOUsers{
         });
     }
 
-    /*Devuelve todos los datos del usuario cuyo email es el introducido*/
-    getNombreUser(id, cb_getNombreUser){
-        this.pool.getConnection(function(err, connection){
-            if(err){
-                cb_getNombreUser(new Error("Error de conexión a la base de datos"), null);
-            }else{
-                const sql = `SELECT nombre_completo FROM user WHERE id_user = ?`;
-
-                connection.query(sql, id, function(err, resultado){
-                    connection.release();
-                    if(err){
-                        cb_getNombreUser(new Error("Error de acceso a la base de datos"), null);
-                    }else{
-                        cb_getNombreUser(null, resultado[0]);
-                    }
-                });
-            }
-        });
-    }
-
     /*Guarda un usuario en la base de datos*/
     updateUser(user, callback){
         this.pool.getConnection(function(error, connection){
