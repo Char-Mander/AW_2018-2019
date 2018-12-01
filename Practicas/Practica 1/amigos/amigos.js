@@ -70,4 +70,45 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
     });
 });
 
+//  Búsqueda de amigos del usuario
+amigos.get("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
+    response.status(200);
+    response.render("busqueda_amigos", { errorMsg: null, puntos: response.locals.userPoints});
+});
+
+amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
+    let user = {};
+
+    user.email = response.locals.userEmail;
+    user.password = request.body.password_user;
+    user.nombre_completo = response.locals.userName;
+    user.sexo = request.body.sexo;
+    user.fecha_nacimiento = request.body.fecha;
+    user.edad = calcularEdad(request.body.fecha);
+    user.imagen_perfil = null;
+    user.puntos = 0;
+
+    if (request.file) {
+        user.imagen_perfil = request.file.buffer;
+    }
+
+    daoUsers.updateUser(user, function (error) {
+        if (error) {
+            response.status(500);
+            console.log(`${error.message}`);
+            response.redirect("/users/modificar_perfil", { errorMsg: "Error en el proceso de modificación", puntos: response.locals.userPoints});
+        } else {
+            daoUsers.getUser(response.locals.userId, function (error, user) {
+                if (error) {
+                    response.status(500);
+                } else {
+                    user.edad = calcularEdad(user.fecha_nacimiento);
+                    response.locals.userName=user.nombre_completo;
+                    response.render("busqueda", { user: user });
+                }
+            });
+        }
+    });
+});
+
 module.exports = amigos;
