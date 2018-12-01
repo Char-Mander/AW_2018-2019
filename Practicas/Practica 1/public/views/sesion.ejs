@@ -24,9 +24,9 @@
                 <div class="enlace puntuacion">
                     <div class="user_icon">
                        <% if(user.imagen_perfil !== null){ %>
-                        <img class="icon" src="/imagen/<%= user.id_user %>"> 
+                        <img class="icon" src="/users/imagen/<%= user.id_user %>"> 
                         <% } else { %>
-                        <img class="icon" src="/no_profile_pic">
+                        <img class="icon" src="/users/no_profile_pic">
                         <% } %>
                     </div>
                     <div class="ptos">
@@ -44,8 +44,8 @@
                 <div class="contenedor_datos">
                     <div class="imagen_usuario">
                         <% if(user.imagen_perfil !== null){ %>
-                        <img src="/imagen/<%= user.id_user %>"> <% } else { %>
-                        <img src="/no_profile_pic">
+                        <img src="/users/imagen/<%= user.id_user %>"> <% } else { %>
+                        <img src="/users/no_profile_pic">
                         <% } %>
                     </div>
                     <div class="datos">
