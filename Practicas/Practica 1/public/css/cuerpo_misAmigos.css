@@ -74,7 +74,7 @@ div.botones{
     justify-content: flex-end;
 }
 
-div.barra_busqueda{
+form.barra_busqueda{
     display: flex;
     width: 96%;
     height: auto;

@@ -107,12 +107,34 @@ class DAOAmigos{
         });
     }
 
+    getUserDesconocido(id_propio, id_amigo, cb_getUserDesconocido){
+        this.pool.getConnection(function(err, connection){
+            if(err){
+                cb_getUserDesconocido(new Error("Error de conexión a la base de datos"), null);
+            }else{
+                const sql = `SELECT * FROM user LEFT JOIN amigos WHERE id_user1 != ? AND id_user2 != ? 
+                AND ((id_user = ? AND id_user = id_user1) OR (id_user = ? id_user = id_user2))`;
+                let elems = [id_propio, id_propio, id_amigo, id_amigo];
+                connection.query(sql, elems, function(err, resultado){
+                    connection.release();
+                    if(err){
+                        cb_getUserDesconocido(new Error("Error de acceso a la base de datos"), null);
+                    }else{
+                        
+                        cb_getUserDesconocido(null, resultado);
+                    }
+                });
+            }
+        });
+    }
+
+    /* Función que busca amigos que contengan en su nombre la cadena que se le pasa a la función */
     buscarAmigos(name, cb_buscarAmigos){
         this.pool.getConnection(function(err, connection){
             if(err){
                 cb_buscarAmigos(new Error("Error de conexión a la base de datos"), null);
             }else{
-                const sql = `SELECT nombre_completo FROM user WHERE nombre_completo LIKE ?`;
+                const sql = `SELECT * FROM user WHERE nombre_completo LIKE '?'`;
 
                 connection.query(sql, [`%`+name+`%`], function(err, resultado){
                     connection.release();
@@ -126,6 +148,8 @@ class DAOAmigos{
             }
         });
     }
+
+
 
 }   
 

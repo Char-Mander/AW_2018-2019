@@ -17,14 +17,14 @@ const daoUsers = new DAOUsers(pool);
 //VENTANA DEL LISTADO DE PETICIONES DE AMISTAD Y AMIGOS DE UN USUARIO
 amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, response) {
     //Sacamos la lista de peticiones
-    daoAmigos.getPeticiones(response.locals.userId, function (error, peticiones){
+    daoAmigos.getPeticiones(response.locals.userId, function (error, peticiones) {
         if (error) {
             response.status(500);
         }
         else {
             let arrayPeticiones = [];
             //Array que permite sacar el nombre de los users que han enviado petición de amistad
-            for(let i = 0; peticiones !== undefined && i < peticiones.length; i++){
+            for (let i = 0; peticiones !== undefined && i < peticiones.length; i++) {
 
                 daoUsers.getUser(peticiones[i].action_id_user, function (error, user) {
                     if (error) {
@@ -44,11 +44,11 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                 else {
                     let arrayAmigos = [];
                     let sacar_amigo;
-                    
-                    //Array que permite sacar el nombre de cada uno de los users que están en la lista de amigos
-                    for(let i = 0; listaAmigos !== undefined && i < listaAmigos.length; i++){
 
-                        if(response.locals.userId == listaAmigos[i].id_user1)
+                    //Array que permite sacar el nombre de cada uno de los users que están en la lista de amigos
+                    for (let i = 0; listaAmigos !== undefined && i < listaAmigos.length; i++) {
+
+                        if (response.locals.userId == listaAmigos[i].id_user1)
                             sacar_amigo = listaAmigos[i].id_user2;
                         else
                             sacar_amigo = listaAmigos[i].id_user1;
@@ -59,8 +59,8 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                             } else {
                                 response.status(200);
                                 arrayAmigos.push(listaAmigos[i]);
-                                arrayAmigos[i].nombre_completo=user.nombre_completo;
-                                response.render("mis_amigos", { amigos: arrayAmigos, puntos: response.locals.userPoints, peticiones: arrayPeticiones});
+                                arrayAmigos[i].nombre_completo = user.nombre_completo;
+                                response.render("mis_amigos", { amigos: arrayAmigos, puntos: response.locals.userPoints, peticiones: arrayPeticiones });
                             }
                         });
                     }
@@ -73,33 +73,35 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
 //  Búsqueda de amigos del usuario
 amigos.get("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
     response.status(200);
-    response.render("busqueda_amigos", { errorMsg: null, puntos: response.locals.userPoints});
+    response.render("busqueda", { errorMsg: null, puntos: response.locals.userPoints });
 });
 
 amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
-    let user = request.body.name_user;
-    
-            daoAmigos.getAmigos(user, function (error, amigos) {
+    let name = request.body.name_user;
+
+    daoAmigos.buscarAmigos(name, function (error, users) {
+        if (error) {
+            response.status(500);
+        } else {
+            response.status(200);
+            for(let i=0; i<users.length; i++){
+            
+            daoAmigos.getUserDesconocido(response.locals.userId, users[i].id_user, function(error, user){
                 if (error) {
                     response.status(500);
                 } else {
-                   
-                    for(let i=0; i<amigos.length; i++){
-                        daoAmigos.buscarAmigos(amigos[i].nombre_completo, function (error, users) {
-                            if (error) {
-                                response.status(500);
-                            } else {
-                                response.status(200);
-                                response.render("busqueda", { amigos: users, puntos: response.locals.userPoints});
-                            
-                            }
-                        });
-                    }
-
+                    response.status(200);
+                    response.redirect("busqueda", { amigos: user, puntos: response.locals.userPoints });
                 }
             });
-        
-        
+        }
+           
+
+        }
+    });
+
+
+
 });
 
 
