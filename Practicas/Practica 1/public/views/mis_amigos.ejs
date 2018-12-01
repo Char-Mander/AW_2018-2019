@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="es-ES">
     <meta charset="utf-8" />
     <title>Mis amigos - FaceBluff</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../css/general.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/cabecera.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo_misAmigos.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cabecera.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo_misAmigos.css" />
 </head>
+
 <body>
-    
+
     <div class="contenedor">
         <div class="header">
             <div class="titulo">
@@ -19,9 +21,10 @@
                 <div class="enlace amigos"> <a href="/amigos/mis_amigos"> Amigos </a> </div>
                 <div class="enlace preguntas"> <a href="preguntas.html"> Preguntas </a> </div>
                 <div class="enlace desconectar"> <a href="/users/signout"> Desconectar </a> </div>
-                <div class="enlace puntuacion"> 
-                    <div class="user_icon"></div> 
-                    <div class="ptos"> <%= puntos %> ptos</div>
+                <div class="enlace puntuacion">
+                    <div class="user_icon"></div>
+                    <div class="ptos">
+                        <%= puntos %> ptos</div>
                 </div>
             </div>
         </div>
@@ -35,13 +38,19 @@
                     <li>
                         <div class="solicitud">
                             <div class="info_user">
-                                <div class="img"></div>
-                                <div class="nombre_solicitud"> <%= solicitud.nombre_completo %> </div>
+                                <% if(solicitud.imagen_perfil !== null){ %>
+                                <img class="icon" src="/users/imagen/<%= solicitud.id_user %>">
+                                <% } else { %>
+                                <img class="icon" src="/users/no_profile_pic">
+                                <% } %>
+                                <div class="nombre_solicitud">
+                                    <%= solicitud.nombre_completo %>
+                                </div>
                             </div>
-                           <div class="botones">
+                            <div class="botones">
                                 <button class="aceptar"> Aceptar </button>
                                 <button class="rechazar"> Rechazar </button>
-                           </div>
+                            </div>
                         </div>
                     </li>
                     <% }); %>
@@ -49,7 +58,7 @@
                 <% } %>
                 <div class="contenedor_busqueda">
                     <div class="titulo_busqueda"> Búsqueda de amigos </div>
-                    <form class="barra_busqueda" method="post" action="/amigos/busqueda_amigos" enctype="multipart/form-data" >
+                    <form class="barra_busqueda" method="post" action="/amigos/busqueda_amigos" enctype="multipart/form-data">
                         <div class="busqueda"> Búsqueda por nombre: </div>
                         <input type="text" name="name_user">
                         <button type="submit"> Buscar </button>
@@ -63,8 +72,14 @@
                         <% amigos.forEach(function(amigo){ %>
                         <li>
                             <div class="amigo">
-                                <div class="img"></div>
-                                <div class="nombre_amigo"> <%= amigo.nombre_completo %> </div>
+                                <% if(amigo.imagen_perfil !== null){ %>
+                                <img class="icon" src="/users/imagen/<%= amigo.id_user %>">
+                                <% } else { %>
+                                <img class="icon" src="/users/no_profile_pic">
+                                <% } %>
+                                <div class="nombre_amigo">
+                                    <%= amigo.nombre_completo %>
+                                </div>
                             </div>
                         </li>
                         <% }); %>
@@ -77,4 +92,5 @@
 
 
 </body>
+
 </html>
