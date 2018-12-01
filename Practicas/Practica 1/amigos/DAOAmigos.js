@@ -1,6 +1,6 @@
 "use strict";
 
-class DAOAplicacion{
+class DAOAmigos{
     constructor(pool) {
         this.pool = pool;
     }
@@ -107,7 +107,27 @@ class DAOAplicacion{
         });
     }
 
+    buscarAmigos(name, cb_buscarAmigos){
+        this.pool.getConnection(function(err, connection){
+            if(err){
+                cb_buscarAmigos(new Error("Error de conexión a la base de datos"), null);
+            }else{
+                const sql = `SELECT nombre_completo FROM user WHERE nombre_completo LIKE ?`;
+
+                connection.query(sql, [`%`+name+`%`], function(err, resultado){
+                    connection.release();
+                    if(err){
+                        cb_buscarAmigos(new Error("Error de acceso a la base de datos"), null);
+                    }else{
+                        
+                        cb_buscarAmigos(null, resultado);
+                    }
+                });
+            }
+        });
+    }
+
 }   
 
 
-module.exports = DAOAplicacion;
+module.exports = DAOAmigos;

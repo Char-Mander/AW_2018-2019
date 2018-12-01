@@ -77,38 +77,30 @@ amigos.get("/busqueda_amigos", middlewares.middlewareLogin, function (request, r
 });
 
 amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
-    let user = {};
-
-    user.email = response.locals.userEmail;
-    user.password = request.body.password_user;
-    user.nombre_completo = response.locals.userName;
-    user.sexo = request.body.sexo;
-    user.fecha_nacimiento = request.body.fecha;
-    user.edad = calcularEdad(request.body.fecha);
-    user.imagen_perfil = null;
-    user.puntos = 0;
-
-    if (request.file) {
-        user.imagen_perfil = request.file.buffer;
-    }
-
-    daoUsers.updateUser(user, function (error) {
-        if (error) {
-            response.status(500);
-            console.log(`${error.message}`);
-            response.redirect("/users/modificar_perfil", { errorMsg: "Error en el proceso de modificación", puntos: response.locals.userPoints});
-        } else {
-            daoUsers.getUser(response.locals.userId, function (error, user) {
+    let user = request.body.name_user;
+    
+            daoAmigos.getAmigos(user, function (error, amigos) {
                 if (error) {
                     response.status(500);
                 } else {
-                    user.edad = calcularEdad(user.fecha_nacimiento);
-                    response.locals.userName=user.nombre_completo;
-                    response.render("busqueda", { user: user });
+                   
+                    for(let i=0; i<amigos.length; i++){
+                        daoAmigos.buscarAmigos(amigos[i].nombre_completo, function (error, users) {
+                            if (error) {
+                                response.status(500);
+                            } else {
+                                response.status(200);
+                                response.render("busqueda", { amigos: users, puntos: response.locals.userPoints});
+                            
+                            }
+                        });
+                    }
+
                 }
             });
-        }
-    });
+        
+        
 });
+
 
 module.exports = amigos;
