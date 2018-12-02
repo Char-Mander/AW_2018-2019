@@ -73,30 +73,37 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
 //  Búsqueda de amigos del usuario
 amigos.get("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
     response.status(200);
-    response.render("busqueda", { errorMsg: null, puntos: response.locals.userPoints });
+    response.render("busqueda", { errorMsg: null, puntos: response.locals.userPoints});
 });
 
 amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
     let name = request.body.name_user;
-
+    //Sacamos el id de los usuarios cuyo nombre se parece al que el usuario de la sesión ha escritos
     daoAmigos.buscarAmigos(name, function (error, users) {
         if (error) {
             response.status(500);
         } else {
             response.status(200);
-            for(let i=0; i<users.length; i++){
-            
-            daoAmigos.getUserDesconocido(response.locals.userId, users[i].id_user, function(error, user){
+
+            daoAmigos.getAmigos(response.locals.userId, function (error, amigos) {
                 if (error) {
                     response.status(500);
                 } else {
                     response.status(200);
-                    response.redirect("busqueda", { amigos: user, puntos: response.locals.userPoints });
+
+                    daoAmigos.getPeticiones(response.locals.userId, function (error, peticiones) {
+                        if (error) {
+                            response.status(500);
+                        } else {
+                            response.status(200);
+                            users.filter(n => n.id_user != response.locals.userId && amigos.every(f => f.id_user1 =! n.id_user && f.id_user2 != n.id_user) 
+                            && peticiones.every(p => p.id_user1 =! n.id_user && p.id_user2 != n.id_user));
+                            console.log(users); 
+                            response.render("busqueda", { amigos: users, puntos: response.locals.userPoints });
+                        }
+                    });
                 }
             });
-        }
-           
-
         }
     });
 

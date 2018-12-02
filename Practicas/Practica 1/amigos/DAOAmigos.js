@@ -53,7 +53,7 @@ class DAOAmigos{
             if(err){
                 cb_getPeticiones(new Error("Error de conexión a la base de datos"), null);
             }else{
-                const sql = `SELECT DISTINCT action_id_user FROM solicitudes WHERE id_user1 = ? AND status = 0`;
+                const sql = `SELECT * FROM solicitudes WHERE id_user1 = ? AND status = 0`;
                 connection.query(sql, [id], function(err, resultado){
                     connection.release();
                     if(err){
@@ -106,15 +106,15 @@ class DAOAmigos{
             }
         });
     }
-
+/*
     getUserDesconocido(id_propio, id_amigo, cb_getUserDesconocido){
         this.pool.getConnection(function(err, connection){
             if(err){
                 cb_getUserDesconocido(new Error("Error de conexión a la base de datos"), null);
             }else{
-                const sql = `SELECT * FROM user LEFT JOIN amigos WHERE id_user1 != ? AND id_user2 != ? 
-                AND ((id_user = ? AND id_user = id_user1) OR (id_user = ? id_user = id_user2))`;
-                let elems = [id_propio, id_propio, id_amigo, id_amigo];
+                const sql = `SELECT DISTINCT * FROM user LEFT JOIN amigos ON id_user1=id_user OR id_user2=id_user 
+                WHERE id_user!=? AND id_user=? `;
+                let elems = [id_propio, id_amigo];
                 connection.query(sql, elems, function(err, resultado){
                     connection.release();
                     if(err){
@@ -126,7 +126,7 @@ class DAOAmigos{
                 });
             }
         });
-    }
+    }*/
 
     /* Función que busca amigos que contengan en su nombre la cadena que se le pasa a la función */
     buscarAmigos(name, cb_buscarAmigos){
