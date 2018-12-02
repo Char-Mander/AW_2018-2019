@@ -73,33 +73,45 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
 //  Búsqueda de amigos del usuario
 amigos.get("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
     response.status(200);
-    response.render("busqueda", { errorMsg: null, puntos: response.locals.userPoints});
+    response.render("busqueda_amigos", { errorMsg: null, puntos: response.locals.userPoints});
 });
 
 amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
-    let name = request.body.name_user;
+    let name = request.body.name_user;//Coge el nombre como undefined (probablemente por la redirección)
+
+    console.log(name);
     //Sacamos el id de los usuarios cuyo nombre se parece al que el usuario de la sesión ha escritos
     daoAmigos.buscarAmigos(name, function (error, users) {
         if (error) {
             response.status(500);
+            console.log(error.message);
         } else {
             response.status(200);
-
+            console.log("Busca a los amigos");
+            //Se sacan los id de la lista de usuarios que son amigos
             daoAmigos.getAmigos(response.locals.userId, function (error, amigos) {
                 if (error) {
                     response.status(500);
+                    console.log(error.message);
                 } else {
                     response.status(200);
-
+                    console.log("Get amigos");
+                    console.log(amigos);
+                    //Se sacan los id de las peticiones de amistad que hay de unos usuarios a otros
                     daoAmigos.getPeticiones(response.locals.userId, function (error, peticiones) {
                         if (error) {
                             response.status(500);
+                            console.log(error.message);
                         } else {
                             response.status(200);
+                            console.log("Get peticiones");
+                            console.log(peticiones);
+                            //Se quita de la lista de usuarios el propio usuario, los que son amigos, y los que tienen una petición de amistad pendiente
                             users.filter(n => n.id_user != response.locals.userId && amigos.every(f => f.id_user1 =! n.id_user && f.id_user2 != n.id_user) 
                             && peticiones.every(p => p.id_user1 =! n.id_user && p.id_user2 != n.id_user));
+                            console.log("Resultado final:");
                             console.log(users); 
-                            response.render("busqueda", { amigos: users, puntos: response.locals.userPoints });
+                            response.redirect("busqueda_amigos", { amigos: users, puntos: response.locals.userPoints });
                         }
                     });
                 }
