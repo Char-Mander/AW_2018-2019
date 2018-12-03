@@ -157,14 +157,14 @@ users.post("/modificar_perfil", multerFactory.single("user_img"), function (requ
         if (error) {
             response.status(500);
             console.log(`${error.message}`);
-            response.redirect("/users/modificar_perfil", { errorMsg: "Error en el proceso de modificación", puntos: response.locals.userPoints});
+            response.render("modificar_perfil", { errorMsg: "Error en el proceso de modificación", puntos: response.locals.userPoints});
         } else {
-            daoUsers.getUser(response.locals.userId, function (error, user) {
+            daoUsers.getUser(response.session.currentUserId, function (error, user) {
                 if (error) {
                     response.status(500);
                 } else {
                     user.edad = calcularEdad(user.fecha_nacimiento);
-                    response.locals.userName=user.nombre_completo;
+                    response.locals.userName = user.nombre_completo;
                     response.render("sesion", { user: user });
                 }
             });

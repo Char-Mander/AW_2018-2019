@@ -90,6 +90,30 @@ input{
     align-self: center;
 }
 
+label.eleccion {
+    display: flex;
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    width: 15%;
+    height: 80%;
+    cursor: pointer;
+    user-select: none;
+    overflow:hidden;
+  }
+
+label.eleccion input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 10px;
+    width: 10px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+  
+
 div.contenedor_añadir_pregunta, div.contenedor_añadir_preguntas{
     display: flex;
     flex-direction: column;

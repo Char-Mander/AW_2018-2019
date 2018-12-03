@@ -19,8 +19,8 @@
             <div class="nav">
                 <div class="enlace perfil"> <a href="/users/sesion"> Perfil </a> </div>
                 <div class="enlace amigos"> <a href="/amigos/mis_amigos"> Amigos </a> </div>
-                <div class="enlace preguntas"> <a href="preguntas.html"> Preguntas </a> </div>
-                <div class="enlace desconectar"> <a href="signin"> Desconectar </a> </div>
+                <div class="enlace preguntas"> <a href="/preguntas/preguntas"> Preguntas </a> </div>
+                <div class="enlace desconectar"> <a href="/users/signin"> Desconectar </a> </div>
                 <div class="enlace puntuacion">
                     <div class="user_icon"></div>
                     <div class="ptos">50 pts</div>
@@ -32,39 +32,55 @@
             <div class="contenedor_añadir_preguntas">
                 <div class="titulo_preguntas"> Añadir pregunta </div>
 
-                <ul class="lista_añadir_opciones_preguntas">
-                    <li>
-                        <div class="nombre_pregunta">
-                            <div class="info_pregunta">Pregunta: <input></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="opcion_respuesta 1">
-                            <div class="info_pregunta">Opción 1: <input></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="opcion_respuesta 2">
-                            <div class="info_pregunta">Opción 2: <input></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="opcion_respuesta 3">
-                            <div class="info_pregunta">Opción 3: <input></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="opcion_respuesta 4">
-                            <div class="info_pregunta">Opción 4: <input></div>
-                        </div>
-                    </li>
-                </ul>
+                <form class="nueva_pregunta" method="post" action="/preguntas/nueva_pregunta" >
 
-                <div class="contenedor_boton_añadir_preguntas">
-                    <div class="botones">
-                        <button class="crear_pregunta"> Añadir nueva pregunta </button>
+                    <ul class="lista_añadir_opciones_preguntas">
+                        <li>
+                            <div class="texto_pregunta">
+                                <div class="info_pregunta">Pregunta: <input type="text" name="texto_pregunta"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="opcion_respuesta 1">
+                                <div class="info_pregunta">Opción 1: <input type="text" name="texto_respuesta1"></div>
+                                <label class="eleccion">Correcta
+                                    <input type="radio" name="correcta1">
+                                </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="opcion_respuesta 2">
+                                <div class="info_pregunta">Opción 2: <input type="text" name="texto_respuesta2"></div>
+                                <label class="eleccion">Correcta
+                                    <input type="radio" name="correcta2">
+                                </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="opcion_respuesta 3">
+                                <div class="info_pregunta">Opción 3: <input type="text" name="texto_respuesta3"></div>
+                                <label class="eleccion">Correcta
+                                    <input type="radio" name="correcta3">
+                                </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="opcion_respuesta 4">
+                                <div class="info_pregunta">Opción 4: <input type="text" name="texto_respuesta4"></div>
+                                <label class="eleccion">Correcta
+                                    <input type="radio" name="correcta4">
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+    
+                    <div class="contenedor_boton_añadir_preguntas">
+                        <div class="botones">
+                            <button class="crear_pregunta"> Añadir nueva pregunta </button>
+                        </div>
                     </div>
-                </div>
+
+                </form>
 
                 <% if (errorMsg !== null ) { %>
                 <div class="mensaje_error">
