@@ -28,7 +28,7 @@
 
                 <div class="body">
                         <div class="contenedor_buscar">
-                            <div class="titulo_buscar"> Resultado de la búsqueda 'e' </div>
+                            <div class="titulo_buscar"> Resultado de la búsqueda '<%= name %>' </div>
                             <% if(amigos !== undefined && amigos.length>0) { %>
                             <ul class="lista_busqueda">
                                     <% amigos.forEach(function(amigo){ %>
@@ -43,7 +43,11 @@
                                        </div>
                                     </div>
                                 </li>
+                                <% }); %>
                             </ul>
+                            <% } else { %>
+                                <%= errorMsg %>
+                            <% } %>
                         </div>   
                 </div>   
             

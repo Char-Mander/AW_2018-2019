@@ -111,7 +111,7 @@ amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, 
                             && peticiones.every(p => p.id_user1 =! n.id_user && p.id_user2 != n.id_user));
                             console.log("Resultado final:");
                             console.log(users); 
-                            response.redirect("busqueda_amigos", { amigos: users, puntos: response.locals.userPoints });
+                            response.redirect("/amigos/busqueda_amigos", { errorMsg: "No se ha encontrado a ningún usuario", amigos: users, puntos: response.locals.userPoints, name : name});
                         }
                     });
                 }
