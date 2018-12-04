@@ -42,7 +42,6 @@ users.post("/signin", function (request, response) {
             request.session.currentUserPoints = datos.puntos;
     
             datos.edad=calcularEdad(datos.fecha_nacimiento);
-            //response.render("sesion", { user: datos });
             response.redirect("/users/sesion");
         }
         else {
