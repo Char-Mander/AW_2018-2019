@@ -113,7 +113,7 @@ class DAOAmigos{
             if(err){
                 cb_buscarAmigos(new Error("Error de conexión a la base de datos"), null);
             }else{
-                const sql = `SELECT * FROM user WHERE nombre_completo LIKE '?'`;
+                const sql = `SELECT * FROM user WHERE nombre_completo LIKE ?`;
                 var elem="%"+name+"%";
                 connection.query(sql, [elem], function(err, resultado){
                     connection.release();

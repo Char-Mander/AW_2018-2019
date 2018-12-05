@@ -25,44 +25,51 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
             let arrayPeticiones = [];
             //Array que permite sacar el nombre de los users que han enviado petición de amistad
             for (let i = 0; peticiones !== undefined && i < peticiones.length; i++) {
-
-                daoUsers.getUser(peticiones[i].action_id_user, function (error, user) {
-                    if (error) {
-                        response.status(500);
-                    } else {
-                        response.status(200);
-                        arrayPeticiones.push(peticiones[i]);
-                        arrayPeticiones[i].nombre_completo = user.nombre_completo;
-                    }
-                });
+                if (peticiones[i] !== undefined) {
+                    daoUsers.getUser(peticiones[i].action_id_user, function (error, user) {
+                        if (error) {
+                            response.status(500);
+                        } else {
+                            response.status(200);
+                            arrayPeticiones.push(peticiones[i]);
+                            arrayPeticiones[i].nombre_completo = user.nombre_completo;
+                        }
+                    });
+                }
             }
             //Sacamos la lista de amigos
             daoAmigos.getAmigos(response.locals.userId, function (error, listaAmigos) {
                 if (error) {
                     response.status(500);
+                    console.log("Error en el getAmigos");
                 }
                 else {
                     let arrayAmigos = [];
                     let sacar_amigo;
-
                     //Array que permite sacar el nombre de cada uno de los users que están en la lista de amigos
                     for (let i = 0; listaAmigos !== undefined && i < listaAmigos.length; i++) {
 
                         if (response.locals.userId == listaAmigos[i].id_user1)
                             sacar_amigo = listaAmigos[i].id_user2;
-                        else
+                        else if (response.locals.userId == listaAmigos[i].id_user2)
                             sacar_amigo = listaAmigos[i].id_user1;
+                        else sacar_amigo = undefined;
 
-                        daoUsers.getUser(sacar_amigo, function (error, user) {
-                            if (error) {
-                                response.status(500);
-                            } else {
-                                response.status(200);
-                                arrayAmigos.push(listaAmigos[i]);
-                                arrayAmigos[i].nombre_completo = user.nombre_completo;
-                                response.render("mis_amigos", { amigos: arrayAmigos, puntos: response.locals.userPoints, peticiones: arrayPeticiones });
-                            }
-                        });
+                        if (sacar_amigo !== undefined) {
+                            daoUsers.getUser(sacar_amigo, function (error, user) {
+                                if (error) {
+                                    response.status(500);
+                                    console.log("Error al sacar el user de amigos");
+                                } else {
+                                    console.log("Coge el user sin problema");
+                                    response.status(200);
+                                    arrayAmigos.push(listaAmigos[i]);
+                                    arrayAmigos[i].nombre_completo = user.nombre_completo;
+                                    console.log("Justo antes del render de mis amigos");
+                                    response.render("mis_amigos", { amigos: arrayAmigos, puntos: response.locals.userPoints, peticiones: arrayPeticiones });
+                                }
+                            });
+                        }
                     }
                 }
             });
@@ -73,10 +80,10 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
 //  Búsqueda de amigos del usuario
 amigos.get("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
     response.status(200);
-    response.render("busqueda_amigos", { errorMsg: null, puntos: response.locals.userPoints});
+    response.render("busqueda_amigos", { errorMsg: null, puntos: response.locals.userPoints });
 });
 
-amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
+amigos.post("/busqueda_amigos", function (request, response) {
     let name = request.body.name_user;//Coge el nombre como undefined (probablemente por la redirección)
 
     console.log(name);
@@ -107,11 +114,14 @@ amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, 
                             console.log("Get peticiones");
                             console.log(peticiones);
                             //Se quita de la lista de usuarios el propio usuario, los que son amigos, y los que tienen una petición de amistad pendiente
-                            users.filter(n => n.id_user != response.locals.userId && amigos.every(f => f.id_user1 =! n.id_user && f.id_user2 != n.id_user) 
-                            && peticiones.every(p => p.id_user1 =! n.id_user && p.id_user2 != n.id_user));
+                            users.filter(n => n.id_user != response.locals.userId && amigos.every(f => f.id_user1 = !n.id_user && f.id_user2 != n.id_user)
+                                && peticiones.every(p => p.id_user1 = !n.id_user && p.id_user2 != n.id_user));
                             console.log("Resultado final:");
-                            console.log(users); 
-                            response.redirect("/amigos/busqueda_amigos", { errorMsg: "No se ha encontrado a ningún usuario", amigos: users, puntos: response.locals.userPoints, name : name});
+                            console.log(users);
+                            response.redirect("/amigos/busqueda_amigos", {
+                                errorMsg: "No se ha encontrado a ningún usuario",
+                                amigos: users, puntos: response.locals.userPoints, name: name
+                            });
                         }
                     });
                 }
