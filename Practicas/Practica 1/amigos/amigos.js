@@ -33,6 +33,7 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                             response.status(200);
                             arrayPeticiones.push(peticiones[i]);
                             arrayPeticiones[i].nombre_completo = user.nombre_completo;
+                            arrayPeticiones[i].imagen_perfil = user.imagen_perfil;
                         }
                     });
                 }
@@ -46,7 +47,6 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                 else {
                     let arrayAmigos = [];
                     let sacar_amigo;
-                    console.log(listaAmigos);
                     //Array que permite sacar el nombre de cada uno de los users que están en la lista de amigos
                     for (let i = 0; listaAmigos !== undefined && i < listaAmigos.length; i++) {
 
@@ -55,7 +55,7 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                         else if (response.locals.userId == listaAmigos[i].id_user2)
                             sacar_amigo = listaAmigos[i].id_user1;
                         else sacar_amigo = undefined;
-                        console.log("Sacar amigo: " + sacar_amigo);
+                        
                         if (sacar_amigo !== undefined) {
                             daoUsers.getUser(sacar_amigo, function (error, user) {
                                 if (error) {
@@ -64,18 +64,20 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                                 } else {
                                     response.status(200);
                                     arrayAmigos.push(listaAmigos[i]);
+                                    arrayAmigos[i].id_user = user.id_user;
                                     arrayAmigos[i].nombre_completo = user.nombre_completo;
+                                    arrayAmigos[i].imagen_perfil = user.imagen_perfil;
+                                    console.log("Vuelta " + i + " del for " + arrayAmigos[i].nombre_completo);
                                 }
                             });
                         }
                     }
-                    //Pasamos también la información del user de la sesión
-                    let usuario = {};
-                    usuario.puntos = response.locals.userPoints;
-                    usuario.id = response.locals.userId;
-                    usuario.img = response.locals.userImg;
-
-                    response.render("mis_amigos", { amigos: arrayAmigos, user: usuario, peticiones: arrayPeticiones });
+                     //Pasamos también la información del user de la sesión
+                     let usuario = {};
+                     usuario.puntos = response.locals.userPoints;
+                     usuario.id = response.locals.userId;
+                     usuario.img = response.locals.userImg;
+                     response.render("mis_amigos", { amigos: arrayAmigos, user: usuario, peticiones: arrayPeticiones });
                 }
             });
         }
@@ -123,9 +125,7 @@ amigos.post("/busqueda_amigos", function (request, response) {
                                 && peticiones.every(p => p.id_user1 = !n.id_user && p.id_user2 != n.id_user));
                             console.log("Resultado final:");
                             console.log(users);
-                            response.redirect("/amigos/busqueda_amigos", {
-                                errorMsg: "No se ha encontrado a ningún usuario",
-                                amigos: users, puntos: response.locals.userPoints, name: name
+                            response.redirect("/amigos/busqueda_amigos", { errorMsg: "No se ha encontrado a ningún usuario", amigos: users, puntos: response.locals.userPoints, name: name
                             });
                         }
                     });

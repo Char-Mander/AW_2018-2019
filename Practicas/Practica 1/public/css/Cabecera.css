@@ -76,6 +76,9 @@ div.user_icon{
 }
 
 img.icon{
+    align-self: center;
+    margin-left:1%;
+    margin-right:1%;
     width: 20px;
     height: 20px;
     border-radius: 104px;

@@ -44,9 +44,9 @@
                         <div class="solicitud">
                             <div class="info_user">
                                 <% if(solicitud.imagen_perfil !== null){ %>
-                                    <img src="/users/imagen/<%= solicitud.id_user %>"> <% } else { %>
-                                    <img src="/users/no_profile_pic">
-                                    <% } %>
+                                    <img class="icon" src="/users/imagen/<%= solicitud.action_id_user %>"> <% } else { %>
+                                    <img class="icon" src="/users/no_profile_pic">
+                                    <% } %>   
                                 <div class="nombre_solicitud">
                                     <%= solicitud.nombre_completo %>
                                 </div>
@@ -77,8 +77,8 @@
                         <li>
                             <div class="amigo">
                                 <% if(amigo.imagen_perfil !== null){ %>
-                                    <img src="/users/imagen/<%= amigo.id_user %>"> <% } else { %>
-                                    <img src="/users/no_profile_pic">
+                                    <img class="icon" src="/users/imagen/<%= amigo.id_user %>"> <% } else { %>
+                                    <img class="icon" src="/users/no_profile_pic">
                                     <% } %>
                                 <div class="nombre_amigo">
                                     <%= amigo.nombre_completo %>
