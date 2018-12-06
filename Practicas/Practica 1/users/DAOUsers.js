@@ -33,19 +33,38 @@ class DAOUsers{
     }
 
     /*Devuelve todos los datos del usuario cuyo email es el introducido*/
-    getUser(id, callback){
+    getUser(id, cb_getUser){
         this.pool.getConnection(function(err, connection){
             if(err){
-                callback(new Error("Error de conexión a la base de datos"), null);
+                cb_getUser(new Error("Error de conexión a la base de datos"), null);
             }else{
                 const sql = `SELECT * FROM user WHERE id_user = ?`;
 
                 connection.query(sql, [id], function(err, resultado){
                     connection.release();
                     if(err){
-                        callback(new Error("Error de acceso a la base de datos"), null);
+                        cb_getUser(new Error("Error de acceso a la base de datos"), null);
                     }else{
-                        callback(null, resultado[0]);
+                        cb_getUser(null, resultado[0]);
+                    }
+                });
+            }
+        });
+    }
+
+    getAllUsers(cb_getAllUsers){
+        this.pool.getConnection(function(err, connection){
+            if(err){
+                cb_getAllUsers(new Error("Error de conexión a la base de datos"), null);
+            }else{
+                const sql = `SELECT * FROM user`;
+
+                connection.query(sql, function(err, resultado){
+                    connection.release();
+                    if(err){
+                        cb_getAllUsers(new Error("Error de acceso a la base de datos"), null);
+                    }else{
+                        cb_getAllUsers(null, resultado);
                     }
                 });
             }

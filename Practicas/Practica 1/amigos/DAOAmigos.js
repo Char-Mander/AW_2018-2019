@@ -53,8 +53,9 @@ class DAOAmigos{
             if(err){
                 cb_getPeticiones(new Error("Error de conexión a la base de datos"), null);
             }else{
-                const sql = `SELECT * FROM solicitudes WHERE id_user1 = ? AND status = 0`;
-                connection.query(sql, [id], function(err, resultado){
+                const sql = `SELECT id_user, nombre_completo, imagen_perfil FROM user LEFT JOIN solicitudes ON action_id_user = id_user
+                WHERE id_user1 = ? OR id_user2 = ? AND action_id_user != ? AND status = 0`;
+                connection.query(sql, [id, id, id], function(err, resultado){
                     connection.release();
                     if(err){
                         cb_getPeticiones(new Error("Error de acceso a la base de datos"), null);
@@ -92,9 +93,10 @@ class DAOAmigos{
             if(err){
                 cb_getAmigos(new Error("Error de conexión a la base de datos"), null);
             }else{
-                const sql = `SELECT * FROM amigos WHERE id_user1 = ? OR id_user2 = ?`;
+                const sql = `SELECT id_user, nombre_completo, imagen_perfil FROM user LEFT JOIN amigos ON id_user1 = id_user OR id_user2 = id_user 
+                WHERE (id_user1 = ? AND id_user2 = id_user) OR (id_user2 = ? AND id_user1 = id_user)`;
 
-                connection.query(sql, [id, id], function(err, resultado){
+                connection.query(sql, [id, id, id], function(err, resultado){
                     connection.release();
                     if(err){
                         console.log("Error en la consulta");
