@@ -135,7 +135,10 @@ users.get("/imagen/:id", middlewares.middlewareLogin, function (request, respons
 //  Modificación del usuario
 users.get("/modificar_perfil", middlewares.middlewareLogin, function (request, response) {
     response.status(200);
-    response.render("modificar_perfil", { errorMsg: null, puntos: response.locals.userPoints});
+    let usr = { id: response.locals.userId,
+        puntos: response.locals.userPoints,
+        imagen: response.locals.userImg}
+    response.render("modificar_perfil", { errorMsg: null, user: usr});
 });
 
 users.post("/modificar_perfil", multerFactory.single("user_img"), function (request, response) {
@@ -158,7 +161,10 @@ users.post("/modificar_perfil", multerFactory.single("user_img"), function (requ
         if (error) {
             response.status(500);
             console.log(`${error.message}`);
-            response.redirect("/users/modificar_perfil", { errorMsg: "Error en el proceso de modificación", puntos: response.locals.userPoints});
+            let usr = { id: response.locals.userId,
+            puntos: response.locals.userPoints,
+            imagen: response.locals.userImg}
+            response.redirect("/users/modificar_perfil", { errorMsg: "Error en el proceso de modificación", user: usr});
         } else {
             daoUsers.getUser(response.locals.userId, function (error, user) {
                 if (error) {

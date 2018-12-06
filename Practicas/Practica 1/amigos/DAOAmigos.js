@@ -122,7 +122,7 @@ class DAOAmigos{
                 AND id_user NOT IN (SELECT id_user FROM user LEFT JOIN amigos ON id_user = id_user1 OR id_user = id_user2 
                     WHERE id_user1 = ? OR id_user2 = ?)`;
                 
-                var elem=[id, "'%"+name+"%'", id, id, id, id];
+                var elem=[id, "%"+name+"%", id, id, id, id];
                 connection.query(sql, elem, function(err, resultado){
                     connection.release();
                     if(err){
