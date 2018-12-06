@@ -40,6 +40,7 @@ users.post("/signin", function (request, response) {
             request.session.currentUserId = datos.id_user;
             request.session.currentUserEmail = datos.email;
             request.session.currentUserPoints = datos.puntos;
+            request.session.currentUserImg = datos.imagen_perfil;
     
             datos.edad=calcularEdad(datos.fecha_nacimiento);
             response.redirect("/users/sesion");
@@ -81,6 +82,7 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
             request.session.currentUserEmail = user.email;
             request.session.currentUserId = user.id_user;
             request.session.currentUserPoints = user.puntos;
+            request.session.currentUserImg = user.imagen_perfil;
             response.redirect("/users/sesion");
         }
     });

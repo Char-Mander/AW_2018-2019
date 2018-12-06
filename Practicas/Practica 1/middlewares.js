@@ -27,6 +27,7 @@ function middlewareLogin(request, response, next) {
         response.locals.userId = request.session.currentUserId;
         response.locals.userEmail = request.session.currentUserEmail;
         response.locals.userPoints = request.session.currentUserPoints;
+        response.locals.userImg = request.session.currentUserImg;
         next();
     }
     else {
