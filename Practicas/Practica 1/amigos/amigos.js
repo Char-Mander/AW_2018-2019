@@ -16,7 +16,7 @@ const daoUsers = new DAOUsers(pool);
 
 //VENTANA DEL LISTADO DE PETICIONES DE AMISTAD Y AMIGOS DE UN USUARIO
 amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, response) {
-
+    
     //Sacamos la lista de peticiones
     daoAmigos.getPeticiones(response.locals.userId, function (error, listaPeticiones) {
         if (error) {
@@ -52,6 +52,7 @@ amigos.get("/busqueda_amigos", function (request, response) {
 
 amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
     let name = request.body.name_user;//Coge el nombre como undefined (probablemente por la redirección)
+
     console.log(name);
     //Sacamos el id de los usuarios cuyo nombre se parece al que el usuario de la sesión ha escritos
     daoAmigos.buscarAmigos(response.locals.userId, name, function (error, users) {
