@@ -11,9 +11,9 @@ class DAOAmigos{
             if(err){
                 cb_insertPeticiones(new Error("Error de conexión a la base de datos"));
             }else{
-                const sql = `INSERT INTO solicitudes (id_user1, id_user2, status, action_id_user) VALUES (?, ?, '0', ?);`;
+                const sql = `INSERT INTO solicitudes (id_user1, id_user2, status, action_id_user) VALUES (?, ?, ?, ?);`;
                 
-                let elems = [id1, id2, id2];
+                let elems = [id1, id2, '0', id2];
                 connection.query(sql, elems, function(err, resultado){
                     connection.release();
                     if(err){

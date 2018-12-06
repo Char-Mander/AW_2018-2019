@@ -50,9 +50,11 @@
                                     <%= amigo.nombre_completo %>
                                 </div>
                             </div>
-                            <div class="botones">
-                                <button class="aceptar"> Solicitar amistad </button>
-                            </div>
+                            <form class="botones" method="post" action="/amigos/enviar_peticion">
+                                    <input type="hidden" name="id_prop" value=<%=user.id%>>
+                                    <input type="hidden" name="id_amig" value=<%=amigo.id_user%>>
+                                <button class="aceptar" type=submit> Solicitar amistad </button>
+                            </form>
                         </div>
                     </li>
                     <% }); %>

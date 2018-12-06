@@ -73,7 +73,7 @@ div.info_user{
     height: 50%;
 }
 
-div.botones{
+form.botones{
     display: flex;
     width: 70%;
     height: 52%;

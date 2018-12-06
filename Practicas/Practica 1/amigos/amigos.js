@@ -35,7 +35,7 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                             usuario.puntos = response.locals.userPoints;
                             usuario.id = response.locals.userId;
                             usuario.img = response.locals.userImg;
-                            response.render("mis_amigos", { gosMsg: "¡No tienes ningún amigo todavía!",
+                            response.render("mis_amigos", { sinAmigosMsg: "¡No tienes ningún amigo todavía!",
                             sinSolicitudesMsg: "No tienes ninguna solicitud pendiente",
                             amigos:  listaAmigos, user: usuario, peticiones: listaPeticiones });
                 }
@@ -75,5 +75,25 @@ amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, 
 
 });
 
+amigos.post("/enviar_peticion", middlewares.middlewareLogin, function(request, response){
+    let id_propio = request.body.id_prop;
+    let id_amigo = request.body.id_amig;
+
+    daoAmigos.insertPeticiones(id_amigo, id_propio, function(error){
+        if (error!==null) {
+            response.status(500);
+            console.log(error.message);
+            response.redirect("/users/sesion");
+        } else {
+            response.status(200);
+            //Aquí iría un mensaje de confirmación 
+            response.redirect("/users/sesion");                       
+        }
+    });
+});
+
+amigos.post("/gestionar_peticiones", middlewares.middlewareLogin, function(request, response){ç
+
+});
 
 module.exports = amigos;
