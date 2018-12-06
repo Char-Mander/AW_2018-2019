@@ -63,6 +63,7 @@ div.pregunta a:hover{
 div.pregunta a:active{
     color:rgb(104, 102, 102);
 }
+
 div.pregunta {
     width: 100%;
     height: auto;
@@ -108,7 +109,7 @@ label.eleccion {
     cursor: pointer;
     user-select: none;
     overflow:hidden;
-  }
+}
 
 label.eleccion input {
     position: absolute;
@@ -119,7 +120,6 @@ label.eleccion input {
     background-color: #eee;
     border-radius: 50%;
 }
-  
 
 div.contenedor_añadir_pregunta, div.contenedor_añadir_preguntas{
     display: flex;
@@ -144,7 +144,6 @@ div.contenedor_boton_añadir_preguntas, div.contenedor_finalizar_formulario{
     align-content: center;
     width: 100%;
 }
-
 
 button{
     width: 70%;

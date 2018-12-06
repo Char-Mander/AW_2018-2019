@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="es-ES">
     <meta charset="utf-8" />
     <title>Responder Preguntas - FaceBluff</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../css/general.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/cabecera.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo_preguntas.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo_responder_pregunta.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cabecera.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo_preguntas.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo_responder_pregunta.css" />
 </head>
+
 <body>
-    
+
     <div class="contenedor">
         <div class="header">
             <div class="titulo">
@@ -20,70 +22,79 @@
                 <div class="enlace amigos"> <a href="/amigos/mis_amigos"> Amigos </a> </div>
                 <div class="enlace preguntas"> <a href="/preguntas/preguntas"> Preguntas </a> </div>
                 <div class="enlace desconectar"> <a href="/users/signin"> Desconectar </a> </div>
-                <div class="enlace puntuacion"> 
-                    <div class="user_icon"></div> 
+                <div class="enlace puntuacion">
+                    <div class="user_icon"></div>
                     <div class="ptos">50 pts</div>
                 </div>
             </div>
         </div>
 
         <div class="body">
-            
+
             <div class="contenedor_info_respuestas">
-                <div class="titulo_pregunta_a_responder"> ¿Nintendo Switch, PS4, o XBOX One? </div>
+                <div class="titulo_pregunta_a_responder"> ¿Qué animal te gusta más? </div>
                 <div class="contenedor_respuestas">
-                    <div class="info_user_pregunta">
-                        <div class="info_respondida"> <h3> No has contestado a esta pregunta.</h3> </div>
-                        <div class="boton_responder_pregunta_propia">
-                            <button class="boton_responder_pregunta">Contestar pregunta</button>
-                        </div>
-                    </div>
-                    <div class="info_amigos_pregunta">
-                        <div class="info_respondida"> <h3> Los siguientes amigos han respondido a esta pregunta:</h3> </div>
-                        <ul class="lista_respuesta_amigos">
+
+                    <form class="responder_pregunta" method="post">
+                        <ul class="lista_respuestas">
                             <li>
-                                <div class="info_respuesta_user 1">
-                                    <div class="img"></div>
-                                    <div class="nombre_solicitud"> Bruja Piruja </div>
-                                    <div class="botones_respuesta_amigos">
-                                        <button class="boton_responder_pregunta_amigo">Adivinar</button>
-                                    </div>   
+                                <div class="respuesta">
+                                    <label class="eleccion">
+                                        <input type="radio" name="sexo" value="Hombre">
+                                        <span class="checkmark"></span>
+                                        Gato
+                                    </label>
                                 </div>
                             </li>
+
                             <li>
-                                <div class="info_respuesta_user 2">
-                                    <div class="img"></div>
-                                    <div class="nombre_solicitud"> Hannibal Gómez </div>   
-                                    <div class="botones_respuesta_amigos">
-                                        <button class="boton_responder_pregunta_amigo">Adivinar</button>
-                                    </div>
+                                <div class="respuesta">
+
+                                    <label class="eleccion">
+                                        <input type="radio" name="sexo" value="Hombre">
+                                        <span class="checkmark"></span>
+                                        Perro
+                                    </label>
                                 </div>
                             </li>
+
                             <li>
-                                <div class="info_respuesta_user 3">
-                                    <div class="img"></div>
-                                    <div class="nombre_solicitud"> Stuart Minion </div>   
-                                    <div class="pregunta_respondida">
-                                        <div class="info_pregunta_respondida_acertada">Has acertado</button>
-                                    </div>
+                                <div class="respuesta">
+
+                                    <label class="eleccion">
+                                        <input type="radio" name="sexo" value="Hombre">
+                                        <span class="checkmark"></span>
+                                        Pájaro
+                                    </label>
                                 </div>
                             </li>
+
                             <li>
-                                <div class="info_respuesta_user 4">
-                                    <div class="img"></div>
-                                    <div class="nombre_solicitud"> Goomba </div>   
-                                    <div class="pregunta_respondida">
-                                        <div class="info_pregunta_respondida_fallada">Has fallado</button>
-                                    </div>
+                                <div class="respuesta">
+
+                                    <label class="eleccion">
+                                        <input type="radio" name="sexo" value="Hombre">
+                                        <span class="checkmark"></span>
+                                        Tortuga
+                                    </label>
                                 </div>
                             </li>
                         </ul>
+                </div>
+                <div class="contenedor_añadir_pregunta">
+                    <div class="botones"> <button class="crear_pregunta" onclick="location.href='/preguntas/responder_pregunta'">
+                            Enviar respuesta </button>
                     </div>
                 </div>
+
+                </form>
             </div>
+
         </div>
+    </div>
     </div>
 
 
 </body>
+
 </html>

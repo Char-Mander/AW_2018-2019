@@ -76,9 +76,18 @@ preguntas.get("/preguntas", function(request, response){
     })
 });
 
+preguntas.get("/info_pregunta", function(request, response){
+    response.status(200);
+    response.render("info_pregunta", { pregunta : "¿Cuál es tu animal favorito?"});
+});
+
 preguntas.get("/responder_pregunta", function(request, response){
     response.status(200);
     response.render("responder_pregunta");
+});
+
+preguntas.post("/responder_pregunta", function(request, response){
+
 });
 
 module.exports = preguntas;
