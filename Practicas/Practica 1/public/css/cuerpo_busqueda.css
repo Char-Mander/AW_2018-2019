@@ -26,7 +26,7 @@ div.titulo_buscar{
 }
 
 
-ul.lista_busqueda{
+ul.lista_busqueda, div.sin_info{
     list-style-type: none;
     display: flex;
     flex-direction: column;
@@ -44,6 +44,14 @@ li{
     margin:0.5%;
 }
 
+div.no_found{
+    font-size: 1.5vw;
+    width: 100%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+}
 
 div.resultado {
     width: 100%;

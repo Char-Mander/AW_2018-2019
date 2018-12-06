@@ -1,57 +1,74 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="es-ES">
     <meta charset="utf-8" />
     <title>Búsqueda - FaceBluff</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../css/general.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/cabecera.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo_busqueda.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cabecera.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo_busqueda.css" />
 
 </head>
+
 <body>
-        <div class="contenedor">
-                <div class="header">
-                    <div class="titulo">
-                        <h1>FaceBluff</h1>
+    <div class="contenedor">
+        <div class="header">
+            <div class="titulo">
+                <h1>FaceBluff</h1>
+            </div>
+            <div class="nav">
+                <div class="enlace perfil"> <a href="/users/sesion"> Perfil </a> </div>
+                <div class="enlace amigos"> <a href="/amigos/mis_amigos"> Amigos </a> </div>
+                <div class="enlace preguntas"> <a href="preguntas.html"> Preguntas </a> </div>
+                <div class="enlace desconectar"> <a href="/users/signout"> Desconectar </a> </div>
+                <div class="enlace puntuacion">
+                    <div class="user_icon">
+                        <% if(user.img !== null){ %>
+                        <img class="icon" src="/users/imagen/<%= user.id %>">
+                        <% } else { %>
+                        <img class="icon" src="/users/no_profile_pic">
+                        <% } %>
                     </div>
-                    <div class="nav">
-                        <div class="enlace perfil"> <a href="sesion"> Perfil </a> </div>
-                        <div class="enlace amigos"> <a href="mis_amigos"> Amigos </a> </div>
-                        <div class="enlace preguntas"> <a href="preguntas.html"> Preguntas </a> </div>
-                        <div class="enlace desconectar"> <a href="signin"> Desconectar </a> </div>
-                        <div class="enlace puntuacion"> 
-                            <div class="user_icon"></div> 
-                            <div class="ptos"> <%= puntos %> ptos</div>
+                    <div class="ptos">
+                        <%= user.puntos %> ptos</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="body">
+            <div class="contenedor_buscar">
+                <div class="titulo_buscar"> Resultado de la búsqueda '
+                    <%= name %>' </div>
+                <% if(amigos !== undefined && amigos.length>0) { %>
+                <ul class="lista_busqueda">
+                    <% amigos.forEach(function(amigo){ %>
+                    <li>
+                        <div class="resultado 1">
+                            <div class="info_user">
+                                <div class="img"></div>
+                                <div class="nombre_solicitud">
+                                    <%= amigo.nombre_completo %>
+                                </div>
+                            </div>
+                            <div class="botones">
+                                <button class="aceptar"> Solicitar amistad </button>
+                            </div>
                         </div>
+                    </li>
+                    <% }); %>
+                </ul>
+                <% } else { %>
+                <div class="sin_info">
+                    <div class="no_found">
+                        <%= noFoundMsg %>
                     </div>
                 </div>
-
-                <div class="body">
-                        <div class="contenedor_buscar">
-                            <div class="titulo_buscar"> Resultado de la búsqueda '<%= name %>' </div>
-                            <% if(amigos !== undefined && amigos.length>0) { %>
-                            <ul class="lista_busqueda">
-                                    <% amigos.forEach(function(amigo){ %>
-                                <li>
-                                    <div class="resultado 1">
-                                        <div class="info_user">
-                                            <div class="img"></div>
-                                            <div class="nombre_solicitud"> <%= amigo.nombre_completo %> </div>
-                                        </div>
-                                       <div class="botones">
-                                            <button class="aceptar"> Solicitar amistad </button>
-                                       </div>
-                                    </div>
-                                </li>
-                                <% }); %>
-                            </ul>
-                            <% } else { %>
-                                <%= errorMsg %>
-                            <% } %>
-                        </div>   
-                </div>   
-            
+                <% } %>
+            </div>
         </div>
-    
+
+    </div>
+
 </body>
+
 </html>

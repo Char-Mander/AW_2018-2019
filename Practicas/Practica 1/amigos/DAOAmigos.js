@@ -111,14 +111,19 @@ class DAOAmigos{
     }
 
     /* Función que busca amigos que contengan en su nombre la cadena que se le pasa a la función */
-    buscarAmigos(name, cb_buscarAmigos){
+    buscarAmigos(id, name, cb_buscarAmigos){
         this.pool.getConnection(function(err, connection){
             if(err){
                 cb_buscarAmigos(new Error("Error de conexión a la base de datos"), null);
             }else{
-                const sql = `SELECT * FROM user WHERE nombre_completo LIKE ?`;
-                var elem="%"+name+"%";
-                connection.query(sql, [elem], function(err, resultado){
+                const sql = `SELECT * FROM user WHERE id_user != ? AND nombre_completo LIKE ? 
+                AND id_user NOT IN (SELECT id_user FROM user LEFT JOIN solicitudes ON id_user = id_user1 OR id_user = id_user2 
+                    WHERE id_user1 = ? OR id_user2 = ?) 
+                AND id_user NOT IN (SELECT id_user FROM user LEFT JOIN amigos ON id_user = id_user1 OR id_user = id_user2 
+                    WHERE id_user1 = ? OR id_user2 = ?)`;
+                
+                var elem=[id, "'%"+name+"%'", id, id, id, id];
+                connection.query(sql, elem, function(err, resultado){
                     connection.release();
                     if(err){
                         cb_buscarAmigos(new Error("Error de acceso a la base de datos"), null);

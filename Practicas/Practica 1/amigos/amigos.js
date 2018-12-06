@@ -35,7 +35,7 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                             usuario.puntos = response.locals.userPoints;
                             usuario.id = response.locals.userId;
                             usuario.img = response.locals.userImg;
-                            response.render("mis_amigos", { sinAmigosMsg: "¡No tienes ningún amigo todavía!",
+                            response.render("mis_amigos", { gosMsg: "¡No tienes ningún amigo todavía!",
                             sinSolicitudesMsg: "No tienes ninguna solicitud pendiente",
                             amigos:  listaAmigos, user: usuario, peticiones: listaPeticiones });
                 }
@@ -45,53 +45,28 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
 });
 
 //  Búsqueda de amigos del usuario
-amigos.get("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
+amigos.get("/busqueda_amigos", function (request, response) {
     response.status(200);
-    response.render("busqueda_amigos", { errorMsg: null, puntos: response.locals.userPoints });
+    response.redirect("/amigos/mis_amigos");
 });
 
-amigos.post("/busqueda_amigos", function (request, response) {
+amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
     let name = request.body.name_user;//Coge el nombre como undefined (probablemente por la redirección)
-
     console.log(name);
     //Sacamos el id de los usuarios cuyo nombre se parece al que el usuario de la sesión ha escritos
-    daoAmigos.buscarAmigos(name, function (error, users) {
+    daoAmigos.buscarAmigos(response.locals.userId, name, function (error, users) {
         if (error) {
             response.status(500);
             console.log(error.message);
         } else {
             response.status(200);
-            console.log("Busca a los amigos");
-            //Se sacan los id de la lista de usuarios que son amigos
-            daoAmigos.getAmigos(response.locals.userId, function (error, amigos) {
-                if (error) {
-                    response.status(500);
-                    console.log(error.message);
-                } else {
-                    response.status(200);
-                    console.log("Get amigos");
-                    console.log(amigos);
-                    //Se sacan los id de las peticiones de amistad que hay de unos usuarios a otros
-                    daoAmigos.getPeticiones(response.locals.userId, function (error, peticiones) {
-                        if (error) {
-                            response.status(500);
-                            console.log(error.message);
-                        } else {
-                            response.status(200);
-                            console.log("Get peticiones");
-                            console.log(peticiones);
-                            //Se quita de la lista de usuarios el propio usuario, los que son amigos, y los que tienen una petición de amistad pendiente
-                            users.filter(n => n.id_user != response.locals.userId && amigos.every(f => f.id_user1 = !n.id_user && f.id_user2 != n.id_user)
-                                && peticiones.every(p => p.id_user1 = !n.id_user && p.id_user2 != n.id_user));
-                            console.log("Resultado final:");
-                            console.log(users);
-                            response.redirect("/amigos/busqueda_amigos", {
-                                errorMsg: "No se ha encontrado a ningún usuario", amigos: users, puntos: response.locals.userPoints, name: name
-                            });
-                        }
-                    });
-                }
-            });
+            let usuario=[];
+            usuario.puntos = response.locals.userPoints;
+            usuario.id = response.locals.userId;
+            usuario.img = response.locals.userImg;
+            response.render("busqueda_amigos",{noFoundMsg: "No se ha encontrado a ningún usuario", 
+            amigos: users, user: usuario, name: name});
+                       
         }
     });
 
