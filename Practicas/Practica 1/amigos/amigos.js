@@ -36,7 +36,7 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                             usuario.id = response.locals.userId;
                             usuario.img = response.locals.userImg;
                             response.render("mis_amigos", { sinAmigosMsg: "¡No tienes ningún amigo todavía!",
-                            sinSolicitudesMsg: "Aún no tienes ninguna solicitud",
+                            sinSolicitudesMsg: "No tienes ninguna solicitud pendiente",
                             amigos:  listaAmigos, user: usuario, peticiones: listaPeticiones });
                 }
             });
