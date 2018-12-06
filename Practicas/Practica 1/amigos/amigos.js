@@ -46,6 +46,7 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                 else {
                     let arrayAmigos = [];
                     let sacar_amigo;
+                    console.log(listaAmigos);
                     //Array que permite sacar el nombre de cada uno de los users que están en la lista de amigos
                     for (let i = 0; listaAmigos !== undefined && i < listaAmigos.length; i++) {
 
@@ -54,23 +55,27 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                         else if (response.locals.userId == listaAmigos[i].id_user2)
                             sacar_amigo = listaAmigos[i].id_user1;
                         else sacar_amigo = undefined;
-
+                        console.log("Sacar amigo: " + sacar_amigo);
                         if (sacar_amigo !== undefined) {
                             daoUsers.getUser(sacar_amigo, function (error, user) {
                                 if (error) {
                                     response.status(500);
                                     console.log("Error al sacar el user de amigos");
                                 } else {
-                                    console.log("Coge el user sin problema");
                                     response.status(200);
                                     arrayAmigos.push(listaAmigos[i]);
                                     arrayAmigos[i].nombre_completo = user.nombre_completo;
-                                    console.log("Justo antes del render de mis amigos");
-                                    response.render("mis_amigos", { amigos: arrayAmigos, puntos: response.locals.userPoints, peticiones: arrayPeticiones });
                                 }
                             });
                         }
                     }
+                    //Pasamos también la información del user de la sesión
+                    let usuario = {};
+                    usuario.puntos = response.locals.userPoints;
+                    usuario.id = response.locals.userId;
+                    usuario.img = response.locals.userImg;
+
+                    response.render("mis_amigos", { amigos: arrayAmigos, user: usuario, peticiones: arrayPeticiones });
                 }
             });
         }

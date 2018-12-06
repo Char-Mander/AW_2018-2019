@@ -97,6 +97,7 @@ class DAOAmigos{
                 connection.query(sql, [id, id], function(err, resultado){
                     connection.release();
                     if(err){
+                        console.log("Error en la consulta");
                         cb_getAmigos(new Error("Error de acceso a la base de datos"), null);
                     }else{
                         

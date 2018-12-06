@@ -22,9 +22,14 @@
                 <div class="enlace preguntas"> <a href="preguntas.html"> Preguntas </a> </div>
                 <div class="enlace desconectar"> <a href="/users/signout"> Desconectar </a> </div>
                 <div class="enlace puntuacion">
-                    <div class="user_icon"></div>
+                    <div class="user_icon">
+                    <% if(user.img !== null){ %>
+                        <img class="icon" src="/users/imagen/<%= user.id %>"> <% } else { %>
+                        <img class="icon" src="/users/no_profile_pic">
+                        <% } %>
+                    </div>
                     <div class="ptos">
-                        <%= puntos %> ptos</div>
+                        <%= user.puntos %> ptos</div>
                 </div>
             </div>
         </div>
@@ -39,10 +44,9 @@
                         <div class="solicitud">
                             <div class="info_user">
                                 <% if(solicitud.imagen_perfil !== null){ %>
-                                <img class="icon" src="/users/imagen/<%= solicitud.id_user %>">
-                                <% } else { %>
-                                <img class="icon" src="/users/no_profile_pic">
-                                <% } %>
+                                    <img src="/users/imagen/<%= solicitud.id_user %>"> <% } else { %>
+                                    <img src="/users/no_profile_pic">
+                                    <% } %>
                                 <div class="nombre_solicitud">
                                     <%= solicitud.nombre_completo %>
                                 </div>
@@ -73,10 +77,9 @@
                         <li>
                             <div class="amigo">
                                 <% if(amigo.imagen_perfil !== null){ %>
-                                <img class="icon" src="/users/imagen/<%= amigo.id_user %>">
-                                <% } else { %>
-                                <img class="icon" src="/users/no_profile_pic">
-                                <% } %>
+                                    <img src="/users/imagen/<%= amigo.id_user %>"> <% } else { %>
+                                    <img src="/users/no_profile_pic">
+                                    <% } %>
                                 <div class="nombre_amigo">
                                     <%= amigo.nombre_completo %>
                                 </div>
