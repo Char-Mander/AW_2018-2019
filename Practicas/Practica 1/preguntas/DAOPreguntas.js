@@ -38,6 +38,26 @@ class DAOPreguntas {
             }
         })
     }
+
+    getRandomQuestions(callback){
+        this.pool.getConnection(function(err, connection){
+            if(err)
+                callback(new Error("Error de conexión a la base de datos"), null);
+            else{
+                const sql = "SELECT * FROM preguntas ORDER BY RAND() LIMIT 5";
+
+                connection.query(sql, function(err, resultado){
+                    connection.release();
+                    if(err)
+                        callback(new Error("Error de acceso a la base de datos"), null);
+                    else{
+                        console.log("Preguntas aleatorias leídas correctamente");
+                        callback(null, resultado);
+                    }
+                })
+            }
+        })
+    }
 }
 
 function generarSentenciaInsertarRespuestas(question, elems){

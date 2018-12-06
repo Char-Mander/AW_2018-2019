@@ -159,7 +159,7 @@ users.post("/modificar_perfil", multerFactory.single("user_img"), function (requ
             console.log(`${error.message}`);
             response.render("modificar_perfil", { errorMsg: "Error en el proceso de modificación", puntos: response.locals.userPoints});
         } else {
-            daoUsers.getUser(response.session.currentUserId, function (error, user) {
+            daoUsers.getUser(request.session.currentUserId, function (error, user) {
                 if (error) {
                     response.status(500);
                 } else {

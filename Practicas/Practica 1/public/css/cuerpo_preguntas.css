@@ -26,6 +26,13 @@ div.titulo_preguntas, div.titulo_añade_preguntas, div.titulo_añadir_preguntas,
     margin-top:4%;
 }
 
+div.mensaje_error{
+    color: red;
+    width: 37.5vw;
+    display: flex;
+    justify-content: center;
+}
+
 ul.lista_preguntas, ul.lista_añadir_opciones_preguntas, div.contenedor_respuestas{
     list-style-type: none;
     display: flex;

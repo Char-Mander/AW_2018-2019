@@ -64,8 +64,21 @@ preguntas.post("/nueva_pregunta", function (request, response) {
 });
 
 preguntas.get("/preguntas", function(request, response){
+    daoPreguntas.getRandomQuestions(function(error, preguntas){
+        if(error){
+            response.status(500);
+            console.log(`${error.message}`);
+            response.render("preguntas", { preguntas : null, errorMsg : `${error.message}` });
+        }else{
+            response.status(200);
+            response.render("preguntas", { preguntas : preguntas, errorMsg : null });
+        }
+    })
+});
+
+preguntas.get("/responder_pregunta", function(request, response){
     response.status(200);
-    response.render("preguntas");
+    response.render("responder_pregunta");
 });
 
 module.exports = preguntas;

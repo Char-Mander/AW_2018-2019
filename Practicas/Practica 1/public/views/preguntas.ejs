@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="es-ES">
     <meta charset="utf-8" />
     <title>Preguntas - FaceBluff</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../css/general.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/cabecera.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo_preguntas.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cabecera.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo_preguntas.css" />
 </head>
+
 <body>
-    
+
     <div class="contenedor">
         <div class="header">
             <div class="titulo">
@@ -19,8 +21,8 @@
                 <div class="enlace amigos"> <a href="/amigos/mis_amigos"> Amigos </a> </div>
                 <div class="enlace preguntas"> <a href="/preguntas/preguntas"> Preguntas </a> </div>
                 <div class="enlace desconectar"> <a href="/users/signin"> Desconectar </a> </div>
-                <div class="enlace puntuacion"> 
-                    <div class="user_icon"></div> 
+                <div class="enlace puntuacion">
+                    <div class="user_icon"></div>
                     <div class="ptos">50 pts</div>
                 </div>
             </div>
@@ -30,35 +32,31 @@
             <div class="contenedor_preguntas">
                 <div class="titulo_preguntas"> Preguntas seleccionadas aleatoriamente </div>
                 <ul class="lista_preguntas">
+
+                    <% if (errorMsg !== null ) { %>
+                    <div class="mensaje_error">
+                        <h4>
+                            <%= errorMsg %>
+                        </h4>
+                    </div>
+                    <% } %>
+
+                    <% if(preguntas !== null) { %>
+                    <% preguntas.forEach(function(pregunta) { %>
                     <li>
                         <div class="pregunta 1">
-                            <div class="info_pregunta"> <a> ¿Cuál es la peor película de la historia? </a></div>
+                            <div class="info_pregunta"> <a href="/preguntas/responder_pregunta">
+                                    <%= pregunta.texto %> </a></div>
                         </div>
                     </li>
-                    <li>
-                        <div class="pregunta 2">
-                            <div class="info_pregunta"> <a> ¿En qué escuela primaria estudiaste? </a> </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="pregunta 3">
-                            <div class="info_pregunta"> <a href="../public/responder_pregunta.html"> ¿Nintendo Switch, PS4, o XBOX One? </a> </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="pregunta 4">
-                            <div class="info_pregunta"> <a> ¿Cuál es tu plato preferido? </a> </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="pregunta 5">
-                            <div class="info_pregunta"> <a> ¿Cuál es el personaje más irritante de juego de tronos? </a> </div>
-                        </div>
-                    </li>
+                    <% }); %>
+                    <% } %>
+
                 </ul>
                 <div class="contenedor_añadir_pregunta">
                     <div class="titulo_añade_preguntas"> ¡Añade tus preguntas! </div>
-                    <div class="botones"> <button class="crear_pregunta" onclick="location.href='/preguntas/nueva_pregunta'"> Crear nueva pregunta </button>
+                    <div class="botones"> <button class="crear_pregunta" onclick="location.href='/preguntas/nueva_pregunta'">
+                            Crear nueva pregunta </button>
                     </div>
                 </div>
             </div>
@@ -67,4 +65,5 @@
 
 
 </body>
+
 </html>
