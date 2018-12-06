@@ -51,10 +51,10 @@ amigos.get("/busqueda_amigos", function (request, response) {
 });
 
 amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
-   // let name = request.body.name_user;//Coge el nombre como undefined (probablemente por la redirección)
-    let name = "mari";
-    console.log(name);
-    //Sacamos el id de los usuarios cuyo nombre se parece al que el usuario de la sesión ha escritos
+    let name = request.body.name_usr; 
+    console.log(request.body.name_usr);
+    //Sacamos el id de los usuarios cuyo nombre se parece al que el usuario de la sesión ha escrito 
+    //IMPORTANTE: No deben estar relacionados con el user de la sesión ni en las peticiones, ni pueden ser amigos aún
     daoAmigos.buscarAmigos(response.locals.userId, name, function (error, users) {
         if (error) {
             response.status(500);
@@ -65,7 +65,7 @@ amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, 
             usuario.puntos = response.locals.userPoints;
             usuario.id = response.locals.userId;
             usuario.img = response.locals.userImg;
-            response.render("busqueda_amigos",{noFoundMsg: "No se ha encontrado a ningún usuario", 
+            response.render("busqueda_amigos", {noFoundMsg: "No se ha encontrado a ningún usuario", 
             amigos: users, user: usuario, name: name});
                        
         }
