@@ -23,8 +23,9 @@
                 <div class="enlace desconectar"> <a href="/users/signout"> Desconectar </a> </div>
                 <div class="enlace puntuacion">
                     <div class="user_icon">
-                    <% if(user.img !== null){ %>
-                        <img class="icon" src="/users/imagen/<%= user.id %>"> <% } else { %>
+                        <% if(user.img !== null){ %>
+                        <img class="icon" src="/users/imagen/<%= user.id %>">
+                        <% } else { %>
                         <img class="icon" src="/users/no_profile_pic">
                         <% } %>
                     </div>
@@ -44,9 +45,10 @@
                         <div class="solicitud">
                             <div class="info_user">
                                 <% if(solicitud.imagen_perfil !== null){ %>
-                                    <img class="icon" src="/users/imagen/<%= solicitud.action_id_user %>"> <% } else { %>
-                                    <img class="icon" src="/users/no_profile_pic">
-                                    <% } %>   
+                                <img class="icon" src="/users/imagen/<%= solicitud.action_id_user %>">
+                                <% } else { %>
+                                <img class="icon" src="/users/no_profile_pic">
+                                <% } %>
                                 <div class="nombre_solicitud">
                                     <%= solicitud.nombre_completo %>
                                 </div>
@@ -59,39 +61,48 @@
                     </li>
                     <% }); %>
                 </ul>
-                <% } %>
-                <div class="contenedor_busqueda">
-                    <div class="titulo_busqueda"> Búsqueda de amigos </div>
-                    <form class="barra_busqueda" method="post" action="/amigos/busqueda_amigos" enctype="multipart/form-data">
-                        <div class="busqueda"> Búsqueda por nombre: </div>
-                        <input type="text" name="name_user" placeholder=" Buscar...">
-                        <button type=submit class="boton_aceptar"> Buscar </button>
-                    </form>
+                <% } else { %>
+                <div class="sin_info">
+                    <div class=" sin_solicitudes"><%= sinSolicitudesMsg %></div>
                 </div>
-
-                <div class="contenedor_amigos">
-                    <div class="titulo_amigos"> Mis amigos </div>
-                    <% if(amigos !== undefined && amigos.length>0) { %>
-                    <ul class="lista_amigos">
-                        <% amigos.forEach(function(amigo){ %>
-                        <li>
-                            <div class="amigo">
-                                <% if(amigo.imagen_perfil !== null){ %>
-                                    <img class="icon" src="/users/imagen/<%= amigo.id_user %>"> <% } else { %>
-                                    <img class="icon" src="/users/no_profile_pic">
-                                    <% } %>
-                                <div class="nombre_amigo">
-                                    <%= amigo.nombre_completo %>
-                                </div>
-                            </div>
-                            
-                        </li>
-                        <% }); %>
-                    </ul>
-                    <% } %>
-                </div>
+            <% } %>
+            <div class="contenedor_busqueda">
+                <div class="titulo_busqueda"> Búsqueda de amigos </div>
+                <form class="barra_busqueda" method="post" action="/amigos/busqueda_amigos" enctype="multipart/form-data">
+                    <div class="busqueda"> Búsqueda por nombre: </div>
+                    <input type="text" name="name_user" placeholder=" Buscar...">
+                    <button type=submit class="boton_aceptar"> Buscar </button>
+                </form>
             </div>
+
+            <div class="contenedor_amigos">
+                <div class="titulo_amigos"> Mis amigos </div>
+                <% if(amigos !== undefined && amigos.length>0) { %>
+                <ul class="lista_amigos">
+                    <% amigos.forEach(function(amigo){ %>
+                    <li>
+                        <div class="amigo">
+                            <% if(amigo.imagen_perfil !== null){ %>
+                            <img class="icon" src="/users/imagen/<%= amigo.id_user %>">
+                            <% } else { %>
+                            <img class="icon" src="/users/no_profile_pic">
+                            <% } %>
+                            <div class="nombre_amigo">
+                                <%= amigo.nombre_completo %>
+                            </div>
+                        </div>
+
+                    </li>
+                    <% }); %>
+                </ul>
+                <% } else { %>
+                <div class="sin_info"">
+                    <div class=" sin_amigos"><%= sinAmigosMsg %></div>
+            </div>
+            <% }%>
         </div>
+    </div>
+    </div>
     </div>
 
 

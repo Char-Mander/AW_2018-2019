@@ -40,7 +40,7 @@ div.titulo_solicitudes,div.titulo_busqueda,div.titulo_amigos{
     margin-bottom: 1%;
 }
 
-ul.lista_solicitudes, ul.lista_amigos{
+ul.lista_solicitudes, ul.lista_amigos, div.sin_info{
     list-style-type: none;
     display: flex;
     flex-direction: column;
@@ -96,6 +96,15 @@ input{
 div.busqueda, div.nombre_solicitud, div.nombre_amigo{
     font-size: 1.6vw;
     width: 30%;
+}
+
+div.sin_amigos, div.sin_solicitudes{
+    font-size: 1.6vw;
+    width: 100%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
 }
 
 button{
