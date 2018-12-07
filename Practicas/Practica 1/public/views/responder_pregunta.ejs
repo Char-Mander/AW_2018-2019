@@ -32,53 +32,26 @@
         <div class="body">
 
             <div class="contenedor_info_respuestas">
-                <div class="titulo_pregunta_a_responder"> ¿Qué animal te gusta más? </div>
+                <div class="titulo_pregunta_a_responder"> <%= pregunta %> </div>
                 <div class="contenedor_respuestas">
 
                     <form class="responder_pregunta" method="post">
                         <ul class="lista_respuestas">
-                            <li>
-                                <div class="respuesta">
-                                    <label class="eleccion">
-                                        <input type="radio" name="sexo" value="Hombre">
-                                        <span class="checkmark"></span>
-                                        Gato
-                                    </label>
-                                </div>
-                            </li>
 
-                            <li>
-                                <div class="respuesta">
-
-                                    <label class="eleccion">
-                                        <input type="radio" name="sexo" value="Hombre">
-                                        <span class="checkmark"></span>
-                                        Perro
-                                    </label>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="respuesta">
-
-                                    <label class="eleccion">
-                                        <input type="radio" name="sexo" value="Hombre">
-                                        <span class="checkmark"></span>
-                                        Pájaro
-                                    </label>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="respuesta">
-
-                                    <label class="eleccion">
-                                        <input type="radio" name="sexo" value="Hombre">
-                                        <span class="checkmark"></span>
-                                        Tortuga
-                                    </label>
-                                </div>
-                            </li>
+                            <% if(respuestas !== null) { %> 
+                            <% respuestas.forEach(function(respuesta) { %>
+                                <li>
+                                        <div class="respuesta">
+                                            <label class="eleccion">
+                                                <input type="radio" name="sexo" value="Hombre">
+                                                <span class="checkmark"></span>
+                                                <%= respuesta.texto %>
+                                            </label>
+                                        </div>
+                                    </li>
+                            <% }); %>
+                            <% } %>
+                            
                         </ul>
                 </div>
                 <div class="contenedor_añadir_pregunta">

@@ -42,18 +42,13 @@ preguntas.post("/nueva_pregunta", function (request, response) {
         respuesta_propia.texto = request.body.texto_respuesta4;
 
     daoPreguntas.insertQuestion(question, function (error, pregunta_id) {
-        console.log("Entrada en la callback de insertQuestion");
         if (error) {
             response.status(500);
             console.log(`${error.message}`);
             response.render("nueva_pregunta", { errorMsg: `${error.message}` });
         } else {
-            console.log("Todo bien en el insert");
             respuesta_propia.id_pregunta = pregunta_id;
-            console.log("Id de la pregunta: " + respuesta_propia.id_pregunta);
-            console.log("Texto de la respuesta: " + respuesta_propia.texto);
             daoPreguntas.insertRespuestaPropia(respuesta_propia, function(error){
-                console.log("Entrada en la callback de isertRespuesta");
                 if(error){
                     response.status(500);
                     console.log(`${error.message}`);
@@ -89,19 +84,43 @@ preguntas.post("/info_pregunta", function(request, response){
             console.log(`${error.message}`);
             response.render("preguntas", { preguntas : null, errorMsg : `${error.message}` });
         }else{
-            response.status(200);
-            response.render("info_pregunta", { pregunta : pregunta });
+
+            daoPreguntas.getRespondida(id_pregunta, function(error, users){
+                if(error){
+                    response.status(500);
+                    console.log(`${error.message}`);
+                    response.render("preguntas", { preguntas : null, errorMsg : `${error.message}` });
+                }else{
+                    response.status(200);
+                    let found = false;
+                    for(let i = 0; i < users.length && !found; i++){
+                        found = users[i].id_user === request.session.currentUserId;
+                    }
+
+                    if(found)
+                        response.render("info_pregunta", { pregunta : pregunta, respondida : true });
+                    else
+                        response.render("info_pregunta", { pregunta : pregunta[0], respondida : false });
+                }
+            })
         }
     })
 });
 
-preguntas.get("/responder_pregunta", function(request, response){
-    response.status(200);
-    response.render("responder_pregunta");
-});
-
 preguntas.post("/responder_pregunta", function(request, response){
-
+    let pregunta_id = request.body.pregunta_id;
+    let pregunta_texto = request.body.pregunta_texto;
+    daoPreguntas.getRespuestas(pregunta_id, function(error, respuestas){
+        if(error){
+            response.status(500);
+            console.log(`${error.message}`);
+            response.redirect("/info_pregunta");
+        }else{
+            response.status(200);
+            console.log("Pregunta: " + pregunta_texto);
+            response.render("responder_pregunta", { pregunta : pregunta_texto, respuestas : respuestas });
+        }
+    })
 });
 
 module.exports = preguntas;

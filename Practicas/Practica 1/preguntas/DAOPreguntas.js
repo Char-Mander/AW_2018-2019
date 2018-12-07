@@ -51,11 +51,7 @@ class DAOPreguntas {
                     if(err)
                         callback(new Error("Error de acceso a la base de datos"));
                     else{
-                        console.log("Respuesta leída correctamente");
                         respuesta_propia.id = resultado[0].id;
-                        console.log("id de la respuesta: " + respuesta_propia.id);
-                        console.log("id usuario: "+ respuesta_propia.id_user);
-                        console.log("id_pregunta: " + respuesta_propia.id_pregunta);
 
                         const sql = `INSERT INTO respuestas_propias(id_pregunta, id_respuesta, id_user) VALUES (?,?,?)`;
                         let elems = [respuesta_propia.id_pregunta, respuesta_propia.id, respuesta_propia.id_user];
@@ -69,25 +65,6 @@ class DAOPreguntas {
                                 callback(null);
                             }
                         })
-                    }
-                })
-            }
-        })
-    }
-
-    getIdRespuesta(texto, callback){
-        this.pool.getConnection(function(err, connection){
-            if(err)
-                callback(new Error("Error de conexión a la base de datos"), null);
-            else{
-                const sql = `SELECT id FROM respuestas WHERE texto = ?`;
-
-                connection.query(sql, [texto], function(err, resultado){
-                    if(err)
-                        callback(new Error("Error de acceso a la base de datos"), null);
-                    else{
-                        console.log("Respuesta leída correctamente");
-                        callback(null, resultado[0]);
                     }
                 })
             }
@@ -119,7 +96,7 @@ class DAOPreguntas {
             if(err)
                 callback(new Error("Error de conexión a la base de datos"), null);
             else{
-                const sql = `SELECT texto FROM preguntas WHERE id = ?`
+                const sql = `SELECT * FROM preguntas WHERE id = ?`
                 
                 connection.query(sql, [id], function(err, pregunta){
                     connection.release();
@@ -127,7 +104,7 @@ class DAOPreguntas {
                         callback(new Error("Error de acceso a la base de datos"), null);
                     else{
                         console.log("Pregunta leída correctamente");
-                        callback(null, pregunta[0]);
+                        callback(null, pregunta);
                     }
                 })
             }
@@ -140,7 +117,37 @@ class DAOPreguntas {
             if(err)
                 callback(new Error("Error de conexión a la base de datos"), null);
             else{
-                
+                const sql = `SELECT id_user FROM respuestas_propias WHERE id_pregunta = ?`;
+
+                connection.query(sql, id, function(error, resultado){
+                    connection.release();
+                    if(error)
+                        callback(new Error("Error de acceso a la base de datos"), null);
+                    else{
+                        console.log("Usuario leído correctamente");
+                        callback(null, resultado);
+                    }
+                })
+            }
+        })
+    }
+
+    getRespuestas(id_pregunta, callback){
+        this.pool.getConnection(function(err, connection){
+            if(err)
+                callback(new Error("Error de conexión a la base de datos"), null);
+            else{
+                const sql = `SELECT texto FROM respuestas WHERE id_pregunta = ?`;
+
+                connection.query(sql, [id_pregunta], function(err, respuestas){
+                    connection.release();
+                    if(err)
+                        callback(new Error("Error de acceso a la base de datos"), null);
+                    else{
+                        console.log("Respuestas leídas correctamentes");
+                        callback(null, respuestas);
+                    }
+                })
             }
         })
     }
