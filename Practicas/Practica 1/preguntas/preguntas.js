@@ -20,10 +20,12 @@ preguntas.get("/nueva_pregunta", function(request, response){
 
 preguntas.post("/nueva_pregunta", function (request, response) {
     let question = {};
+    let respuesta_propia = {};
+
+    respuesta_propia.id_user = request.session.currentUserId;
 
     question.texto = request.body.texto_pregunta;
     question.respuestas = [];
-    question.correctos = [];
 
     question.respuestas.push(request.body.texto_respuesta1);
     question.respuestas.push(request.body.texto_respuesta2);
@@ -31,33 +33,36 @@ preguntas.post("/nueva_pregunta", function (request, response) {
     question.respuestas.push(request.body.texto_respuesta4);
 
     if(request.body.correcta1 == "on")
-        question.correctos.push(true);
-    else
-        question.correctos.push(false);
+        respuesta_propia.texto = request.body.texto_respuesta1;
+    else if(request.body.correcta2 == "on")
+        respuesta_propia.texto = request.body.texto_respuesta2;
+    else if(request.body.correcta3 == "on")
+        respuesta_propia.texto = request.body.texto_respuesta3;
+    else if(request.body.correcta4 == "on")
+        respuesta_propia.texto = request.body.texto_respuesta4;
 
-    if(request.body.correcta2 == "on")
-        question.correctos.push(true);
-    else
-        question.correctos.push(false);
-    
-    if(request.body.correcta3 == "on")
-        question.correctos.push(true);
-    else
-        question.correctos.push(false);
-
-    if(request.body.correcta4 == "on")
-        question.correctos.push(true);
-    else
-        question.correctos.push(false);
-
-    daoPreguntas.insertQuestion(question, function (error) {
+    daoPreguntas.insertQuestion(question, function (error, pregunta_id) {
+        console.log("Entrada en la callback de insertQuestion");
         if (error) {
             response.status(500);
             console.log(`${error.message}`);
             response.render("nueva_pregunta", { errorMsg: `${error.message}` });
         } else {
-            response.status(200);
-            response.redirect("/preguntas/preguntas");
+            console.log("Todo bien en el insert");
+            respuesta_propia.id_pregunta = pregunta_id;
+            console.log("Id de la pregunta: " + respuesta_propia.id_pregunta);
+            console.log("Texto de la respuesta: " + respuesta_propia.texto);
+            daoPreguntas.insertRespuestaPropia(respuesta_propia, function(error){
+                console.log("Entrada en la callback de isertRespuesta");
+                if(error){
+                    response.status(500);
+                    console.log(`${error.message}`);
+                    response.render("nueva_pregunta", { errorMsg: `${error.message}` });
+                }else{
+                    response.status(200);
+                    response.redirect("/preguntas/preguntas");
+                }
+            })
         }
     });
 
@@ -76,9 +81,18 @@ preguntas.get("/preguntas", function(request, response){
     })
 });
 
-preguntas.get("/info_pregunta", function(request, response){
-    response.status(200);
-    response.render("info_pregunta", { pregunta : "¿Cuál es tu animal favorito?"});
+preguntas.post("/info_pregunta", function(request, response){
+    let id_pregunta = request.body.pregunta_id;
+    daoPreguntas.getQuestion(id_pregunta, function(error, pregunta){
+        if(error){
+            response.status(500);
+            console.log(`${error.message}`);
+            response.render("preguntas", { preguntas : null, errorMsg : `${error.message}` });
+        }else{
+            response.status(200);
+            response.render("info_pregunta", { pregunta : pregunta });
+        }
+    })
 });
 
 preguntas.get("/responder_pregunta", function(request, response){

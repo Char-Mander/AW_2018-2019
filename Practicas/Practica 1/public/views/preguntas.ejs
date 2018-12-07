@@ -44,9 +44,15 @@
                     <% if(preguntas !== null) { %>
                     <% preguntas.forEach(function(pregunta) { %>
                     <li>
-                        <div class="pregunta 1">
-                            <div class="info_pregunta"> <a href="/preguntas/info_pregunta">
-                                    <%= pregunta.texto %> </a></div>
+                        <div class="pregunta">
+                            <div class="info_pregunta">
+                                <%= pregunta.texto %>
+                            </div>
+
+                            <form class="responder_pregunta" method="post" action="/preguntas/info_pregunta">
+                                <input type="hidden" name="pregunta_id" value=<%= pregunta.id %>>
+                                <button class="boton_responder" type="submit"> Responder </button>
+                            </form>
                         </div>
                     </li>
                     <% }); %>
