@@ -16,7 +16,7 @@ const daoUsers = new DAOUsers(pool);
 
 //VENTANA DEL LISTADO DE PETICIONES DE AMISTAD Y AMIGOS DE UN USUARIO
 amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, response) {
-    
+
     //Sacamos la lista de peticiones
     daoAmigos.getPeticiones(response.locals.userId, function (error, listaPeticiones) {
         if (error) {
@@ -32,12 +32,14 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                 else {
                     response.status(200);
                     let usuario = {};
-                            usuario.puntos = response.locals.userPoints;
-                            usuario.id = response.locals.userId;
-                            usuario.img = response.locals.userImg;
-                            response.render("mis_amigos", { sinAmigosMsg: "¡No tienes ningún amigo todavía!",
-                            sinSolicitudesMsg: "No tienes ninguna solicitud pendiente",
-                            amigos:  listaAmigos, user: usuario, peticiones: listaPeticiones });
+                    usuario.puntos = response.locals.userPoints;
+                    usuario.id = response.locals.userId;
+                    usuario.img = response.locals.userImg;
+                    response.render("mis_amigos", {
+                        sinAmigosMsg: "¡No tienes ningún amigo todavía!",
+                        sinSolicitudesMsg: "No tienes ninguna solicitud pendiente",
+                        amigos: listaAmigos, user: usuario, peticiones: listaPeticiones
+                    });
                 }
             });
         }
@@ -51,8 +53,7 @@ amigos.get("/busqueda_amigos", function (request, response) {
 });
 
 amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
-    let name = request.body.name_usr; 
-    console.log(request.body.name_usr);
+    let name = request.body.name_usr;
     //Sacamos el id de los usuarios cuyo nombre se parece al que el usuario de la sesión ha escrito 
     //IMPORTANTE: No deben estar relacionados con el user de la sesión ni en las peticiones, ni pueden ser amigos aún
     daoAmigos.buscarAmigos(response.locals.userId, name, function (error, users) {
@@ -61,13 +62,15 @@ amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, 
             console.log(error.message);
         } else {
             response.status(200);
-            let usuario=[];
+            let usuario = [];
             usuario.puntos = response.locals.userPoints;
             usuario.id = response.locals.userId;
             usuario.img = response.locals.userImg;
-            response.render("busqueda_amigos", {noFoundMsg: "No se ha encontrado a ningún usuario", 
-            amigos: users, user: usuario, name: name});
-                       
+            response.render("busqueda_amigos", {
+                noFoundMsg: "No se ha encontrado a ningún usuario",
+                amigos: users, user: usuario, name: name
+            });
+
         }
     });
 
@@ -75,24 +78,51 @@ amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, 
 
 });
 
-amigos.post("/enviar_peticion", middlewares.middlewareLogin, function(request, response){
+amigos.post("/enviar_peticion", middlewares.middlewareLogin, function (request, response) {
     let id_propio = request.body.id_prop;
     let id_amigo = request.body.id_amig;
+    console.log(id_propio + " " + id_amigo);
 
-    daoAmigos.insertPeticiones(id_amigo, id_propio, function(error){
-        if (error!==null) {
+    daoAmigos.insertPeticiones(id_amigo, id_propio, function (error) {
+        if (error !== null) {
             response.status(500);
             console.log(error.message);
-            response.redirect("/users/sesion");
+            response.redirect("/amigos/mis_amigos");
         } else {
             response.status(200);
             //Aquí iría un mensaje de confirmación 
-            response.redirect("/users/sesion");                       
+            response.redirect("/amigos/mis_amigos");
         }
     });
 });
 
-amigos.post("/gestionar_peticiones", middlewares.middlewareLogin, function(request, response){ç
+amigos.post("/aceptar_peticion", middlewares.middlewareLogin, function (request, response) {
+    let id_propio = request.body.id_propio_aceptar_peticion;
+    let id_amigo = request.body.id_amigo_aceptar_peticion;
+    console.log("ID AMIGO: " + id_amigo + "     ID PROPIO: " + id_propio);
+    daoAmigos.insertAmigos(id_propio, id_amigo, function(error){
+        if(error){
+            response.status(500);
+            console.log(error.message);
+            console.log("error en el insert Amigos");
+        }
+        else{
+            daoAmigos.peticionDone(id_propio, id_amigo, function(error){
+                if(error){
+                    response.status(500);
+                    console.log(error.message);
+                    console.log("error en el peticion done");
+                }
+                else{
+                    response.status(200);
+                    response.redirect("/amigos/mis_amigos");
+                }
+            });
+        }
+    });
+});
+
+amigos.post("/rechazar_peticion", middlewares.middlewareLogin, function (request, response) {
 
 });
 

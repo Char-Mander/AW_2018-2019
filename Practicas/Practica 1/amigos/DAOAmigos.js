@@ -32,15 +32,15 @@ class DAOAmigos{
             if(err){
                 cb_peticionesDone(new Error("Error de conexión a la base de datos"));
             }else{
-                const sql = `DELETE FROM solicitudes WHERE id_user1=? AND id_user2=?;`;
+                const sql = `DELETE FROM solicitudes WHERE (id_user1=? OR id_user2=?) AND action_id_user=?;`;
                 
-                let elems = [id1, id2];
+                let elems = [id1, id1, id2];
                 connection.query(sql, elems, function(err, resultado){
                     connection.release();
                     if(err){
-                        cb_insertPeticiones(new Error("Error de acceso a la base de datos"));
+                        cb_peticionesDone(new Error("Error de acceso a la base de datos"));
                     }else{
-                        cb_insertPeticiones(null);
+                        cb_peticionesDone(null);
                     }
                 });
             }

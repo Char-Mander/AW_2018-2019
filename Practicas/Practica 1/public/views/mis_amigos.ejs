@@ -45,7 +45,7 @@
                         <div class="solicitud">
                             <div class="info_user">
                                 <% if(solicitud.imagen_perfil !== null){ %>
-                                <img class="icon" src="/users/imagen/<%= solicitud.action_id_user %>">
+                                <img class="icon" src="/users/imagen/<%= solicitud.id_user %>">
                                 <% } else { %>
                                 <img class="icon" src="/users/no_profile_pic">
                                 <% } %>
@@ -54,8 +54,16 @@
                                 </div>
                             </div>
                             <div class="botones">
-                                <button type="submit" class="aceptar"> Aceptar </button>
-                                <button type="submit" class="rechazar"> Rechazar </button>
+                                <form class="boton_aceptar" method="post" action="/amigos/aceptar_peticion">
+                                    <input type="hidden" name="id_aceptar_solicitud" value=<%=user.id%>>
+                                    <input type="hidden" name="amigo_aceptar_solicitud" value=<%=solicitud.id_user%>>
+                                    <button class="aceptar" type="submit" > Aceptar </button>
+                                </form>
+                                <form class="boton_rechazar" method="post" action="/amigos/rechazar_peticion">
+                                    <input type="hidden" name="id_rechazar_solicitud" value=<%=user.id%>>
+                                    <input type="hidden" name="amigo_rechazar_solicitud" value=<%=solicitud.id_user%>>
+                                    <button class="rechazar" type="submit"> Rechazar </button>
+                                </form>
                             </div>
                         </div>
                     </li>
@@ -63,45 +71,49 @@
                 </ul>
                 <% } else { %>
                 <div class="sin_info">
-                    <div class="sin_solicitudes"><%= sinSolicitudesMsg %></div>
+                    <div class="sin_solicitudes">
+                        <%= sinSolicitudesMsg %>
+                    </div>
                 </div>
-            <% } %>
-            <div class="contenedor_busqueda">
-                <div class="titulo_busqueda"> Búsqueda de amigos </div>
-                <form class="barra_busqueda" method="post" action="/amigos/busqueda_amigos">
-                    <div class="busqueda"> Búsqueda por nombre: </div>
-                    <input type="text" name="name_usr" placeholder=" Buscar...">
-                    <button type=submit class="boton_aceptar"> Buscar </button>
-                </form>
-            </div>
+                <% } %>
+                <div class="contenedor_busqueda">
+                    <div class="titulo_busqueda"> Búsqueda de amigos </div>
+                    <form class="barra_busqueda" method="post" action="/amigos/busqueda_amigos">
+                        <div class="busqueda"> Búsqueda por nombre: </div>
+                        <input type="text" name="name_usr" placeholder=" Buscar...">
+                        <button type=submit class="boton_aceptar"> Buscar </button>
+                    </form>
+                </div>
 
-            <div class="contenedor_amigos">
-                <div class="titulo_amigos"> Mis amigos </div>
-                <% if(amigos !== undefined && amigos.length>0) { %>
-                <ul class="lista_amigos">
-                    <% amigos.forEach(function(amigo){ %>
-                    <li>
-                        <div class="amigo">
-                            <% if(amigo.imagen_perfil !== null){ %>
-                            <img class="icon" src="/users/imagen/<%= amigo.id_user %>">
-                            <% } else { %>
-                            <img class="icon" src="/users/no_profile_pic">
-                            <% } %>
-                            <div class="nombre_amigo">
-                                <%= amigo.nombre_completo %>
+                <div class="contenedor_amigos">
+                    <div class="titulo_amigos"> Mis amigos </div>
+                    <% if(amigos !== undefined && amigos.length>0) { %>
+                    <ul class="lista_amigos">
+                        <% amigos.forEach(function(amigo){ %>
+                        <li>
+                            <div class="amigo">
+                                <% if(amigo.imagen_perfil !== null){ %>
+                                <img class="icon" src="/users/imagen/<%= amigo.id_user %>">
+                                <% } else { %>
+                                <img class="icon" src="/users/no_profile_pic">
+                                <% } %>
+                                <div class="nombre_amigo">
+                                    <%= amigo.nombre_completo %>
+                                </div>
                             </div>
-                        </div>
 
-                    </li>
-                    <% }); %>
-                </ul>
-                <% } else { %>
-                <div class="sin_info"">
-                    <div class=" sin_amigos"><%= sinAmigosMsg %></div>
+                        </li>
+                        <% }); %>
+                    </ul>
+                    <% } else { %>
+                    <div class="sin_info"">
+                    <div class=" sin_amigos">
+                        <%= sinAmigosMsg %>
+                    </div>
+                </div>
+                <% }%>
             </div>
-            <% }%>
         </div>
-    </div>
     </div>
     </div>
 

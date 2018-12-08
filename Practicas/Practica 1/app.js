@@ -23,7 +23,6 @@ app.use(express.static(ficherosEstaticos));
 app.use(bodyParser.urlencoded({ extended: true })); //body-parser
 app.use(middlewares.middlewareSession); //express-mysql-session
 
-
 app.use("/users", users);   //Manejadores de ruta de usuarios
 app.use("/amigos", amigos); //Manejadores de ruta de amigos y solicitudes
 

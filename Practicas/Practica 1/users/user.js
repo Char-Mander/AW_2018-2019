@@ -141,18 +141,18 @@ users.get("/modificar_perfil", middlewares.middlewareLogin, function (request, r
     response.render("modificar_perfil", { errorMsg: null, user: usr});
 });
 
-users.post("/modificar_perfil", multerFactory.single("user_img"), function (request, response) {
+users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.single("user_img"), function (request, response) {
     let user = {};
 
     user.email = response.locals.userEmail;
     user.password = request.body.password_user;
-    user.nombre_completo = response.locals.userName;
+    user.nombre_completo = request.body.name_user;
     user.sexo = request.body.sexo;
     user.fecha_nacimiento = request.body.fecha;
     user.edad = calcularEdad(request.body.fecha);
     user.imagen_perfil = null;
     user.puntos = 0;
-
+    console.log("Fecha de nacimiento al coger los datos: " + user.fecha_nacimiento);
     if (request.file) {
         user.imagen_perfil = request.file.buffer;
     }
@@ -170,8 +170,9 @@ users.post("/modificar_perfil", multerFactory.single("user_img"), function (requ
                 if (error) {
                     response.status(500);
                 } else {
+                    console.log("Fecha nacimiento en el getUser: " + user.fecha_nacimiento);
                     user.edad = calcularEdad(user.fecha_nacimiento);
-                    response.locals.userName=user.nombre_completo;
+                    response.locals.userImg = user.imagen_perfil;
                     response.render("sesion", { user: user });
                 }
             });

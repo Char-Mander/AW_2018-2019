@@ -45,6 +45,7 @@ class DAOUsers{
                     if(err){
                         cb_getUser(new Error("Error de acceso a la base de datos"), null);
                     }else{
+                        console.log("dentro del GetUser: " + resultado[0]);
                         cb_getUser(null, resultado[0]);
                     }
                 });
@@ -72,19 +73,20 @@ class DAOUsers{
     }
 
     /*Guarda un usuario en la base de datos*/
-    updateUser(user, callback){
+    updateUser(user, cb_updateUser){
         this.pool.getConnection(function(error, connection){
             if(error){
-                callback(new Error("Error de conexión a la base de datos"), null);
+                cb_updateUser(new Error("Error de conexión a la base de datos"), null);
             }else{
                 let elems = [];
                 const sql = crearSentenciaUpdateUser(user, elems);
                 connection.query(sql, elems, function(error, resultado){
                     connection.release();
                     if(error){
-                        callback(new Error("Error de acceso a la base de datos"));
+                        cb_updateUser(new Error("Error de acceso a la base de datos"));
                     }else{
-                        callback(null);
+                        cb_updateUser(null);
+                        console.log("Update insertado correctamente");
                     }
                 });
             }
@@ -147,7 +149,7 @@ function crearSentenciaUpdateUser(user, elems){
 
     for(let contador=0; contador<Object.values(user).length; contador++){
         
-        if(user[`${Object.keys(user)[contador]}`] && `${Object.keys(user)[contador]}`!=="edad"){
+        if(user[`${Object.keys(user)[contador]}`] && user[`${Object.keys(user)[contador]}`] !== undefined && `${Object.keys(user)[contador]}`!=="edad"){
 
             if(firstElem!==1){
                sql+=`, `;
@@ -164,7 +166,7 @@ function crearSentenciaUpdateUser(user, elems){
 
     sql += ` WHERE email = ?`
     elems.push(user.email);
-
+    console.log("Sentencia: " + sql);
     return sql;
 }
 
