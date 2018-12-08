@@ -152,7 +152,6 @@ users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.singl
     user.edad = calcularEdad(request.body.fecha);
     user.imagen_perfil = null;
     user.puntos = 0;
-    console.log("Fecha de nacimiento al coger los datos: " + user.fecha_nacimiento);
     if (request.file) {
         user.imagen_perfil = request.file.buffer;
     }
@@ -170,7 +169,6 @@ users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.singl
                 if (error) {
                     response.status(500);
                 } else {
-                    console.log("Fecha nacimiento en el getUser: " + user.fecha_nacimiento);
                     user.edad = calcularEdad(user.fecha_nacimiento);
                     response.locals.userImg = user.imagen_perfil;
                     response.render("sesion", { user: user });

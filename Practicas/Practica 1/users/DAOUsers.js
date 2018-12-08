@@ -45,7 +45,6 @@ class DAOUsers{
                     if(err){
                         cb_getUser(new Error("Error de acceso a la base de datos"), null);
                     }else{
-                        console.log("dentro del GetUser: " + resultado[0]);
                         cb_getUser(null, resultado[0]);
                     }
                 });
@@ -166,7 +165,6 @@ function crearSentenciaUpdateUser(user, elems){
 
     sql += ` WHERE email = ?`
     elems.push(user.email);
-    console.log("Sentencia: " + sql);
     return sql;
 }
 
