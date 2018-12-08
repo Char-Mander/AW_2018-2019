@@ -55,12 +55,10 @@
                             </div>
                             <div class="botones">
                                 <form class="boton_aceptar" method="post" action="/amigos/aceptar_peticion">
-                                    <input type="hidden" name="id_aceptar_solicitud" value=<%=user.id%>>
                                     <input type="hidden" name="amigo_aceptar_solicitud" value=<%=solicitud.id_user%>>
                                     <button class="aceptar" type="submit" > Aceptar </button>
                                 </form>
                                 <form class="boton_rechazar" method="post" action="/amigos/rechazar_peticion">
-                                    <input type="hidden" name="id_rechazar_solicitud" value=<%=user.id%>>
                                     <input type="hidden" name="amigo_rechazar_solicitud" value=<%=solicitud.id_user%>>
                                     <button class="rechazar" type="submit"> Rechazar </button>
                                 </form>

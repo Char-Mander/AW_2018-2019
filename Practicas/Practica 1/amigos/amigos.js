@@ -97,23 +97,23 @@ amigos.post("/enviar_peticion", middlewares.middlewareLogin, function (request, 
 });
 
 amigos.post("/aceptar_peticion", middlewares.middlewareLogin, function (request, response) {
-    let id_propio = request.body.id_propio_aceptar_peticion;
+    let id_propio = response.locals.userId;
     let id_amigo = request.body.id_amigo_aceptar_peticion;
     console.log("ID AMIGO: " + id_amigo + "     ID PROPIO: " + id_propio);
-    daoAmigos.insertAmigos(id_propio, id_amigo, function(error){
-        if(error){
+    daoAmigos.insertAmigos(id_propio, id_amigo, function (error) {
+        if (error) {
             response.status(500);
             console.log(error.message);
             console.log("error en el insert Amigos");
         }
-        else{
-            daoAmigos.peticionDone(id_propio, id_amigo, function(error){
-                if(error){
+        else {
+            daoAmigos.peticionDone(id_propio, id_amigo, function (error) {
+                if (error) {
                     response.status(500);
                     console.log(error.message);
                     console.log("error en el peticion done");
                 }
-                else{
+                else {
                     response.status(200);
                     response.redirect("/amigos/mis_amigos");
                 }
@@ -123,7 +123,20 @@ amigos.post("/aceptar_peticion", middlewares.middlewareLogin, function (request,
 });
 
 amigos.post("/rechazar_peticion", middlewares.middlewareLogin, function (request, response) {
-
+    let id_propio = response.locals.userId;
+    let id_amigo = request.body.id_amigo_aceptar_peticion;
+    console.log("ID AMIGO: " + id_amigo + "     ID PROPIO: " + id_propio);
+    daoAmigos.peticionDone(id_propio, id_amigo, function (error) {
+        if (error) {
+            response.status(500);
+            console.log(error.message);
+            console.log("error en el peticion done");
+        }
+        else {
+            response.status(200);
+            response.redirect("/amigos/mis_amigos");
+        }
+    });
 });
 
 module.exports = amigos;

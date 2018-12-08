@@ -55,6 +55,8 @@ ul.lista_solicitudes, ul.lista_amigos, div.sin_info{
 
 li{
     margin: 0.6%;
+    height: 2vw;
+    width: 100%;
     background-color: white;
     border-radius: 5px;
 }
