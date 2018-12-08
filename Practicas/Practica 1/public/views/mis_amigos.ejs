@@ -55,11 +55,11 @@
                             </div>
                             <div class="botones">
                                 <form class="botones" method="post" action="/amigos/aceptar_peticion">
-                                    <input type="hidden" name="solicitud" value=<%=solicitud.id_user%>>
+                                    <input type="hidden" name="sol" value=<%=solicitud.id_user%>>
                                     <button class="aceptar" type="submit"> Aceptar </button>
                                 </form>
                                 <form class="botones" method="post" action="/amigos/rechazar_peticion">
-                                    <input type="hidden" name="solicitud" value=<%=solicitud.id_user%>>
+                                    <input type="hidden" name="sol" value=<%=solicitud.id_user%>>
                                     <button class="rechazar" type="submit"> Rechazar </button>
                                 </form>
                             </div>
