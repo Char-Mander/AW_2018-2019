@@ -11,9 +11,9 @@ class DAOAmigos{
             if(err){
                 cb_insertPeticiones(new Error("Error de conexión a la base de datos"));
             }else{
-                const sql = `INSERT INTO solicitudes (id_user1, id_user2, status, action_id_user) VALUES (?, ?, ?, ?);`;
+                const sql = `INSERT INTO solicitudes (id_user1,  action_id_user) VALUES (?, ?);`;
                 
-                let elems = [id1, id2, '0', id2];
+                let elems = [id1, id2];
                 connection.query(sql, elems, function(err, resultado){
                     connection.release();
                     if(err){
@@ -32,9 +32,9 @@ class DAOAmigos{
             if(err){
                 cb_peticionesDone(new Error("Error de conexión a la base de datos"));
             }else{
-                const sql = `DELETE FROM solicitudes WHERE (id_user1=? OR id_user2=?) AND action_id_user=?;`;
+                const sql = `DELETE FROM solicitudes WHERE id_user1=? AND action_id_user=?;`;
                 
-                let elems = [id1, id1, id2];
+                let elems = [id1, id2];
                 connection.query(sql, elems, function(err, resultado){
                     connection.release();
                     if(err){
@@ -54,8 +54,8 @@ class DAOAmigos{
                 cb_getPeticiones(new Error("Error de conexión a la base de datos"), null);
             }else{
                 const sql = `SELECT id_user, nombre_completo, imagen_perfil FROM user LEFT JOIN solicitudes ON action_id_user = id_user
-                WHERE id_user1 = ? OR id_user2 = ? AND action_id_user != ? AND status = 0`;
-                connection.query(sql, [id, id, id], function(err, resultado){
+                WHERE id_user1 = ?`;
+                connection.query(sql, [id], function(err, resultado){
                     connection.release();
                     if(err){
                         cb_getPeticiones(new Error("Error de acceso a la base de datos"), null);
@@ -117,8 +117,8 @@ class DAOAmigos{
                 cb_buscarAmigos(new Error("Error de conexión a la base de datos"), null);
             }else{
                 const sql = `SELECT * FROM user WHERE id_user != ? AND nombre_completo LIKE ? 
-                AND id_user NOT IN (SELECT id_user FROM user LEFT JOIN solicitudes ON id_user = id_user1 OR id_user = id_user2 
-                    WHERE id_user1 = ? OR id_user2 = ?) 
+                AND id_user NOT IN (SELECT id_user FROM user LEFT JOIN solicitudes ON id_user = id_user1 OR id_user = action_id_user 
+                    WHERE id_user1 = ? OR action_id_user = ?) 
                 AND id_user NOT IN (SELECT id_user FROM user LEFT JOIN amigos ON id_user = id_user1 OR id_user = id_user2 
                     WHERE id_user1 = ? OR id_user2 = ?)`;
                 

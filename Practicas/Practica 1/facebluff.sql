@@ -38,8 +38,6 @@ CREATE TABLE `user` (
 
 CREATE TABLE `solicitudes` (
   `id_user1` int(11) UNSIGNED NOT NULL,
-  `id_user2` int(11) UNSIGNED NOT NULL,
-  `status` tinyint(1) UNSIGNED DEFAULT NULL,
   `action_id_user` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -107,16 +105,15 @@ CREATE TABLE `respuestas_adivinadas` (
 -- --------------------------------------------------------
 
 --
--- Índices para tablas volcadas
+-- ï¿½ndices para tablas volcadas
 --
 
 --
 -- Indices de la tabla `solicitudes`
 --
 ALTER TABLE `solicitudes`
-  ADD UNIQUE KEY `unique_users_id` (`id_user1`,`id_user2`),
+  ADD UNIQUE KEY `unique_users_id` (`id_user1`,`action_id_user`),
   ADD KEY `id_user1` (`id_user1`),
-  ADD KEY `id_user2` (`id_user2`),
   ADD KEY `action_id_user` (`action_id_user`);
 
 --
@@ -194,7 +191,6 @@ ALTER TABLE `respuestas_adivinadas`
 --
 ALTER TABLE `solicitudes`
   ADD CONSTRAINT `id_user1_fk_solicitudes` FOREIGN KEY (`id_user1`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_user2_fk_solicitudes` FOREIGN KEY (`id_user2`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_users_fk_solicitudes` FOREIGN KEY (`action_id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
   
 --
