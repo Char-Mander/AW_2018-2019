@@ -137,7 +137,7 @@ class DAOPreguntas {
             if(err)
                 callback(new Error("Error de conexión a la base de datos"), null);
             else{
-                const sql = `SELECT texto FROM respuestas WHERE id_pregunta = ?`;
+                const sql = `SELECT * FROM respuestas WHERE id_pregunta = ?`;
 
                 connection.query(sql, [id_pregunta], function(err, respuestas){
                     connection.release();

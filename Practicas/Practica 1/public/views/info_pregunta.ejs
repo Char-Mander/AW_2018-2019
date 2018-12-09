@@ -44,12 +44,8 @@
                             <% } else { %>
                             <h3> No has contestado a esta pregunta.</h3>
                             <div class="boton_responder_pregunta_propia">
-                                <form class="responder_pregunta" method="POST" action="/preguntas/responder_pregunta">
-                                    <input type="hidden" name="pregunta_id" value=<%= pregunta.id %>>
-                                    <input type="hidden" name="pregunta_texto" value="<%= pregunta.texto %>">
-                                    <button class="boton_responder_pregunta" type="submit">Contestar
-                                        pregunta</button>
-                                </form>
+                                <button class="boton_responder_pregunta" onclick="location.href='/preguntas/responder_pregunta?id=<%= pregunta.id %>&texto=<%= pregunta.texto %>'">Contestar
+                                    pregunta</button>
                             </div>
                             <% } %>
 

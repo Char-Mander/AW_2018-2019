@@ -99,7 +99,9 @@ CREATE TABLE `respuestas_adivinadas` (
   `id_pregunta` int(11) UNSIGNED NOT NULL,
   `id_respuesta` int(11) UNSIGNED NOT NULL PRIMARY KEY,
   `id_amigo` int(11) UNSIGNED NOT NULL,
-  `id_propio` int(11) UNSIGNED NOT NULL
+  `id_propio` int(11) UNSIGNED NOT NULL,
+  `correct` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
+  `vista` tinyint(1) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -174,16 +176,25 @@ ALTER TABLE `respuestas`
 --
 
 --
+-- Filtros para la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+    ADD CONSTRAINT `id_pregunta_fk_respuestas` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `respuestas_propuestas`
 --
 ALTER TABLE `respuestas_propias`
-    ADD CONSTRAINT `id_pregunta_fk_propias` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+    ADD CONSTRAINT `id_pregunta_fk_propias` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `id_respuesta_fk_propias` FOREIGN KEY (`id_respuesta`) REFERENCES `respuestas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `id_user_fk_propias` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `respuestas_adivinadas`
 --
 ALTER TABLE `respuestas_adivinadas`
   ADD CONSTRAINT `id_pregunta_fk_adivinada` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_respuesta_fk_adivinada` FOREIGN KEY (`id_respuesta`) REFERENCES `respuestas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_amigo_fk` FOREIGN KEY (`id_amigo`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_propio_fk` FOREIGN KEY (`id_propio`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 

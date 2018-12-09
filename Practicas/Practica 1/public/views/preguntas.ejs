@@ -46,13 +46,8 @@
                     <li>
                         <div class="pregunta">
                             <div class="info_pregunta">
-                                <%= pregunta.texto %>
+                                <a href="/preguntas/info_pregunta?id=<%= pregunta.id %>"> <%= pregunta.texto %> </a>
                             </div>
-
-                            <form class="responder_pregunta" method="post" action="/preguntas/info_pregunta">
-                                <input type="hidden" name="pregunta_id" value=<%= pregunta.id %>>
-                                <button class="boton_responder" type="submit"> Responder </button>
-                            </form>
                         </div>
                     </li>
                     <% }); %>

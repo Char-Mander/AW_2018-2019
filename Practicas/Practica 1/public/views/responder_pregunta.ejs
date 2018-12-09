@@ -32,35 +32,40 @@
         <div class="body">
 
             <div class="contenedor_info_respuestas">
-                <div class="titulo_pregunta_a_responder"> <%= pregunta %> </div>
+                <div class="titulo_pregunta_a_responder">
+                    <%= pregunta.texto %>
+                </div>
                 <div class="contenedor_respuestas">
+                    <ul class="lista_respuestas">
 
-                    <form class="responder_pregunta" method="post">
-                        <ul class="lista_respuestas">
+                        <% if(respuestas !== null) { %>
+                        <% respuestas.forEach(function(respuesta) { %>
+                        <li>
+                            <div class="respuesta">
+                                <label class="eleccion">
+                                    <!--<input type="radio" name="respuesta">
+                                                <span class="checkmark"></span>-->
+                                    <%= respuesta.texto %>
+                                </label>
 
-                            <% if(respuestas !== null) { %> 
-                            <% respuestas.forEach(function(respuesta) { %>
-                                <li>
-                                        <div class="respuesta">
-                                            <label class="eleccion">
-                                                <input type="radio" name="sexo" value="Hombre">
-                                                <span class="checkmark"></span>
-                                                <%= respuesta.texto %>
-                                            </label>
-                                        </div>
-                                    </li>
-                            <% }); %>
-                            <% } %>
-                            
-                        </ul>
+                                <form class="responder_pregunta" method="post" action="/preguntas/contestar_pregunta">
+                                    <input type="hidden" name="respuesta_texto" value="<%= respuesta.texto %>">
+                                    <input type="hidden" name="pregunta_id" value=<%= pregunta.id %>>
+                                    <input type="hidden" name="pregunta_texto" value="<%= pregunta.texto %>">
+
+                                    <button class="boton_responder" type="submit"> Responder </button>
+                                </form>
+                            </div>
+                        </li>
+                        <% }); %>
+                        <% } %>
+
+                    </ul>
                 </div>
                 <div class="contenedor_añadir_pregunta">
-                    <div class="botones"> <button class="crear_pregunta" onclick="location.href='/preguntas/responder_pregunta'">
-                            Enviar respuesta </button>
+                    <div class="botones">
                     </div>
                 </div>
-
-                </form>
             </div>
 
         </div>
