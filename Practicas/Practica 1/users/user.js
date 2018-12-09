@@ -79,6 +79,7 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
     request.checkBody("password_user", "La contraseña está vacía").notEmpty();
     request.checkBody("name_user", "El nombre del usuario está vacío").notEmpty();
     request.checkBody("fecha", "La fecha de nacimiento del usuario está vacía").notEmpty();
+    request.checkBody("sexo", "El campo del sexo está vacío").notEmpty();
     //  Comprobar que la contraseña tenga un mínimo y un máximo de longitud
     request.checkBody("password_user", "La contraseña no es válida").isLength({ min: 4, max: 20 });
     //  Comprobar que el formato del email sea correcto
