@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="es-ES">
+    <meta charset="utf-8" />
+    <title>Responder Preguntas - FaceBluff</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/general.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cabecera.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo_preguntas.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/cuerpo_responder_pregunta.css" />
+</head>
+
+<body>
+
+    <div class="contenedor">
+        <div class="header">
+            <div class="titulo">
+                <h1>FaceBluff</h1>
+            </div>
+            <div class="nav">
+                <div class="enlace perfil"> <a href="/users/sesion"> Perfil </a> </div>
+                <div class="enlace amigos"> <a href="/amigos/mis_amigos"> Amigos </a> </div>
+                <div class="enlace preguntas"> <a href="/preguntas/preguntas"> Preguntas </a> </div>
+                <div class="enlace desconectar"> <a href="/users/signin"> Desconectar </a> </div>
+                <div class="enlace puntuacion">
+                    <div class="user_icon"></div>
+                    <div class="ptos">50 pts</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="body">
+
+            <div class="contenedor_info_respuestas">
+                <div class="titulo_pregunta_a_responder">
+                    <%= pregunta.texto %>
+                </div>
+                <div class="contenedor_respuestas">
+                    <div class="info_user_pregunta">
+                        <div class="info_respondida">
+
+                            <% if(respondida) { %>
+                            <h3> Ya has contestado a esta pregunta.</h3>
+                            <% } else { %>
+                            <h3> No has contestado a esta pregunta.</h3>
+                            <div class="boton_responder_pregunta_propia">
+                                <button class="boton_responder_pregunta" onclick="location.href='/preguntas/responder_pregunta?id=<%= pregunta.id %>&texto=<%= pregunta.texto %>'">Contestar
+                                    pregunta</button>
+                            </div>
+                            <% } %>
+
+                        </div>
+
+                    </div>
+                    <div class="info_amigos_pregunta">
+                        <div class="info_respondida">
+                            <h3> Los siguientes amigos han respondido a esta pregunta:</h3>
+                        </div>
+                        <ul class="lista_respuesta_amigos">
+
+                            <% if (amigos !== null) { %>
+                            <% amigos.forEach(function(amigo) { %>
+                            <li>
+                                <div class="info_respuesta_user 1">
+                                    <div class="img">
+                                        <% if(amigo.imagen_perfil !== null){ %>
+                                        <img class="icon" src="/users/imagen/<%= amigo.id_user %>">
+                                        <% } else { %>
+                                        <img class="icon" src="/users/no_profile_pic">
+                                        <% } %>
+                                    </div>
+                                    <div class="nombre_solicitud">
+                                        <%= amigo.nombre_completo %>
+                                    </div>
+                                    <div class="botones_respuesta_amigos">
+                                        <% if (amigo.correct !== null) { %>
+                                        <% if (amigo.correct == true) { %>
+                                        Has acertado
+                                        <% } else { %>
+                                        Has fallado
+                                        <% } %>
+                                        <% } else { %>
+                                        <button class="boton_responder_pregunta_amigo" onclick="location.href='/preguntas/adivinar_pregunta?id=<%= pregunta.id %>&texto=<%= pregunta.texto %>&id_amigo=<%= amigo.id_user %>'">Adivinar</button>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </li>
+                            <% })} %>
+
+
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
