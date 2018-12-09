@@ -157,10 +157,11 @@ class DAOPreguntas {
             if(err)
                 callback(new Error("Error de conexión a la base de datos"), null);
             else{
-                const sql = `SELECT id_user, nombre_completo, imagen_perfil FROM user LEFT JOIN amigos 
-                ON id_user1 = id_user OR id_user2 = id_user WHERE id_user IN (SELECT id_user FROM respuestas_propias WHERE id_pregunta = ?)
-                 AND (id_user1 = ? AND id_user2 = id_user) OR (id_user2 = ? AND id_user1 = id_user)`;
-                let elems = [id_pregunta, id_user, id_user];
+                const sql = `SELECT id_user, nombre_completo, imagen_perfil, correct FROM user LEFT JOIN amigos ON id_user1 = id_user 
+                OR id_user2 = id_user LEFT JOIN respuestas_adivinadas ON id_amigo = id_user WHERE id_user IN 
+                (SELECT id_user FROM respuestas_propias WHERE id_pregunta = ?) AND (id_user1 = ? AND id_user2 = id_user) OR 
+                (id_user2 = ? AND id_user1 = id_user) AND id_propio = ?`;
+                let elems = [id_pregunta, id_user, id_user, id_user];
 
                 connection.query(sql, elems, function(err, amigos){
                     connection.release();

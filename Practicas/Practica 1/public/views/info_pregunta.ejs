@@ -60,25 +60,35 @@
 
                             <% if (amigos !== null) { %>
                             <% amigos.forEach(function(amigo) { %>
-                                <li>
-                                    <div class="info_respuesta_user 1">
-                                            <div class="img">
-                                                    <% if(amigo.imagen_perfil !== null){ %>
-                                                        <img class="icon" src="/users/imagen/<%= amigo.id_user %>"> 
-                                                        <% } else { %>
-                                                        <img class="icon" src="/users/no_profile_pic">
-                                                        <% } %>
-                                            </div>
-                                            <div class="nombre_solicitud"> <%= amigo.nombre_completo %> </div>
-                                            <div class="botones_respuesta_amigos">
-                                                <button class="boton_responder_pregunta_amigo" onclick="location.href='/preguntas/responder_pregunta'">Adivinar</button>
-                                            </div>
-                                        </div>
-                                    </li>
+                            <li>
+                                <div class="info_respuesta_user 1">
+                                    <div class="img">
+                                        <% if(amigo.imagen_perfil !== null){ %>
+                                        <img class="icon" src="/users/imagen/<%= amigo.id_user %>">
+                                        <% } else { %>
+                                        <img class="icon" src="/users/no_profile_pic">
+                                        <% } %>
+                                    </div>
+                                    <div class="nombre_solicitud">
+                                        <%= amigo.nombre_completo %>
+                                    </div>
+                                    <div class="botones_respuesta_amigos">
+                                        <% if (amigo.correct !== null) { %>
+                                        <% if (amigo.correct == true) { %>
+                                        Has acertado
+                                        <% } else { %>
+                                        Has fallado
+                                        <% } %>
+                                        <% } else { %>
+                                        <button class="boton_responder_pregunta_amigo" onclick="location.href='/preguntas/responder_pregunta'">Adivinar</button>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </li>
                             <% })} %>
 
 
-                            
+
                         </ul>
                     </div>
                 </div>
