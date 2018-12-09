@@ -157,11 +157,11 @@ class DAOPreguntas {
             if(err)
                 callback(new Error("Error de conexión a la base de datos"), null);
             else{
-                const sql = `SELECT id_user, nombre_completo, imagen_perfil, correct FROM user LEFT JOIN amigos ON id_user1 = id_user 
-                OR id_user2 = id_user LEFT JOIN respuestas_adivinadas ON id_amigo = id_user WHERE id_user IN 
-                (SELECT id_user FROM respuestas_propias WHERE id_pregunta = ?) AND (id_user1 = ? AND id_user2 = id_user) OR 
-                (id_user2 = ? AND id_user1 = id_user) AND id_propio = ?`;
-                let elems = [id_pregunta, id_user, id_user, id_user];
+                const sql = `SELECT id_user, nombre_completo, imagen_perfil FROM user LEFT JOIN amigos 
+                ON id_user1 = id_user OR id_user2 = id_user WHERE ((id_user1 = ? AND id_user2 = id_user) 
+                OR (id_user2 = ? AND id_user1 = id_user) ) AND id_user IN 
+                (SELECT id_user FROM respuestas_propias WHERE id_pregunta = ?)`;
+                let elems = [id_user, id_user, id_pregunta];
 
                 connection.query(sql, elems, function(err, amigos){
                     connection.release();
@@ -170,6 +170,72 @@ class DAOPreguntas {
                     else{
                         console.log("Usuarios que han respondido leídos correctamente");
                         callback(null, amigos);
+                    }
+                })
+            }
+        })
+    }
+
+
+    getIfAdivinada(id_pregunta, id_user, id_amigo, callback){
+        this.pool.getConnection(function(err, connection){
+            if(err)
+                callback(new Error("Error de conexión a la base de datos"), null);
+            else{
+                const sql = `SELECT correct FROM respuestas_adivinadas WHERE id_propio = ? AND id_amigo = ? AND id_pregunta = ?`;
+                let elems = [id_user, id_amigo, id_pregunta];
+
+                connection.query(sql, elems, function(err, correct){
+                    connection.release();
+                    if(err)
+                        callback(new Error("Error de acceso a la base de datos"), null);
+                    else{
+                        console.log("Acierto leído correctamente");
+                        callback(null, correct[0]);
+                    }
+                })
+            }
+        })
+    }
+
+
+    getRespuestaPropia(id_user, id_pregunta, callback){
+        this.pool.getConnection(function(err, connection){
+            if(err)
+                callback(new Error("Error de conexión a la base de datos"), null);
+            else{
+                const sql = `SELECT id_respuesta FROM respuestas_propias WHERE id_pregunta = ? AND id_user = ?`;
+                let elems = [id_pregunta, id_user];
+
+                connection.query(sql, elems, function(err, id_respuesta){
+                    connection.release();
+                    if(err)
+                        callback(new Error("Error de acceso a la base de datos"), null);
+                    else{
+                        console.log("Acierto leído correctamente");
+                        callback(null, id_respuesta[0]);
+                    }
+                })
+            }
+        })
+    }
+
+
+    insertRespuestaAdivinada(id_pregunta, id_respuesta, id_amigo, id_propio, correct, callback){
+        this.pool.getConnection(function(err, connection){
+            if(err)
+                callback(new Error("Error de conexión a la base de datos"));
+            else{
+                const sql = `INSERT INTO respuestas_adivinadas(id_pregunta, id_respuesta, id_amigo, id_propio, correct, vista) VALUES (?,?,?,?,?,?)`;
+                let elems = [id_pregunta, id_respuesta, id_amigo, id_propio, correct, false];
+
+                connection.query(sql, elems, function(err){
+                    connection.release();
+                    if(err)
+                        callback(new Error("Error de acceso a la base de datos"));
+                    else{
+                        console.log("Respuesta adivinada insertada correctamente");
+                        callback(null);
                     }
                 })
             }

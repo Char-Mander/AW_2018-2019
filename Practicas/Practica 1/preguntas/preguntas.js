@@ -5,6 +5,7 @@ const mysql = require("mysql");
 const path = require("path");
 const multer = require("multer");
 const DAOPreguntas = require("./DAOPreguntas.js");
+const DAOUsers = require("../users/DAOUsers.js");
 const config = require("../config");
 const middlewares = require("../middlewares.js");
 
@@ -13,6 +14,8 @@ const preguntas = express.Router();
 const pool = mysql.createPool(config.mysqlConfig);
 
 const daoPreguntas = new DAOPreguntas(pool);
+const daoUsers = new DAOUsers(pool);
+
 preguntas.get("/nueva_pregunta", function (request, response) {
     response.status(200);
     response.render("nueva_pregunta", { errorMsg: null });
@@ -81,7 +84,7 @@ preguntas.get("/preguntas", function (request, response) {
     })
 });
 
-preguntas.get("/info_pregunta", function(request, response){
+preguntas.get("/info_pregunta", function (request, response) {
     let id_pregunta = request.query.id;
     let respondida = false;
 
@@ -100,17 +103,16 @@ preguntas.get("/info_pregunta", function(request, response){
                 } else {
                     respondida = user.length !== 0;
 
-                    daoPreguntas.getAmigosQueHanRespondido(id_pregunta, request.session.currentUserId, function(error, amigos){
+                    daoPreguntas.getAmigosQueHanRespondido(id_pregunta, request.session.currentUserId, function (error, amigos) {
                         if (error) {
                             response.status(500);
                             console.log(`${error.message}`);
                             response.render("preguntas", { preguntas: null, errorMsg: `${error.message}` });
-                        }else{
-                            response.status(200);
-                            response.render("info_pregunta", { pregunta: pregunta[0], respondida: respondida, amigos : amigos });
+                        } else {
+                            response.render("info_pregunta", { pregunta: pregunta[0], respondida: respondida, amigos: amigos });
                         }
                     })
-  
+
                 }
             })
         }
@@ -133,7 +135,7 @@ preguntas.get("/responder_pregunta", function (request, response) {
     })
 });
 
-preguntas.post("/contestar_pregunta", function (request, response) {
+preguntas.post("/responder_pregunta", function (request, response) {
     let respuesta_propia = {};
     let pregunta = {};
     pregunta.id = request.body.pregunta_id;
@@ -155,7 +157,68 @@ preguntas.post("/contestar_pregunta", function (request, response) {
     })
 });
 
-preguntas.get("/adivinar_pregunta", function(request, response){
+preguntas.get("/adivinar_pregunta", function (request, response) {//pregunta.id, pregunta.texto, amigo.id
+    let pregunta = {};
+    let id_amigo = request.query.id_amigo;
+    pregunta.id = request.query.id;
+    pregunta.texto = request.query.texto;
+
+    daoPreguntas.getRespuestas(pregunta.id, function (error, respuestas) {
+        if (error) {
+            response.status(500);
+            console.log(`${error.message}`);
+            response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
+        } else {
+
+            daoUsers.getUser(id_amigo, function (error, amigo) {
+                if (error) {
+                    response.status(500);
+                    console.log(`${error.message}`);
+                    response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
+                } else {
+                    response.status(200);
+                    response.render("adivinar_pregunta", { pregunta: pregunta, respuestas: respuestas, amigo: amigo });
+                }
+            })
+
+
+        }
+    })
+
+});
+
+preguntas.post("/adivinar_pregunta", function (request, response) {
+    let respuesta = {};
+    let pregunta = {};
+    let correct = false;
+    let id_amigo = request.body.id_amigo;
+
+    respuesta.id = request.body.respuesta_id;
+    respuesta.texto = request.body.respuesta_texto;
+
+    pregunta.id = request.body.pregunta_id;
+    pregunta.texto = request.pregunta_texto;
+
+    daoPreguntas.getRespuestaPropia(id_amigo, pregunta.id, function (error, id_respuesta) {
+        if (error) {
+            response.status(500);
+            console.log(`${error.message}`);
+            response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
+        } else {
+            let correct = respuesta.id == id_respuesta.id_respuesta;
+
+            daoPreguntas.insertRespuestaAdivinada(pregunta.id, respuesta.id, id_amigo, request.session.currentUserId, correct, function (error) {
+                if (error) {
+                    response.status(500);
+                    console.log(`${error.message}`);
+                    response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
+                }else{
+                    response.status(200);
+                    response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
+                }
+            })
+        }
+    })
 
 });
 

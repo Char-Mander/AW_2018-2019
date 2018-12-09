@@ -73,15 +73,16 @@
                                         <%= amigo.nombre_completo %>
                                     </div>
                                     <div class="botones_respuesta_amigos">
-                                        <% if (amigo.correct !== null) { %>
+                                            <button class="boton_responder_pregunta_amigo" onclick="location.href='/preguntas/adivinar_pregunta?id=<%= pregunta.id %>&texto=<%= pregunta.texto %>&id_amigo=<%= amigo.id_user %>'">Adivinar</button>
+                                        <!--<% if (amigo.correct !== null) { %>
                                         <% if (amigo.correct == true) { %>
                                         Has acertado
                                         <% } else { %>
                                         Has fallado
                                         <% } %>
-                                        <% } else { %>
-                                        <button class="boton_responder_pregunta_amigo" onclick="location.href='/preguntas/adivinar_pregunta?id=<%= pregunta.id %>&texto=<%= pregunta.texto %>&id_amigo=<%= amigo.id_user %>'">Adivinar</button>
-                                        <% } %>
+                                        <% } else { %>-->
+                                        
+                                        <!--<% } %>-->
                                     </div>
                                 </div>
                             </li>
