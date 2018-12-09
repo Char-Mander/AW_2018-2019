@@ -135,10 +135,10 @@ users.get("/imagen/:id", middlewares.middlewareLogin, function (request, respons
 //  Modificación del usuario
 users.get("/modificar_perfil", middlewares.middlewareLogin, function (request, response) {
     response.status(200);
-    let usr = { id: response.locals.userId,
+    let user = { id_user: response.locals.userId,
         puntos: response.locals.userPoints,
-        imagen: response.locals.userImg}
-    response.render("modificar_perfil", { errorMsg: null, user: usr});
+        imagen_perfil: response.locals.userImg}
+    response.render("modificar_perfil", { errorMsg: null, user: user});
 });
 
 users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.single("user_img"), function (request, response) {
