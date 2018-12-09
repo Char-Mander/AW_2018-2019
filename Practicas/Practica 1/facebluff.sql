@@ -38,6 +38,7 @@ CREATE TABLE `user` (
 
 CREATE TABLE `solicitudes` (
   `id_user1` int(11) UNSIGNED NOT NULL,
+  `id_user2` int(11) UNSIGNED NOT NULL,
   `status` tinyint(1) UNSIGNED DEFAULT NULL,
   `action_id_user` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -67,37 +68,46 @@ CREATE TABLE `preguntas` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `respuestas_propuestas`
+-- Estructura de tabla para la tabla `respuestas`
 --
 
-CREATE TABLE `respuestas_propuestas` (
+CREATE TABLE `respuestas` (
   `id_pregunta` int(11) UNSIGNED NOT NULL,
   `id` int(11) UNSIGNED NOT NULL PRIMARY KEY,
-  `texto` varchar(200) NOT NULL,
-  `correct` tinyint(1) NOT NULL
-
+  `texto` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `preguntas_respondidas`
+-- Estructura de tabla para la tabla `respuestas_propias`
 --
 
-CREATE TABLE `preguntas_respondidas` (
+CREATE TABLE `respuestas_propias` (
+  `id_pregunta` int(11) UNSIGNED NOT NULL,
+  `id_respuesta` int(11) UNSIGNED NOT NULL PRIMARY KEY,
+  `id_user` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuestas_adivinadas``
+--
+
+CREATE TABLE `respuestas_adivinadas` (
   `id_pregunta` int(11) UNSIGNED NOT NULL,
   `id_respuesta` int(11) UNSIGNED NOT NULL PRIMARY KEY,
   `id_amigo` int(11) UNSIGNED NOT NULL,
-  `id_propio` int(11) UNSIGNED NOT NULL
+  `id_propio` int(11) UNSIGNED NOT NULL,
+  `correct` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
+  `vista` tinyint(1) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
-
-
-
 --
--- √çndices para tablas volcadas
+-- Õndices para tablas volcadas
 --
 
 --
@@ -118,18 +128,18 @@ ALTER TABLE `amigos`
 	ADD KEY `id_user2` (`id_user2`);
   
 --
--- Indices de la tabla `respuestas_propuestas`
+-- Indices de la tabla `respuestas_adivinadas`
 --
-ALTER TABLE `respuestas_propuestas`
+ALTER TABLE `respuestas_adivinadas`
   ADD KEY `id_pregunta` (`id_pregunta`);
 
 --
--- Indices de la tabla `preguntas_respondidas`
+-- Indices de la tabla `respuestas_propias`
 --
-ALTER TABLE `preguntas_respondidas`
+ALTER TABLE `respuestas_propias`
   ADD KEY `id_pregunta` (`id_pregunta`),
-  ADD KEY `id_amigo` (`id_amigo`),
-  ADD KEY `id_propio` (`id_propio`);
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_respuesta` (`id_respuesta`);
 
 
 
@@ -153,9 +163,9 @@ ALTER TABLE `preguntas`
 
 
 --
--- AUTO_INCREMENT de la tabla `respuestas_propuestas`
+-- AUTO_INCREMENT de la tabla `respuestas`
 --
-ALTER TABLE `respuestas_propuestas`
+ALTER TABLE `respuestas`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 
@@ -168,14 +178,14 @@ ALTER TABLE `respuestas_propuestas`
 --
 -- Filtros para la tabla `respuestas_propuestas`
 --
-ALTER TABLE `respuestas_propuestas`
-    ADD CONSTRAINT `id_pregunta_fk_propuestas` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `respuestas_propias`
+    ADD CONSTRAINT `id_pregunta_fk_propias` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `preguntas_respondidas`
+-- Filtros para la tabla `respuestas_adivinadas`
 --
-ALTER TABLE `preguntas_respondidas`
-  ADD CONSTRAINT `id_pregunta_fk_realizadas` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ALTER TABLE `respuestas_adivinadas`
+  ADD CONSTRAINT `id_pregunta_fk_adivinada` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_amigo_fk` FOREIGN KEY (`id_amigo`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_propio_fk` FOREIGN KEY (`id_propio`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
