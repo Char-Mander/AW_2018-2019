@@ -55,7 +55,7 @@ ul.lista_solicitudes, ul.lista_amigos, div.sin_info{
 
 li{
     margin: 0.6%;
-    height: 2.2vw;
+    height: 2.5vw;
     width: 100%;
     background-color: white;
     border-radius: 5px;
@@ -67,20 +67,23 @@ div.solicitud, div.amigo{
 
 div.info_user{
     display: flex;
-    width: 50%;
+    width: 75%;
+    height: 2.5vw
 }
 
 div.botones{
     display: flex;
     width: 50%;
+    height: 100%;
     justify-content: flex-end;
 }
 
 form.botones{
     display:flex;
     width: 100%;
+    height: 100%;
     justify-content: flex-end;
-    align-content: space-around;
+    align-content: flex-end;
 }
 
 form.barra_busqueda{
@@ -116,7 +119,19 @@ div.sin_amigos, div.sin_solicitudes{
     align-content: center;
 }
 
-button{
+button.aceptar, button.rechazar{
+    width: 80%;
+    height: 100%;
+    font-family: 'Patrick Hand';
+    font-size: 1.5vw;
+    border-radius: 5px;
+    background-color: rgb(172, 240, 172);
+    overflow: hidden;
+    align-self: center;
+    margin:1%;
+}
+
+button.buscar{
     width: 30%;
     height: 90%;
     font-family: 'Patrick Hand';
@@ -125,7 +140,6 @@ button{
     background-color:rgb(172, 240, 172); 
     overflow: hidden;
     align-self: center;
-    margin-left:1%;
 }
 
 div.img{

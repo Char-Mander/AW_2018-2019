@@ -97,7 +97,6 @@ amigos.post("/enviar_peticion", middlewares.middlewareLogin, function (request, 
 amigos.post("/aceptar_peticion", middlewares.middlewareLogin, function (request, response) {
     let id_propio = response.locals.userId;
     let id_amigo = request.body.sol;
-    console.log("ID AMIGO: " + id_amigo + "     ID PROPIO: " + id_propio);
     daoAmigos.insertAmigos(id_propio, id_amigo, function (error) {
         if (error) {
             response.status(500);
@@ -125,7 +124,6 @@ amigos.post("/aceptar_peticion", middlewares.middlewareLogin, function (request,
 amigos.post("/rechazar_peticion", middlewares.middlewareLogin, function (request, response) {
     let id_propio = response.locals.userId;
     let id_amigo = request.body.sol;
-    console.log("ID AMIGO: " + id_amigo + "     ID PROPIO: " + id_propio);
     daoAmigos.peticionDone(id_propio, id_amigo, function (error) {
         if (error) {
             response.status(500);
