@@ -38,7 +38,6 @@ CREATE TABLE `user` (
 
 CREATE TABLE `solicitudes` (
   `id_user1` int(11) UNSIGNED NOT NULL,
-  `id_user2` int(11) UNSIGNED NOT NULL,
   `status` tinyint(1) UNSIGNED DEFAULT NULL,
   `action_id_user` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

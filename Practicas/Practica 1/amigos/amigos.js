@@ -101,7 +101,6 @@ amigos.post("/aceptar_peticion", middlewares.middlewareLogin, function (request,
         if (error) {
             response.status(500);
             console.log(error.message);
-            console.log("error en el insert Amigos");
             response.redirect("/amigos/mis_amigos");
         }
         else {
@@ -109,7 +108,6 @@ amigos.post("/aceptar_peticion", middlewares.middlewareLogin, function (request,
                 if (error) {
                     response.status(500);
                     console.log(error.message);
-                    console.log("error en el peticion done");
                     response.redirect("/amigos/mis_amigos");
                 }
                 else {
@@ -128,7 +126,6 @@ amigos.post("/rechazar_peticion", middlewares.middlewareLogin, function (request
         if (error) {
             response.status(500);
             console.log(error.message);
-            console.log("error en el peticion done");
             response.redirect("/amigos/mis_amigos");
         }
         else {
