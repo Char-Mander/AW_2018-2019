@@ -46,6 +46,7 @@ users.post("/signin", function (request, response) {
             response.redirect("/users/sesion");
         }
         else {
+            response.status(200);
             response.render("signIn", { errorMsg: "Dirección de correo y/o contraseña no válidos." });
         }
     });
@@ -57,7 +58,24 @@ users.get("/signup", middlewares.middlewareLogged, function (request, response) 
 });
 
 users.post("/signup", multerFactory.single("user_img"), function (request, response) {
-    let user = {};
+
+    //  Comprobar que los campos obligatorios no estén vacíos
+    request.checkBody("email_user", "El email del usuario está vacío").notEmpty();
+    request.checkBody("password_user", "La contraseña está vacía").notEmpty();
+    request.checkBody("name_user", "El nombre del usuario está vacío").notEmpty();
+    request.checkBody("fecha", "La fecha de nacimiento del usuario está vacía").notEmpty();
+    //  Comprobar que la contraseña tenga un mínimo y un máximo de longitud
+    request.checkBody("password_user", "La contraseña no es válida").isLength({ min: 4, max: 20 });
+    //  Comprobar que el formato del email sea correcto
+    request.checkBody("email_user", "La dirección de correo no es válida").isEmail();
+    //  Comprobar que la fecha de nacimiento sea anterior a la fecha actual
+    request.checkBody("fecha", "La fecha de nacimiento no es válida").isBefore();
+
+    request.getValidationResult().then(function(result) {
+        // El método isEmpty() devuelve true si las comprobaciones
+        // no han detectado ningún error
+        if (result.isEmpty()) {
+        let user = {};
 
     user.email = request.body.email_user;
     user.password = request.body.password_user;
@@ -74,7 +92,6 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
     daoUsers.insertUser(user, function (error, id) {
         if (error) {
             response.status(500);
-            console.log(`${error.message}`);
             response.render("signUp", { errorMsg: `${error.message}` });
         } else {
             user.id_user = id;
@@ -86,6 +103,15 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
             response.redirect("/users/sesion");
         }
     });
+        } else {
+            response.status(200);
+            //Se meten todos los mensajes de error en un array
+            let mensaje = result.array().map(n => " " + n.msg);
+            response.render("signIn", { errorMsg: mensaje });
+        }
+        });
+
+    
 
 });
 

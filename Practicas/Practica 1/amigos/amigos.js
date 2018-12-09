@@ -14,16 +14,16 @@ const pool = mysql.createPool(config.mysqlConfig);
 const daoAmigos = new DAOAmigos(pool);
 const daoUsers = new DAOUsers(pool);
 
-//VENTANA DEL LISTADO DE PETICIONES DE AMISTAD Y AMIGOS DE UN USUARIO
+//  VENTANA DEL LISTADO DE PETICIONES DE AMISTAD Y AMIGOS DE UN USUARIO
 amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, response) {
 
-    //Sacamos la lista de peticiones
+    //  Sacamos la lista de peticiones
     daoAmigos.getPeticiones(response.locals.userId, function (error, listaPeticiones) {
         if (error) {
             response.status(500);
         }
         else {
-            //Sacamos la lista de amigos
+            //  Sacamos la lista de amigos
             daoAmigos.getAmigos(response.locals.userId, function (error, listaAmigos) {
                 if (error) {
                     response.status(500);
@@ -54,8 +54,8 @@ amigos.get("/busqueda_amigos", function (request, response) {
 
 amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, response) {
     let name = request.body.name_usr;
-    //Sacamos el id de los usuarios cuyo nombre se parece al que el usuario de la sesión ha escrito 
-    //IMPORTANTE: No deben estar relacionados con el user de la sesión ni en las peticiones, ni pueden ser amigos aún
+    //  Sacamos el id de los usuarios cuyo nombre se parece al que el usuario de la sesión ha escrito 
+    //  IMPORTANTE: No deben estar relacionados con el user de la sesión ni en las peticiones, ni pueden ser amigos aún
     daoAmigos.buscarAmigos(response.locals.userId, name, function (error, users) {
         if (error) {
             response.status(500);
@@ -76,6 +76,7 @@ amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, 
 });
 
 
+//  Envío de solicitudes de amistad
 amigos.post("/enviar_peticion", middlewares.middlewareLogin, function (request, response) {
     let id_propio = response.locals.userId;
     let id_amigo = request.body.id_amig;
@@ -93,7 +94,7 @@ amigos.post("/enviar_peticion", middlewares.middlewareLogin, function (request, 
     });
 });
 
-
+//  Aceptar una solicitud de amistad
 amigos.post("/aceptar_peticion", middlewares.middlewareLogin, function (request, response) {
     let id_propio = response.locals.userId;
     let id_amigo = request.body.sol;
@@ -119,6 +120,7 @@ amigos.post("/aceptar_peticion", middlewares.middlewareLogin, function (request,
     });
 });
 
+//  Rechazar una solicitud de amistad
 amigos.post("/rechazar_peticion", middlewares.middlewareLogin, function (request, response) {
     let id_propio = response.locals.userId;
     let id_amigo = request.body.sol;
