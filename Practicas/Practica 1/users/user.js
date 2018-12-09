@@ -210,7 +210,7 @@ users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.singl
             }
             response.redirect("/users/modificar_perfil", { errorMsg: "Error en el proceso de modificación", user: usr });
         } else {
-            daoUsers.getUser(request.session.currentUserId, function (error, user) {
+            daoUsers.getUser(response.locals.userId, function (error, user) {
                 if (error) {
                     response.status(500);
                 } else {

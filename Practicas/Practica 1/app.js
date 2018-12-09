@@ -8,7 +8,6 @@ const middlewares = require("./middlewares.js");
 const expressValidator = require("express-validator");
 const users = require("./users/user.js");
 const amigos = require("./amigos/amigos.js");
-const preguntas = require("./preguntas/preguntas.js");
 
 //  Creación de una aplicación express
 const app = express();
@@ -29,7 +28,6 @@ app.use(expressValidator());
 
 app.use("/users", users);   //Manejadores de ruta de usuarios
 app.use("/amigos", amigos); //Manejadores de ruta de amigos y solicitudes
-app.use("/preguntas", preguntas);   //Manejadores de ruta de preguntas
 
 
 //  Arranque del servidor

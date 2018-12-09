@@ -26,13 +26,6 @@ div.titulo_preguntas, div.titulo_añade_preguntas, div.titulo_añadir_preguntas,
     margin-top:4%;
 }
 
-div.mensaje_error{
-    color: red;
-    width: 37.5vw;
-    display: flex;
-    justify-content: center;
-}
-
 ul.lista_preguntas, ul.lista_añadir_opciones_preguntas, div.contenedor_respuestas{
     list-style-type: none;
     display: flex;
@@ -63,7 +56,6 @@ div.pregunta a:hover{
 div.pregunta a:active{
     color:rgb(104, 102, 102);
 }
-
 div.pregunta {
     width: 100%;
     height: auto;
@@ -98,29 +90,6 @@ input{
     align-self: center;
 }
 
-label.eleccion {
-    display: flex;
-    position: relative;
-    padding-left: 20px;
-    margin-bottom: 5px;
-    margin-top: 5px;
-    width: 15%;
-    height: 80%;
-    cursor: pointer;
-    user-select: none;
-    overflow:hidden;
-}
-
-label.eleccion input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 10px;
-    width: 10px;
-    background-color: #eee;
-    border-radius: 50%;
-}
-
 div.contenedor_añadir_pregunta, div.contenedor_añadir_preguntas{
     display: flex;
     flex-direction: column;
@@ -144,6 +113,7 @@ div.contenedor_boton_añadir_preguntas, div.contenedor_finalizar_formulario{
     align-content: center;
     width: 100%;
 }
+
 
 button{
     width: 70%;
