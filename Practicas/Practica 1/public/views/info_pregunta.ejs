@@ -80,7 +80,7 @@
                                         Has fallado
                                         <% } %>
                                         <% } else { %>
-                                        <button class="boton_responder_pregunta_amigo" onclick="location.href='/preguntas/responder_pregunta'">Adivinar</button>
+                                        <button class="boton_responder_pregunta_amigo" onclick="location.href='/preguntas/adivinar_pregunta?id=<%= pregunta.id %>&texto=<%= pregunta.texto %>&id_amigo=<%= amigo.id_user %>'">Adivinar</button>
                                         <% } %>
                                     </div>
                                 </div>

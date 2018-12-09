@@ -155,4 +155,8 @@ preguntas.post("/contestar_pregunta", function (request, response) {
     })
 });
 
+preguntas.get("/adivinar_pregunta", function(request, response){
+
+});
+
 module.exports = preguntas;
