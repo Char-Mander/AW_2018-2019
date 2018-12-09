@@ -61,7 +61,7 @@ div.nombre_solicitud{
 }
 
 div.img{
-    content: url(../img/solicitud1.jpg);
+    /*content: url(../img/solicitud1.jpg);*/
     display:flex;
     align-self: center;
     width: 3vw;

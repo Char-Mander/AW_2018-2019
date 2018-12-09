@@ -83,6 +83,7 @@ preguntas.get("/preguntas", function (request, response) {
 
 preguntas.get("/info_pregunta", function(request, response){
     let id_pregunta = request.query.id;
+    let respondida = false;
 
     daoPreguntas.getQuestion(id_pregunta, function (error, pregunta) {
         if (error) {
@@ -91,22 +92,25 @@ preguntas.get("/info_pregunta", function(request, response){
             response.render("preguntas", { preguntas: null, errorMsg: `${error.message}` });
         } else {
 
-            daoPreguntas.getRespondida(id_pregunta, function (error, users) {
+            daoPreguntas.getIfRespondida(id_pregunta, request.session.currentUserId, function (error, user) {
                 if (error) {
                     response.status(500);
                     console.log(`${error.message}`);
                     response.render("preguntas", { preguntas: null, errorMsg: `${error.message}` });
                 } else {
-                    response.status(200);
-                    let found = false;
-                    for (let i = 0; i < users.length && !found; i++) {
-                        found = users[i].id_user === request.session.currentUserId;
-                    }
+                    respondida = user.length !== 0;
 
-                    if (found)
-                        response.render("info_pregunta", { pregunta: pregunta[0], respondida: true });
-                    else
-                        response.render("info_pregunta", { pregunta: pregunta[0], respondida: false });
+                    daoPreguntas.getAmigosQueHanRespondido(id_pregunta, request.session.currentUserId, function(error, amigos){
+                        if (error) {
+                            response.status(500);
+                            console.log(`${error.message}`);
+                            response.render("preguntas", { preguntas: null, errorMsg: `${error.message}` });
+                        }else{
+                            response.status(200);
+                            response.render("info_pregunta", { pregunta: pregunta[0], respondida: respondida, amigos : amigos });
+                        }
+                    })
+  
                 }
             })
         }

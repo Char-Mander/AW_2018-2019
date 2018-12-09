@@ -112,14 +112,14 @@ class DAOPreguntas {
         })
     }
 
-    getRespondida(id, callback){
+    getIfRespondida(id_pregunta, id_user, callback){
         this.pool.getConnection(function(err, connection){
             if(err)
                 callback(new Error("Error de conexión a la base de datos"), null);
             else{
-                const sql = `SELECT id_user FROM respuestas_propias WHERE id_pregunta = ?`;
+                const sql = `SELECT id_user FROM respuestas_propias WHERE id_pregunta = ? AND id_user = ?`;
 
-                connection.query(sql, id, function(error, resultado){
+                connection.query(sql, [id_pregunta, id_user], function(error, resultado){
                     connection.release();
                     if(error)
                         callback(new Error("Error de acceso a la base de datos"), null);
@@ -146,6 +146,29 @@ class DAOPreguntas {
                     else{
                         console.log("Respuestas leídas correctamentes");
                         callback(null, respuestas);
+                    }
+                })
+            }
+        })
+    }
+
+    getAmigosQueHanRespondido(id_pregunta, id_user, callback){
+        this.pool.getConnection(function(err, connection){
+            if(err)
+                callback(new Error("Error de conexión a la base de datos"), null);
+            else{
+                const sql = `SELECT id_user, nombre_completo, imagen_perfil FROM user LEFT JOIN amigos 
+                ON id_user1 = id_user OR id_user2 = id_user WHERE id_user IN (SELECT id_user FROM respuestas_propias WHERE id_pregunta = ?)
+                 AND (id_user1 = ? AND id_user2 = id_user) OR (id_user2 = ? AND id_user1 = id_user)`;
+                let elems = [id_pregunta, id_user, id_user];
+
+                connection.query(sql, elems, function(err, amigos){
+                    connection.release();
+                    if(err)
+                        callback(new Error("Error de acceso a la base de datos"), null);
+                    else{
+                        console.log("Usuarios que han respondido leídos correctamente");
+                        callback(null, amigos);
                     }
                 })
             }

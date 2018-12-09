@@ -57,42 +57,28 @@
                             <h3> Los siguientes amigos han respondido a esta pregunta:</h3>
                         </div>
                         <ul class="lista_respuesta_amigos">
-                            <li>
-                                <div class="info_respuesta_user 1">
-                                    <div class="img"></div>
-                                    <div class="nombre_solicitud"> Bruja Piruja </div>
-                                    <div class="botones_respuesta_amigos">
-                                        <button class="boton_responder_pregunta_amigo" onclick="location.href='/preguntas/responder_pregunta'">Adivinar</button>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="info_respuesta_user 2">
-                                    <div class="img"></div>
-                                    <div class="nombre_solicitud"> Hannibal Gómez </div>
-                                    <div class="botones_respuesta_amigos">
-                                        <button class="boton_responder_pregunta_amigo" onclick="location.href='/preguntas/responder_pregunta'">Adivinar</button>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="info_respuesta_user 3">
-                                    <div class="img"></div>
-                                    <div class="nombre_solicitud"> Stuart Minion </div>
-                                    <div class="pregunta_respondida">
-                                        <div class="info_pregunta_respondida_acertada">Has acertado</button>
+
+                            <% if (amigos !== null) { %>
+                            <% amigos.forEach(function(amigo) { %>
+                                <li>
+                                    <div class="info_respuesta_user 1">
+                                            <div class="img">
+                                                    <% if(amigo.imagen_perfil !== null){ %>
+                                                        <img class="icon" src="/users/imagen/<%= amigo.id_user %>"> 
+                                                        <% } else { %>
+                                                        <img class="icon" src="/users/no_profile_pic">
+                                                        <% } %>
+                                            </div>
+                                            <div class="nombre_solicitud"> <%= amigo.nombre_completo %> </div>
+                                            <div class="botones_respuesta_amigos">
+                                                <button class="boton_responder_pregunta_amigo" onclick="location.href='/preguntas/responder_pregunta'">Adivinar</button>
+                                            </div>
                                         </div>
-                                    </div>
-                            </li>
-                            <li>
-                                <div class="info_respuesta_user 4">
-                                    <div class="img"></div>
-                                    <div class="nombre_solicitud"> Goomba </div>
-                                    <div class="pregunta_respondida">
-                                        <div class="info_pregunta_respondida_fallada">Has fallado</button>
-                                        </div>
-                                    </div>
-                            </li>
+                                    </li>
+                            <% })} %>
+
+
+                            
                         </ul>
                     </div>
                 </div>
