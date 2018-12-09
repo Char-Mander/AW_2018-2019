@@ -6,7 +6,7 @@ const path = require("path");
 const multer = require("multer");
 const DAOUsers = require("./DAOUsers.js");
 const config = require("../config");
-const middlewares = require("../middlewares.js"); 
+const middlewares = require("../middlewares.js");
 
 const users = express.Router();
 
@@ -24,33 +24,48 @@ users.get("/signin", middlewares.middlewareLogged, function (request, response) 
 
 //COGE LOS DATOS DEL FORMULARIO DEL SIGNIN, Y REDIRECCIONA A LA VENTANA DE SESIÓN
 users.post("/signin", function (request, response) {
-    let user = {
-        email: "",
-        password: ""
-    }
-    user.email = request.body.email_user;
-    user.password = request.body.password_user;
+    //  Comprobar que los campos obligatorios no estén vacíos
+    request.checkBody("email_user", "El email del usuario está vacío").notEmpty();
+    request.checkBody("password_user", "La contraseña está vacía").notEmpty();
+    request.getValidationResult().then(function (result) {
+        // El método isEmpty() devuelve true si las comprobaciones
+        // no han detectado ningún error
+        if (result.isEmpty()) {
+            let user = {
+                email: "",
+                password: ""
+            }
+            user.email = request.body.email_user;
+            user.password = request.body.password_user;
 
-    daoUsers.isUserCorrect(user.email, user.password, function (error, res, datos) {
-        if (error) {
-            response.render("signIn", { errorMsg: "Error" });
-        }
-        else if (res) {
+            daoUsers.isUserCorrect(user.email, user.password, function (error, res, datos) {
+                if (error) {
+                    response.render("signIn", { errorMsg: "Error" });
+                }
+                else if (res) {
+                    response.status(200);
+                    request.session.currentUserId = datos.id_user;
+                    request.session.currentUserEmail = datos.email;
+                    request.session.currentUserPoints = datos.puntos;
+                    request.session.currentUserImg = datos.imagen_perfil;
+
+                    datos.edad = calcularEdad(datos.fecha_nacimiento);
+                    response.redirect("/users/sesion");
+                }
+                else {
+                    response.status(200);
+                    response.render("signIn", { errorMsg: "Dirección de correo y/o contraseña no válidos." });
+                }
+            });
+        } else {
             response.status(200);
-            request.session.currentUserId = datos.id_user;
-            request.session.currentUserEmail = datos.email;
-            request.session.currentUserPoints = datos.puntos;
-            request.session.currentUserImg = datos.imagen_perfil;
-    
-            datos.edad=calcularEdad(datos.fecha_nacimiento);
-            response.redirect("/users/sesion");
-        }
-        else {
-            response.status(200);
-            response.render("signIn", { errorMsg: "Dirección de correo y/o contraseña no válidos." });
+            //Se meten todos los mensajes de error en un array
+            let mensaje = result.array().map(n => " " + n.msg);
+            response.render("signin", { errorMsg: mensaje });
         }
     });
 });
+
 
 //  Registro del usuario
 users.get("/signup", middlewares.middlewareLogged, function (request, response) {
@@ -71,47 +86,47 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
     //  Comprobar que la fecha de nacimiento sea anterior a la fecha actual
     request.checkBody("fecha", "La fecha de nacimiento no es válida").isBefore();
 
-    request.getValidationResult().then(function(result) {
+    request.getValidationResult().then(function (result) {
         // El método isEmpty() devuelve true si las comprobaciones
         // no han detectado ningún error
         if (result.isEmpty()) {
-        let user = {};
+            let user = {};
 
-    user.email = request.body.email_user;
-    user.password = request.body.password_user;
-    user.nombre_completo = request.body.name_user;
-    user.sexo = request.body.sexo;
-    user.fecha_nacimiento = request.body.fecha;
-    user.edad = calcularEdad(request.body.fecha);
-    user.imagen_perfil = null;
+            user.email = request.body.email_user;
+            user.password = request.body.password_user;
+            user.nombre_completo = request.body.name_user;
+            user.sexo = request.body.sexo;
+            user.fecha_nacimiento = request.body.fecha;
+            user.edad = calcularEdad(request.body.fecha);
+            user.imagen_perfil = null;
 
-    if (request.file) {
-        user.imagen_perfil = request.file.buffer;
-    }
+            if (request.file) {
+                user.imagen_perfil = request.file.buffer;
+            }
 
-    daoUsers.insertUser(user, function (error, id) {
-        if (error) {
-            response.status(500);
-            response.render("signUp", { errorMsg: `${error.message}` });
-        } else {
-            user.id_user = id;
-            response.status(200);
-            request.session.currentUserEmail = user.email;
-            request.session.currentUserId = user.id_user;
-            request.session.currentUserPoints = user.puntos;
-            request.session.currentUserImg = user.imagen_perfil;
-            response.redirect("/users/sesion");
-        }
-    });
+            daoUsers.insertUser(user, function (error, id) {
+                if (error) {
+                    response.status(500);
+                    response.render("signup", { errorMsg: `${error.message}` });
+                } else {
+                    user.id_user = id;
+                    response.status(200);
+                    request.session.currentUserEmail = user.email;
+                    request.session.currentUserId = user.id_user;
+                    request.session.currentUserPoints = user.puntos;
+                    request.session.currentUserImg = user.imagen_perfil;
+                    response.redirect("/users/sesion");
+                }
+            });
         } else {
             response.status(200);
             //Se meten todos los mensajes de error en un array
             let mensaje = result.array().map(n => " " + n.msg);
-            response.render("signIn", { errorMsg: mensaje });
+            response.render("signUp", { errorMsg: mensaje });
         }
-        });
+    });
 
-    
+
 
 });
 
@@ -161,10 +176,12 @@ users.get("/imagen/:id", middlewares.middlewareLogin, function (request, respons
 //  Modificación del usuario
 users.get("/modificar_perfil", middlewares.middlewareLogin, function (request, response) {
     response.status(200);
-    let user = { id_user: response.locals.userId,
+    let user = {
+        id_user: response.locals.userId,
         puntos: response.locals.userPoints,
-        imagen_perfil: response.locals.userImg}
-    response.render("modificar_perfil", { errorMsg: null, user: user});
+        imagen_perfil: response.locals.userImg
+    }
+    response.render("modificar_perfil", { errorMsg: null, user: user });
 });
 
 users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.single("user_img"), function (request, response) {
@@ -186,10 +203,12 @@ users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.singl
         if (error) {
             response.status(500);
             console.log(`${error.message}`);
-            let usr = { id: response.locals.userId,
-            puntos: response.locals.userPoints,
-            imagen: response.locals.userImg}
-            response.redirect("/users/modificar_perfil", { errorMsg: "Error en el proceso de modificación", user: usr});
+            let usr = {
+                id: response.locals.userId,
+                puntos: response.locals.userPoints,
+                imagen: response.locals.userImg
+            }
+            response.redirect("/users/modificar_perfil", { errorMsg: "Error en el proceso de modificación", user: usr });
         } else {
             daoUsers.getUser(response.locals.userId, function (error, user) {
                 if (error) {

@@ -88,23 +88,13 @@
                         <button class="boton_aceptar" type="submit"> Crear usuario </button>
                     </form>
 
-                    <% if (errorMsg !== null && errorMsg.length>1 ) { %>
-                        <% if (errorMsg !== null ) { %>
-                    <div class="mensaje_error">
-                        <% errorMsg.forEach(function(mensaje){ %>
-                        <h4>
-                            <%= mensaje.msg %>
-                        </h4>
-                        <% }); %>
-                    </div>
-                        <% } else { %>
+                    <<% if (errorMsg !== null ) { %>
                         <div class="mensaje_error">
                             <h4>
                                 <%= errorMsg %>
                             </h4>
                         </div>
                         <% } %>
-                    <% } %>
 
                 </div>
             </div>
