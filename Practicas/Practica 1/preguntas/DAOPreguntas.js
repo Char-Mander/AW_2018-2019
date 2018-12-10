@@ -54,7 +54,7 @@ class DAOPreguntas {
                         respuesta_propia.id = resultado[0].id;
 
                         const sql = `INSERT INTO respuestas_propias(id_pregunta, id_respuesta, id_user) VALUES (?,?,?)`;
-                        let elems = [respuesta_propia.id_pregunta, respuesta_propia.id, respuesta_propia.id_user];
+                        let elems = [Number(respuesta_propia.id_pregunta), respuesta_propia.id, respuesta_propia.id_user];
 
                         connection.query(sql, elems, function(err, resultado){
                             connection.release();
@@ -157,11 +157,16 @@ class DAOPreguntas {
             if(err)
                 callback(new Error("Error de conexión a la base de datos"), null);
             else{
-                const sql = `SELECT id_user, nombre_completo, imagen_perfil FROM user LEFT JOIN amigos 
-                ON id_user1 = id_user OR id_user2 = id_user WHERE ((id_user1 = ? AND id_user2 = id_user) 
-                OR (id_user2 = ? AND id_user1 = id_user) ) AND id_user IN 
-                (SELECT id_user FROM respuestas_propias WHERE id_pregunta = ?)`;
-                let elems = [id_user, id_user, id_pregunta];
+                const sql = `SELECT id_user, nombre_completo, correct
+                            FROM user 
+                            LEFT JOIN amigos ON (id_user1 = ? AND id_user2 = id_user) OR (id_user2 = ? AND id_user1 = id_user)
+                            LEFT JOIN respuestas_adivinadas ON (id_propio = ? AND id_amigo = id_user AND id_pregunta = ?)
+                            WHERE id_user IN (SELECT id_user 
+                                            FROM respuestas_propias 
+                                            WHERE id_pregunta = ?) 
+                            AND id_user != ?`;
+
+                let elems = [id_user, id_user, id_user, id_pregunta, id_pregunta, id_user];
 
                 connection.query(sql, elems, function(err, amigos){
                     connection.release();

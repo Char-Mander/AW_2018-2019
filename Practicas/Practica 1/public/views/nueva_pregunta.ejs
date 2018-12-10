@@ -22,8 +22,15 @@
                 <div class="enlace preguntas"> <a href="/preguntas/preguntas"> Preguntas </a> </div>
                 <div class="enlace desconectar"> <a href="/users/signin"> Desconectar </a> </div>
                 <div class="enlace puntuacion">
-                    <div class="user_icon"></div>
-                    <div class="ptos">50 pts</div>
+                    <div class="user_icon">
+                        <% if(user.img !== null){ %>
+                        <img class="icon" src="/users/imagen/<%= user.id %>">
+                        <% } else { %>
+                        <img class="icon" src="/users/no_profile_pic">
+                        <% } %>
+                    </div>
+                    <div class="ptos">
+                        <%= user.puntos %> ptos</div>
                 </div>
             </div>
         </div>
@@ -44,7 +51,7 @@
                             <div class="opcion_respuesta 1">
                                 <div class="info_pregunta">Opción 1: <input type="text" name="texto_respuesta1"></div>
                                 <label class="eleccion">Correcta
-                                    <input type="radio" name="correcta1">
+                                    <input type="radio" name="correcta">
                                 </label>
                             </div>
                         </li>
@@ -52,7 +59,7 @@
                             <div class="opcion_respuesta 2">
                                 <div class="info_pregunta">Opción 2: <input type="text" name="texto_respuesta2"></div>
                                 <label class="eleccion">Correcta
-                                    <input type="radio" name="correcta2">
+                                    <input type="radio" name="correcta">
                                 </label>
                             </div>
                         </li>
@@ -60,7 +67,7 @@
                             <div class="opcion_respuesta 3">
                                 <div class="info_pregunta">Opción 3: <input type="text" name="texto_respuesta3"></div>
                                 <label class="eleccion">Correcta
-                                    <input type="radio" name="correcta3">
+                                    <input type="radio" name="correcta">
                                 </label>
                             </div>
                         </li>
@@ -68,7 +75,7 @@
                             <div class="opcion_respuesta 4">
                                 <div class="info_pregunta">Opción 4: <input type="text" name="texto_respuesta4"></div>
                                 <label class="eleccion">Correcta
-                                    <input type="radio" name="correcta4">
+                                    <input type="radio" name="correcta">
                                 </label>
                             </div>
                         </li>
