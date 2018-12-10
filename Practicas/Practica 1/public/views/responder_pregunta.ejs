@@ -65,6 +65,20 @@
                             </div>
                         </li>
                         <% }); %>
+                        <li>
+                            <div class="respuesta_opcional">
+                                <!--<label class="eleccion">
+                                </label>-->
+
+                                <form class="responder_pregunta" method="post" action="/preguntas/responder_pregunta">
+                                    <input class="input_opcional" type="text" name="respuesta_texto">
+                                    <input type="hidden" name="pregunta_id" value=<%= pregunta.id %>>
+                                    <input type="hidden" name="pregunta_texto" value="<%= pregunta.texto %>">
+
+                                    <button class="boton_responder" type="submit"> Responder </button>
+                                </form>
+                            </div>
+                        </li>
                         <% } %>
 
                     </ul>

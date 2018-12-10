@@ -177,17 +177,28 @@ preguntas.post("/responder_pregunta", middlewares.middlewareLogin, function (req
     respuesta_propia.id_pregunta = request.body.pregunta_id;
     respuesta_propia.texto = request.body.respuesta_texto;
 
-
     daoPreguntas.insertRespuestaPropia(respuesta_propia, function (error) {
         if (error) {
             response.status(500);
             console.log("Error en insertar respuesta propia");
             console.log(`${error.message}`);
-        } else {
+        } else if(error===null){
             response.status(200);
             response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
         }
-    })
+        else{
+            daoPreguntas.insertRespuestaPersonalizada(respuesta_propia, function (error){
+                if (error) {
+                    response.status(500);
+                    console.log("Error al insertar la respuesta personalizada");
+                    console.log(`${error.message}`);
+                }  else{
+                    response.status(200);
+                    response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
+                }
+            });
+        }
+    });
 });
 
 preguntas.get("/adivinar_pregunta", middlewares.middlewareLogin, function (request, response) {//pregunta.id, pregunta.texto, amigo.id
