@@ -90,7 +90,6 @@ preguntas.post("/nueva_pregunta", middlewares.middlewareLogin, function (request
 preguntas.get("/preguntas", middlewares.middlewareLogin, function (request, response) {
     let usuario = {};
     usuario.puntos = response.locals.userPoints;
-    console.log("Puntos: " + usuario.puntos);
     usuario.id = response.locals.userId;
 
     daoPreguntas.getRandomQuestions(function (error, preguntas) {
