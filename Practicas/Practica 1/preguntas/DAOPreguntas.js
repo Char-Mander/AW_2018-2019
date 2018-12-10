@@ -51,9 +51,12 @@ class DAOPreguntas {
                     if(err)
                         callback(new Error("Error de acceso a la base de datos"));
                     else{
+                        console.log("Id de la respuesta: " + resultado[0].id);
                         respuesta_propia.id = resultado[0].id;
-
+                        console.log("Pasa por el sacar id correctamente");
                         const sql = `INSERT INTO respuestas_propias(id_pregunta, id_respuesta, id_user) VALUES (?,?,?)`;
+                        console.log("Respuesta propia: " + respuesta_propia.id + " " + respuesta_propia.id_user + " "
+                        + " " + respuesta_propia.id_pregunta);
                         let elems = [Number(respuesta_propia.id_pregunta), respuesta_propia.id, respuesta_propia.id_user];
 
                         connection.query(sql, elems, function(err, resultado){
@@ -61,6 +64,7 @@ class DAOPreguntas {
                             if(err)
                                 callback(new Error("Error de acceso a la base de datos"));
                             else{
+                                console.log("Pasa por el insertar respuesta propia correctamente");
                                 console.log("Respuesta propia guardada correctamente");
                                 callback(null);
                             }

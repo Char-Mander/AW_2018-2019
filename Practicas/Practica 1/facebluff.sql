@@ -134,6 +134,7 @@ ALTER TABLE `respuestas_adivinadas`
 -- Indices de la tabla `respuestas_propias`
 --
 ALTER TABLE `respuestas_propias`
+  ADD UNIQUE KEY `unique_question_answer_user` (`id_pregunta`, `id_user`, `id_respuesta`),
   ADD KEY `id_pregunta` (`id_pregunta`),
   ADD KEY `id_user` (`id_user`),
   ADD KEY `id_respuesta` (`id_respuesta`);
