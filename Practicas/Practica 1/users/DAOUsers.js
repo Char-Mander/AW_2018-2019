@@ -147,6 +147,7 @@ class DAOUsers{
             else{
                 const sql = `UPDATE user SET puntos = ? WHERE id_user = ? `;
                 let elems = [newPoints, id]; 
+                connection.query(sql, elems, function(err){
                     connection.release();
                     if(err){
                         cb_getUserImageName(new Error("Error de acceso a la base de datos"));
