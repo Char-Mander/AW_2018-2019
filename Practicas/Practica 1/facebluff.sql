@@ -83,7 +83,7 @@ CREATE TABLE `respuestas` (
 
 CREATE TABLE `respuestas_propias` (
   `id_pregunta` int(11) UNSIGNED NOT NULL,
-  `id_respuesta` int(11) UNSIGNED NOT NULL PRIMARY KEY,
+  `id_respuesta` int(11) UNSIGNED NOT NULL,
   `id_user` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
