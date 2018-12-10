@@ -21,7 +21,7 @@
                 <div class="enlace perfil"> <a href="/users/sesion"> Perfil </a> </div>
                 <div class="enlace amigos"> <a href="/amigos/mis_amigos"> Amigos </a> </div>
                 <div class="enlace preguntas"> <a href="/preguntas/preguntas"> Preguntas </a> </div>
-                <div class="enlace desconectar"> <a href="/users/signout"> Desconectar </a> </div>
+                <div class="enlace desconectar"> <a href="/users/signin"> Desconectar </a> </div>
                 <div class="enlace puntuacion">
                     <div class="user_icon">
                         <% if(user.img !== null){ %>
@@ -45,6 +45,8 @@
                 <div class="contenedor_respuestas">
                     <ul class="lista_respuestas">
 
+                        ¿ Qué crees que opina <%= amigo.nombre_completo %> ?
+
                         <% if(respuestas !== null) { %>
                         <% respuestas.forEach(function(respuesta) { %>
                         <li>
@@ -55,10 +57,12 @@
                                     <%= respuesta.texto %>
                                 </label>
 
-                                <form class="responder_pregunta" method="post" action="/preguntas/responder_pregunta">
+                                <form class="responder_pregunta" method="post" action="/preguntas/adivinar_pregunta">
+                                    <input type="hidden" name="respuesta_id" value=<%= respuesta.id %>>
                                     <input type="hidden" name="respuesta_texto" value="<%= respuesta.texto %>">
-                                    <input type="hidden" name="pregunta_id" value=<%= pregunta.id %>>
+                                    <input type="hidden" name="pregunta_id" value="<%= pregunta.id %>">
                                     <input type="hidden" name="pregunta_texto" value="<%= pregunta.texto %>">
+                                    <input type="hidden" name="id_amigo" value=<%=amigo.id_user%>>
 
                                     <button class="boton_responder" type="submit"> Responder </button>
                                 </form>

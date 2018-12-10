@@ -22,8 +22,15 @@
                 <div class="enlace preguntas"> <a href="/preguntas/preguntas"> Preguntas </a> </div>
                 <div class="enlace desconectar"> <a href="/users/signout"> Desconectar </a> </div>
                 <div class="enlace puntuacion">
-                    <div class="user_icon"></div>
-                    <div class="ptos">50 pts</div>
+                    <div class="user_icon">
+                        <% if(user.img !== null){ %>
+                        <img class="icon" src="/users/imagen/<%= user.id %>">
+                        <% } else { %>
+                        <img class="icon" src="/users/no_profile_pic">
+                        <% } %>
+                    </div>
+                    <div class="ptos">
+                        <%= user.puntos %> ptos</div>
                 </div>
             </div>
         </div>
