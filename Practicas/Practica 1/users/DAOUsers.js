@@ -139,9 +139,25 @@ class DAOUsers{
             }
         });
     }
-
-    updatePoints(){
-        
+    updatePoints(id, newPoints, cb_updatePoints){
+        this.pool.getConnection(function(err, connection){
+            if(err){
+                cb_getUserImageName(new Error("Error de conexión a la base de datos"), false);
+            }
+            else{
+                const sql = `UPDATE user SET puntos = ? WHERE id_user = ? `;
+                let elems = [newPoints, id]; 
+                connection.query(sql, elems, function(err){
+                    connection.release();
+                    if(err){
+                        cb_getUserImageName(new Error("Error de acceso a la base de datos"));
+                    }
+                    else{
+                        cb_getUserImageName(null);
+                    }
+                })
+            }
+        });
     }
     
 }
