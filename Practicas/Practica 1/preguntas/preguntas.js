@@ -16,23 +16,23 @@ const pool = mysql.createPool(config.mysqlConfig);
 const daoPreguntas = new DAOPreguntas(pool);
 const daoUsers = new DAOUsers(pool);
 
-preguntas.get("/nueva_pregunta", function (request, response) {
+preguntas.get("/nueva_pregunta", middlewares.middlewareLogin, function (request, response) {
     response.status(200);
     let usuario = {};
-    usuario.puntos = request.session.currentUserPoints;
-    usuario.id = request.session.currentUserId;
+    usuario.puntos = response.locals.userPoints;
+    usuario.id = response.locals.userId;
     response.render("nueva_pregunta", { errorMsg: null, user : usuario });
 });
 
-preguntas.post("/nueva_pregunta", function (request, response) {
+preguntas.post("/nueva_pregunta", middlewares.middlewareLogin, function (request, response) {
     let usuario = {};
-    usuario.puntos = request.session.currentUserPoints;
-    usuario.id = request.session.currentUserId;
+    usuario.puntos = response.locals.userPoints;
+    usuario.id = response.locals.userId;
 
     let question = {};
     let respuesta_propia = {};
 
-    respuesta_propia.id_user = request.session.currentUserId;
+    respuesta_propia.id_user = response.locals.userId;
 
     request.checkBody("texto_pregunta", "La pregunta no puede ser vacía").notEmpty();
     request.checkBody("texto_respuesta1", "Las respuestas no pueden ser vacías").notEmpty();
@@ -87,10 +87,11 @@ preguntas.post("/nueva_pregunta", function (request, response) {
 
 });
 
-preguntas.get("/preguntas", function (request, response) {
+preguntas.get("/preguntas", middlewares.middlewareLogin, function (request, response) {
     let usuario = {};
-    usuario.puntos = request.session.currentUserPoints;
-    usuario.id = request.session.currentUserId;
+    usuario.puntos = response.locals.userPoints;
+    console.log("Puntos: " + usuario.puntos);
+    usuario.id = response.locals.userId;
 
     daoPreguntas.getRandomQuestions(function (error, preguntas) {
         if (error) {
@@ -104,10 +105,10 @@ preguntas.get("/preguntas", function (request, response) {
     })
 });
 
-preguntas.get("/info_pregunta", function (request, response) {
+preguntas.get("/info_pregunta", middlewares.middlewareLogin, function (request, response) {
     let usuario = {};
-    usuario.puntos = request.session.currentUserPoints;
-    usuario.id = request.session.currentUserId;
+    usuario.puntos = response.locals.userPoints;
+    usuario.id = response.locals.userId;
 
     let id_pregunta = request.query.id;
     let respondida = false;
@@ -119,7 +120,7 @@ preguntas.get("/info_pregunta", function (request, response) {
             response.render("preguntas", { preguntas: null, errorMsg: `${error.message}`, user : usuario });
         } else {
 
-            daoPreguntas.getIfRespondida(id_pregunta, request.session.currentUserId, function (error, user) {
+            daoPreguntas.getIfRespondida(id_pregunta, response.locals.userId, function (error, user) {
                 if (error) {
                     response.status(500);
                     console.log(`${error.message}`);
@@ -127,7 +128,7 @@ preguntas.get("/info_pregunta", function (request, response) {
                 } else {
                     respondida = user.length !== 0;
 
-                    daoPreguntas.getAmigosQueHanRespondido(id_pregunta, request.session.currentUserId, function (error, amigos) {
+                    daoPreguntas.getAmigosQueHanRespondido(id_pregunta, response.locals.userId, function (error, amigos) {
                         if (error) {
                             response.status(500);
                             console.log(`${error.message}`);
@@ -143,10 +144,10 @@ preguntas.get("/info_pregunta", function (request, response) {
     })
 });
 
-preguntas.get("/responder_pregunta", function (request, response) {
+preguntas.get("/responder_pregunta", middlewares.middlewareLogin, function (request, response) {
     let usuario = {};
-    usuario.puntos = request.session.currentUserPoints;
-    usuario.id = request.session.currentUserId;
+    usuario.puntos = response.locals.userPoints;
+    usuario.id = response.locals.userId;
 
     let pregunta = {};
     pregunta.id = request.query.id;
@@ -163,16 +164,16 @@ preguntas.get("/responder_pregunta", function (request, response) {
     })
 });
 
-preguntas.post("/responder_pregunta", function (request, response) {
+preguntas.post("/responder_pregunta", middlewares.middlewareLogin, function (request, response) {
     let usuario = {};
-    usuario.puntos = request.session.currentUserPoints;
-    usuario.id = request.session.currentUserId;
+    usuario.puntos = response.locals.userPoints;
+    usuario.id = response.locals.userId;
 
     let respuesta_propia = {};
     let pregunta = {};
     pregunta.id = request.body.pregunta_id;
     pregunta.texto = request.body.pregunta_texto;
-    respuesta_propia.id_user = request.session.currentUserId;
+    respuesta_propia.id_user = response.locals.userId;
     respuesta_propia.id_pregunta = request.body.pregunta_id;
     respuesta_propia.texto = request.body.respuesta_texto;
 
@@ -189,10 +190,10 @@ preguntas.post("/responder_pregunta", function (request, response) {
     })
 });
 
-preguntas.get("/adivinar_pregunta", function (request, response) {//pregunta.id, pregunta.texto, amigo.id
+preguntas.get("/adivinar_pregunta", middlewares.middlewareLogin, function (request, response) {//pregunta.id, pregunta.texto, amigo.id
     let usuario = {};
-    usuario.puntos = request.session.currentUserPoints;
-    usuario.id = request.session.currentUserId;
+    usuario.puntos = response.locals.userPoints;
+    usuario.id = response.locals.userId;
 
     let pregunta = {};
     let id_amigo = request.query.id_amigo;
@@ -221,10 +222,10 @@ preguntas.get("/adivinar_pregunta", function (request, response) {//pregunta.id,
 
 });
 
-preguntas.post("/adivinar_pregunta", function (request, response) {
+preguntas.post("/adivinar_pregunta", middlewares.middlewareLogin, function (request, response) {
     let usuario = {};
-    usuario.puntos = request.session.currentUserPoints;
-    usuario.id = request.session.currentUserId;
+    usuario.puntos = response.locals.userPoints;
+    usuario.id = response.locals.userId;
 
     let respuesta = {};
     let pregunta = {};
