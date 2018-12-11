@@ -193,9 +193,13 @@ users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.singl
     user.fecha_nacimiento = request.body.fecha;
     user.edad = calcularEdad(request.body.fecha);
     user.imagen_perfil = null;
-    user.puntos = 0;
-    if (request.file) {
+    user.puntos=response.locals.userPoints;
+    //user.puntos = 0;
+    if (request.file /*&& user.puntos>=100*/) {
         user.imagen_perfil = request.file.buffer;
+       /* user.puntos -= 100;
+        request.session.currentUserPoints = user.puntos;
+        response.locals.userPoints = user.puntos;*/
     }
 
     daoUsers.updateUser(user, function (error) {
