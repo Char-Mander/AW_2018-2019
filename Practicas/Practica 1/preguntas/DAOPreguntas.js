@@ -204,7 +204,7 @@ class DAOPreguntas {
                     else {
                         const sql = `SELECT id_user, nombre_completo, correct
                             FROM user 
-                            LEFT JOIN amigos ON (id_user2 = id_user) OR (id_user1 = id_user)
+                            LEFT JOIN amigos ON id_user2 = id_user OR id_user1 = id_user
                             LEFT JOIN respuestas_adivinadas ON (id_propio = ? AND id_amigo = id_user AND id_pregunta = ?)
                             WHERE (id_user1 = ? OR id_user2 = ?) 
                             AND id_user IN (SELECT id_user 
