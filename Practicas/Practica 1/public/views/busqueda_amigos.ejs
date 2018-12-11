@@ -45,7 +45,11 @@
                     <li>
                         <div class="resultado 1">
                             <div class="info_user">
-                                <div class="img"></div>
+                                <% if(amigo.imagen_perfil !== null){ %>
+                                    <img class="icon" src="/users/imagen/<%= amigo.id_user %>">
+                                    <% } else { %>
+                                    <img class="icon" src="/users/no_profile_pic">
+                                    <% } %>
                                 <div class="nombre_solicitud">
                                     <%= amigo.nombre_completo %>
                                 </div>
