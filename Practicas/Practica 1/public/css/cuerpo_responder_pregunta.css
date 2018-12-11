@@ -42,6 +42,8 @@ div.info_respuesta_user{
     justify-content: space-evenly;
     background-color: white;
     border-radius: 5px;
+    height: 2.5vw;
+    overflow: hidden;
 }
 
 div.respuesta{
@@ -85,7 +87,6 @@ div.nombre_solicitud{
 }
 
 div.img{
-    /*content: url(../img/solicitud1.jpg);*/
     display:flex;
     align-self: center;
     width: 3vw;
@@ -100,7 +101,7 @@ div.botones_respuesta_amigos, div.pregunta_respondida{
     align-content: center;
     align-self: center;
     width: 50%;
-    height: 70%;
+    height: auto;
 }
 
 /*Botones de selección personalizados*/
