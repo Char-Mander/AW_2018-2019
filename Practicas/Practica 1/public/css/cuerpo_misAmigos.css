@@ -63,6 +63,8 @@ li{
 
 div.solicitud, div.amigo{
     display:flex;
+    height: 2.5vw;
+    overflow: hidden;
 }
 
 div.info_user{
