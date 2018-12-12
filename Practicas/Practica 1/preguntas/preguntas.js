@@ -58,22 +58,8 @@ preguntas.post("/nueva_pregunta", middlewares.middlewareLogin, function (request
                     console.log(`${error.message}`);
                     response.render("nueva_pregunta", { errorMsg: `${error.message}`, user: usuario });
                 } else {
-                    respuesta_propia.id_pregunta = pregunta_id;
-                    if (respuesta_propia.texto !== undefined) {
-                        daoPreguntas.insertRespuestaPropia(respuesta_propia, function (error) {
-                            if (error) {
-                                response.status(500);
-                                console.log(`${error.message}`);
-                                response.render("nueva_pregunta", { errorMsg: `${error.message}`, user: usuario });
-                            } else {
-                                response.status(200);
-                                response.redirect("/preguntas/preguntas");
-                            }
-                        })
-                    } else {
                         response.status(200);
                         response.redirect("/preguntas/preguntas");
-                    }
                 }
             });
         } else {
