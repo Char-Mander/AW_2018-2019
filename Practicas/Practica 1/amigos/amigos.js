@@ -18,13 +18,13 @@ const daoUsers = new DAOUsers(pool);
 amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, response) {
 
     //  Sacamos la lista de peticiones
-    daoAmigos.getPeticiones(response.locals.userId, function (error, listaPeticiones) {
+    daoAmigos.getPeticiones(request.session.currentUserId, function (error, listaPeticiones) {
         if (error) {
             response.status(500);
         }
         else {
             //  Sacamos la lista de amigos
-            daoAmigos.getAmigos(response.locals.userId, function (error, listaAmigos) {
+            daoAmigos.getAmigos(request.session.currentUserId, function (error, listaAmigos) {
                 if (error) {
                     response.status(500);
                     console.log("Error en el getAmigos");
@@ -32,9 +32,9 @@ amigos.get("/mis_amigos", middlewares.middlewareLogin, function (request, respon
                 else {
                     response.status(200);
                     let usuario = {};
-                    usuario.puntos = response.locals.userPoints;
-                    usuario.id = response.locals.userId;
-                    usuario.img = response.locals.userImg;
+                    usuario.puntos = request.session.currentUserPoints;
+                    usuario.id = request.session.currentUserId;
+                    usuario.img = request.session.currentUserImg;
                     response.render("mis_amigos", {
                         sinAmigosMsg: "¡No tienes ningún amigo todavía!",
                         sinSolicitudesMsg: "No tienes ninguna solicitud pendiente",
@@ -56,16 +56,16 @@ amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, 
     let name = request.body.name_usr;
     //  Sacamos el id de los usuarios cuyo nombre se parece al que el usuario de la sesión ha escrito 
     //  IMPORTANTE: No deben estar relacionados con el user de la sesión ni en las peticiones, ni pueden ser amigos aún
-    daoAmigos.buscarAmigos(response.locals.userId, name, function (error, users) {
+    daoAmigos.buscarAmigos(request.session.currentUserId, name, function (error, users) {
         if (error) {
             response.status(500);
             console.log(error.message);
         } else {
             response.status(200);
             let usuario = [];
-            usuario.puntos = response.locals.userPoints;
-            usuario.id = response.locals.userId;
-            usuario.img = response.locals.userImg;
+            usuario.puntos = request.session.currentUserPoints;
+            usuario.id = request.session.currentUserId;
+            usuario.img = request.session.currentUserImg;
             response.render("busqueda_amigos", {
                 noFoundMsg: "No se ha encontrado a ningún usuario",
                 amigos: users, user: usuario, name: name
@@ -78,7 +78,7 @@ amigos.post("/busqueda_amigos", middlewares.middlewareLogin, function (request, 
 
 //  Envío de solicitudes de amistad
 amigos.post("/enviar_peticion", middlewares.middlewareLogin, function (request, response) {
-    let id_propio = response.locals.userId;
+    let id_propio = request.session.currentUserId;
     let id_amigo = request.body.id_amig;
 
     daoAmigos.insertPeticiones(id_amigo, id_propio, function (error) {
@@ -96,7 +96,7 @@ amigos.post("/enviar_peticion", middlewares.middlewareLogin, function (request, 
 
 //  Aceptar una solicitud de amistad
 amigos.post("/aceptar_peticion", middlewares.middlewareLogin, function (request, response) {
-    let id_propio = response.locals.userId;
+    let id_propio = request.session.currentUserId;
     let id_amigo = request.body.sol;
     daoAmigos.insertAmigos(id_propio, id_amigo, function (error) {
         if (error) {
@@ -122,7 +122,7 @@ amigos.post("/aceptar_peticion", middlewares.middlewareLogin, function (request,
 
 //  Rechazar una solicitud de amistad
 amigos.post("/rechazar_peticion", middlewares.middlewareLogin, function (request, response) {
-    let id_propio = response.locals.userId;
+    let id_propio = request.session.currentUserId;
     let id_amigo = request.body.sol;
     daoAmigos.peticionDone(id_propio, id_amigo, function (error) {
         if (error) {
