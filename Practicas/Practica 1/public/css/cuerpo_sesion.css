@@ -19,6 +19,38 @@ div.contenedor_ventana{
     align-items: center;
 }
 
+div.contenedor_notificaciones{
+    position: absolute;
+    left:68%;
+    top:190px;
+    width: 30vw;
+    height: 20vw;
+}
+
+ul.lista_amigos{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    width: 94%;
+    height: 90%;
+    justify-content: space-evenly;
+    background-image: linear-gradient(to bottom right, rgb(89, 219, 89),rgb(250, 234, 201));
+    border-radius: 5px;
+    padding:2%;
+    box-shadow: 2px 2px 5px rgb(82, 82, 82);
+    overflow: scroll;
+}
+
+li{
+    margin: 0.6%;
+    height: auto;
+    width: 100%;
+    background-color: white;
+    border-radius: 5px;
+    justify-content: space-evenly;
+}
+
+
 div.titulo_ventana{
     display: flex;
     justify-content: center;
