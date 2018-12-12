@@ -47,6 +47,7 @@ users.post("/signin", function (request, response) {
                     request.session.currentUserId = datos.id_user;
                     request.session.currentUserEmail = datos.email;
                     request.session.currentUserPoints = datos.puntos;
+                    request.session.currentUserImg = datos.imagen_perfil;
 
                     datos.edad = calcularEdad(datos.fecha_nacimiento);
                     response.redirect("/users/sesion");
@@ -114,6 +115,7 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
                     request.session.currentUserEmail = user.email;
                     request.session.currentUserId = user.id_user;
                     request.session.currentUserPoints = user.puntos;
+                    request.session.currentUserImg = user.imagen_perfil;
                     response.redirect("/users/sesion");
                 }
             });
@@ -176,24 +178,26 @@ users.get("/imagen/:id", middlewares.middlewareLogin, function (request, respons
 users.get("/modificar_perfil", middlewares.middlewareLogin, function (request, response) {
     response.status(200);
     let user = {
-        id_user: response.locals.userId,
-        puntos: response.locals.userPoints,
-        imagen_perfil: response.locals.userImg
+        id_user: request.session.currentUserId,
+        puntos: request.session.currentUserPoints,
+        imagen_perfil: request.session.currentUserImg
     }
+    console.log("Imagen en el sesion: " + request.session.currentUserImg)
     response.render("modificar_perfil", { errorMsg: null, user: user });
 });
 
 users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.single("user_img"), function (request, response) {
     let user = {};
+    console.log("Imagen en el sesion: " + request.session.currentUserImg);
 
-    user.email = response.locals.userEmail;
+    user.email = request.session.currentUserEmail;
     user.password = request.body.password_user;
     user.nombre_completo = request.body.name_user;
     user.sexo = request.body.sexo;
     user.fecha_nacimiento = request.body.fecha;
     user.edad = calcularEdad(request.body.fecha);
-    user.imagen_perfil = null;
-    user.puntos=response.locals.userPoints;
+    user.imagen_perfil = request.session.currentUserImg;
+    user.puntos=request.session.currentUserPoints;
     
     if (request.file) {
         user.imagen_perfil = request.file.buffer;
@@ -204,9 +208,9 @@ users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.singl
             response.status(500);
             console.log(`${error.message}`);
             let usr = {
-                id: response.locals.userId,
-                puntos: response.locals.userPoints,
-                imagen: response.locals.userImg
+                id: request.session.currentUserId,
+                puntos:  request.session.currentUserPoints,
+                imagen: request.session.currentUserImg
             }
             response.redirect("/users/modificar_perfil", { errorMsg: "Error en el proceso de modificación", user: usr });
         } else {
@@ -215,7 +219,7 @@ users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.singl
                     response.status(500);
                 } else {
                     user.edad = calcularEdad(user.fecha_nacimiento);
-                    response.locals.userImg = user.imagen_perfil;
+                    request.session.currentUserImg = user.imagen_perfil;
                     response.render("sesion", { user: user });
                 }
             });
