@@ -197,30 +197,42 @@ class DAOPreguntas {
                 })
             }
 
-            getAmigosQueHanRespondido(id_pregunta, id_user, callback) {
+            getAmigosQueHanRespondido(id_pregunta, id_user, cb_getAmigosQueHanRespondido) {
                 this.pool.getConnection(function (err, connection) {
                     if (err)
-                        callback(new Error("Error de conexión a la base de datos"), null);
+                        cb_getAmigosQueHanRespondido(new Error("Error de conexión a la base de datos"), null);
                     else {
-                        const sql = `SELECT id_user, nombre_completo, correct
-                            FROM user 
-                            LEFT JOIN amigos ON id_user2 = id_user OR id_user1 = id_user
-                            LEFT JOIN respuestas_adivinadas ON (id_propio = ? AND id_amigo = id_user AND id_pregunta = ?)
-                            WHERE (id_user1 = ? OR id_user2 = ?) 
+                        
+                        const amigos_sql = `SELECT id_user, nombre_completo, imagen_perfil 
+                        FROM user LEFT JOIN amigos ON id_user1 = id_user OR id_user2 = id_user 
+                        WHERE (id_user1 = ? AND id_user2 = id_user) OR (id_user2 = ? AND id_user1 = id_user)
                             AND id_user IN (SELECT id_user 
                                             FROM respuestas_propias 
-                                            WHERE id_pregunta = ?) 
-                            AND id_user != ?`;
+                                            WHERE id_pregunta = ?)`;
 
-                        let elems = [id_user, id_user, id_user, id_pregunta, id_pregunta, id_user];
+                        let elems = [id_user, id_user, id_pregunta];
 
-                        connection.query(sql, elems, function (err, amigos) {
-                            connection.release();
+                        connection.query(amigos_sql, elems, function (err, amigos) {
+                            
                             if (err)
-                                callback(new Error("Error de acceso a la base de datos"), null);
+                            cb_getAmigosQueHanRespondido(new Error("Error de acceso a la base de datos"), null);
                             else {
-                                console.log("Usuarios que han respondido leídos correctamente");
-                                callback(null, amigos);
+                            
+                                const respuestas_sql = `SELECT id_user, correct
+                                FROM user JOIN respuestas_adivinadas ON id_user = id_amigo 
+                                WHERE id_propio = ? AND id_pregunta = ?`;
+
+                                let elems2 = [id_user,  id_pregunta];
+                                connection.query(respuestas_sql, elems2, function (err, respuestas) {
+                                    connection.release();
+                                    if (err)
+                                    cb_getAmigosQueHanRespondido(new Error("Error de acceso a la base de datos"), null);
+                                    else {
+                                        console.log("Amigos : " + amigos + "        respuestas: " + respuestas);
+                                        let friends = amigos.map(a => respuestas.map(r => (a.id_user == r.id_amigo) ));
+                                        cb_getAmigosQueHanRespondido(null, friends);
+                                    }
+                                })
                             }
                         })
                     }

@@ -21,7 +21,7 @@ preguntas.get("/nueva_pregunta", middlewares.middlewareLogin, function (request,
     let usuario = {};
     usuario.puntos = response.locals.userPoints;
     usuario.id = response.locals.userId;
-    response.render("nueva_pregunta", { errorMsg: null, user : usuario });
+    response.render("nueva_pregunta", { errorMsg: null, user: usuario });
 });
 
 preguntas.post("/nueva_pregunta", middlewares.middlewareLogin, function (request, response) {
@@ -39,7 +39,6 @@ preguntas.post("/nueva_pregunta", middlewares.middlewareLogin, function (request
     request.checkBody("texto_respuesta2", "Las respuestas no pueden ser vacías").notEmpty();
     request.checkBody("texto_respuesta3", "Las respuestas no pueden ser vacías").notEmpty();
     request.checkBody("texto_respuesta4", "Las respuestas no pueden ser vacías").notEmpty();
-
     request.getValidationResult().then(function (result) {
         if (result.isEmpty()) {
             question.texto = request.body.texto_pregunta;
@@ -54,7 +53,7 @@ preguntas.post("/nueva_pregunta", middlewares.middlewareLogin, function (request
                 if (error) {
                     response.status(500);
                     console.log(`${error.message}`);
-                    response.render("nueva_pregunta", { errorMsg: `${error.message}`, user : usuario });
+                    response.render("nueva_pregunta", { errorMsg: `${error.message}`, user: usuario });
                 } else {
                     respuesta_propia.id_pregunta = pregunta_id;
                     if (respuesta_propia.texto !== undefined) {
@@ -62,7 +61,7 @@ preguntas.post("/nueva_pregunta", middlewares.middlewareLogin, function (request
                             if (error) {
                                 response.status(500);
                                 console.log(`${error.message}`);
-                                response.render("nueva_pregunta", { errorMsg: `${error.message}`, user : usuario });
+                                response.render("nueva_pregunta", { errorMsg: `${error.message}`, user: usuario });
                             } else {
                                 response.status(200);
                                 response.redirect("/preguntas/preguntas");
@@ -79,7 +78,7 @@ preguntas.post("/nueva_pregunta", middlewares.middlewareLogin, function (request
             //Se meten todos los mensajes de error en un array
             let mensaje = result.array().map(n => " " + n.msg);
             mensaje.splice(2, 3);
-            response.render("nueva_pregunta", { errorMsg: mensaje, user : usuario });
+            response.render("nueva_pregunta", { errorMsg: mensaje, user: usuario });
         }
     })
 
@@ -96,10 +95,10 @@ preguntas.get("/preguntas", middlewares.middlewareLogin, function (request, resp
         if (error) {
             response.status(500);
             console.log(`${error.message}`);
-            response.render("preguntas", { preguntas: null, errorMsg: `${error.message}`, user : usuario });
+            response.render("preguntas", { preguntas: null, errorMsg: `${error.message}`, user: usuario });
         } else {
             response.status(200);
-            response.render("preguntas", { preguntas: preguntas, errorMsg: null, user : usuario });
+            response.render("preguntas", { preguntas: preguntas, errorMsg: null, user: usuario });
         }
     })
 });
@@ -116,14 +115,14 @@ preguntas.get("/info_pregunta", middlewares.middlewareLogin, function (request, 
         if (error) {
             response.status(500);
             console.log(`${error.message}`);
-            response.render("preguntas", { preguntas: null, errorMsg: `${error.message}`, user : usuario });
+            response.render("preguntas", { preguntas: null, errorMsg: `${error.message}`, user: usuario });
         } else {
 
             daoPreguntas.getIfRespondida(id_pregunta, response.locals.userId, function (error, user) {
                 if (error) {
                     response.status(500);
                     console.log(`${error.message}`);
-                    response.render("preguntas", { preguntas: null, errorMsg: `${error.message}`, user : usuario });
+                    response.render("preguntas", { preguntas: null, errorMsg: `${error.message}`, user: usuario });
                 } else {
                     respondida = user.length !== 0;
 
@@ -131,9 +130,11 @@ preguntas.get("/info_pregunta", middlewares.middlewareLogin, function (request, 
                         if (error) {
                             response.status(500);
                             console.log(`${error.message}`);
-                            response.render("preguntas", { preguntas: null, errorMsg: `${error.message}`, user : usuario });
+                            response.render("preguntas", { preguntas: null, errorMsg: `${error.message}`, user: usuario });
                         } else {
-                            response.render("info_pregunta", { pregunta: pregunta[0], respondida: respondida, amigos: amigos, user : usuario });
+                            
+                            console.log(amigos);
+                            response.render("info_pregunta", { pregunta: pregunta[0], respondida: respondida, amigos: amigos, user: usuario });
                         }
                     })
 
@@ -158,9 +159,10 @@ preguntas.get("/responder_pregunta", middlewares.middlewareLogin, function (requ
             response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
         } else {
             response.status(200);
-            response.render("responder_pregunta", { pregunta: pregunta, respuestas: respuestas, user : usuario });
+            response.render("responder_pregunta", { pregunta: pregunta, respuestas: respuestas, user: usuario });
         }
     })
+
 });
 
 preguntas.post("/responder_pregunta", middlewares.middlewareLogin, function (request, response) {
@@ -174,28 +176,38 @@ preguntas.post("/responder_pregunta", middlewares.middlewareLogin, function (req
     pregunta.texto = request.body.pregunta_texto;
     respuesta_propia.id_user = response.locals.userId;
     respuesta_propia.id_pregunta = request.body.pregunta_id;
-    respuesta_propia.texto = request.body.respuesta_texto;
 
-    daoPreguntas.insertRespuestaPropia(respuesta_propia, function (error) {
-        if (error) {
-            response.status(500);
-            console.log("Error en insertar respuesta propia");
-            console.log(`${error.message}`);
-        } else if(error===null){
-            response.status(200);
-            response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
-        }
-        else{
-            daoPreguntas.insertRespuestaPersonalizada(respuesta_propia, function (error){
+    request.checkBody("respuesta_texto", "Las respuestas no pueden ser vacías").notEmpty();
+    request.getValidationResult().then(function (result) {
+        if (result.isEmpty()) {
+            respuesta_propia.texto = request.body.respuesta_texto;
+            daoPreguntas.insertRespuestaPropia(respuesta_propia, function (error) {
                 if (error) {
                     response.status(500);
-                    console.log("Error al insertar la respuesta personalizada");
+                    console.log("Error en insertar respuesta propia");
                     console.log(`${error.message}`);
-                }  else{
+                } else if (error === null) {
                     response.status(200);
                     response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
                 }
+                else {
+                    daoPreguntas.insertRespuestaPersonalizada(respuesta_propia, function (error) {
+                        if (error) {
+                            response.status(500);
+                            console.log("Error al insertar la respuesta personalizada");
+                            console.log(`${error.message}`);
+                        } else {
+                            response.status(200);
+                            response.render("/preguntas/info_pregunta?id=" + pregunta.id);
+                        }
+                    });
+                }
             });
+        } else {
+            response.status(200);
+            //Se meten todos los mensajes de error en un array
+            let mensaje = result.array().map(n => " " + n.msg);
+            response.redirect("/preguntas/responder_pregunta", { errorMsg: mensaje, user: usuario });
         }
     });
 });
@@ -224,7 +236,7 @@ preguntas.get("/adivinar_pregunta", middlewares.middlewareLogin, function (reque
                     response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
                 } else {
                     response.status(200);
-                    response.render("adivinar_pregunta", { pregunta: pregunta, respuestas: respuestas, amigo: amigo, user : usuario });
+                    response.render("adivinar_pregunta", { pregunta: pregunta, respuestas: respuestas, amigo: amigo, user: usuario });
                 }
             })
         }
