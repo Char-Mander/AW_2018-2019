@@ -47,7 +47,8 @@ users.post("/signin", function (request, response) {
                     request.session.currentUserId = datos.id_user;
                     request.session.currentUserEmail = datos.email;
                     request.session.currentUserPoints = datos.puntos;
-                    request.session.currentUserImg = datos.imagen_perfil;
+                    if(datos.imagen_perfil !== undefined)
+                        request.session.currentUserImg = true;
 
                     datos.edad = calcularEdad(datos.fecha_nacimiento);
                     response.redirect("/users/sesion");
@@ -115,7 +116,8 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
                     request.session.currentUserEmail = user.email;
                     request.session.currentUserId = user.id_user;
                     request.session.currentUserPoints = user.puntos;
-                    request.session.currentUserImg = user.imagen_perfil;
+                    if(user.imagen_perfil !== undefined)
+                        request.session.currentUserImg = true;
                     response.redirect("/users/sesion");
                 }
             });
@@ -218,7 +220,8 @@ users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.singl
                     response.status(500);
                 } else {
                     user.edad = calcularEdad(user.fecha_nacimiento);
-                    request.session.currentUserImg = user.imagen_perfil;
+                    if(user.imagen_perfil)
+                        request.session.currentUserImg = true;
                     response.render("sesion", { user: user });
                 }
             });
@@ -261,6 +264,5 @@ function calcularEdad(fecha) {
 
     return edad;
 }
-
 
 module.exports = users;
