@@ -7,12 +7,14 @@ const multer = require("multer");
 const DAOUsers = require("./DAOUsers.js");
 const config = require("../config");
 const middlewares = require("../middlewares.js");
+const DAOAplicacion = require("../aplicacion/DAOAplicacion.js");
 
 const users = express.Router();
 
 const pool = mysql.createPool(config.mysqlConfig);
 
 const daoUsers = new DAOUsers(pool);
+const daoAplicacion = new DAOAplicacion(pool);
 
 const multerFactory = multer({ storage: multer.memoryStorage() });
 
@@ -141,7 +143,26 @@ users.get("/sesion", middlewares.middlewareLogin, function (request, response) {
         } else {
             response.status(200);
             usuario.edad = calcularEdad(usuario.fecha_nacimiento);
-            response.render("sesion", { user: usuario });
+            daoAplicacion.getListadoNotificaciones(request.session.currentUserId, function(error, listado){
+                if (error) {
+                    console.log(error.message);
+                }
+                else if (res) {
+                    response.status(200);
+                    daoAplicacion.actualizarNotificaciones(request.session.currentUserId, function(error){
+                        if(error){
+                            response.status(500);
+                            console.log(error.messsage);
+                        }
+                        else {
+                            response.status(200);
+                            response.render("sesion", { user: usuario, notificaciones: listado });
+                        }
+                    });
+                }
+            });
+
+          
         }
     });
 });

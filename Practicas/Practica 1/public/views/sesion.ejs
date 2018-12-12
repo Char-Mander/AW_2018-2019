@@ -76,6 +76,45 @@
                     </div>
                 </div>
             </div>
+             <% if(notificaciones !== undefined && notificaciones.length>0) { %> 
+            <div class="contenedor_notificaciones">
+                <div class="titulo_ventana">
+                    <h2>Notificaciones</h2>
+                </div>
+                <div class="contenedor_datos">
+                   
+                        <ul class="lista_amigos">
+                             <% notificaciones.forEach(function(amigo){ %> 
+                            <li>
+                                <div class="amigo">
+
+                                     <% if(amigo.imagen_perfil !== null){ %>
+                                    <img class="icon" src="/users/imagen/<%= amigo.id_user %>">
+                                    <% } else { %>
+                                    <img class="icon" src="/users/no_profile_pic">
+                                    <% } %>
+                                    <div class="info">
+                                        <%= amigo.nombre_completo %> ha 
+                                        <% if (amigo.correct === '0') { %>
+                                            fallado
+                                        <% } else { %>
+                                            acertado
+                                        <% } %> 
+                                        la pregunta: " <%= amigo.texto_pregunta %> 
+                                        <br/>
+                                        Respondió: <%= amigo.texto_respuesta %>
+                                        <br/> 
+                                        La respuesta correcta era: <%= amigo.respuesta_correcta %>
+                                    </div> 
+                                </div>
+    
+                            </li>
+                             <% }); %> 
+                        </ul>
+                </div>
+            </div>
+            <% } %> 
+           
         </div>
 </body>
 
