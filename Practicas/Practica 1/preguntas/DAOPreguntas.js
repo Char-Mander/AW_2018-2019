@@ -135,6 +135,55 @@ class DAOPreguntas {
         })
     }
 
+    get3RandomAnswers(id_pregunta, callback) {
+        this.pool.getConnection(function (err, connection) {
+            if (err)
+                callback(new Error("Error de conexión a la base de datos"), null);
+            else {
+                const sql = `SELECT * FROM respuestas WHERE id_pregunta = ? ORDER BY RAND() LIMIT 3`;
+
+                connection.query(sql, id_pregunta, function (err, respuestas) {
+                    connection.release();
+                    if (err)
+                        callback(new Error("Error de acceso a la base de datos"), null);
+                    else {
+                        console.log("3 respuestas aleatorias leídas correctamente");
+                        callback(null, respuestas);
+                    }
+                })
+            }
+        })
+    }
+
+    getCorrectAnswer(id_amigo, id_pregunta, callback) {
+        this.pool.getConnection(function (err, connection) {
+            if (err)
+                callback(new Error("Error de conexión a la base de datos"), null);
+            else {
+                const sql = `SELECT id_respuesta FROM respuestas_propias WHERE id_user = ? AND id_pregunta = ?`;
+                let elems = [id_amigo, id_pregunta];
+
+                connection.query(sql, elems, function (err, id_respuesta_correcta) {
+                    connection.release();
+                    if (err)
+                        callback(new Error("Error de acceso a la base de datos"), null);
+                    else {
+                        console.log("ID de la respuesta correcta leído correctamente");
+
+                        const sql_texto = `SELECT texto FROM respuestas WHERE id = ?`;
+
+                        connection.query(sql_texto, id_respuesta_correcta[0].id_respuesta, function (err, texto_respuesta) {
+                            if (err)
+                                callback(new Error("Error de acceso a la base de datos"), null);
+                            else
+                                callback(null, texto_respuesta[0].texto);
+                        })
+                    }
+                })
+            }
+        })
+    }
+
     getQuestion(id, callback) {
         this.pool.getConnection(function (err, connection) {
             if (err)
@@ -234,7 +283,7 @@ class DAOPreguntas {
                                 cb_getAmigosQueHanRespondido(new Error("Error de acceso a la base de datos"), null);
                             else {
 
-                                amigos.forEach(function(amigo){
+                                amigos.forEach(function (amigo) {
                                     amigo.correct = null;
                                 });
 
@@ -245,7 +294,7 @@ class DAOPreguntas {
                                                 v.correct = true;
                                             else
                                                 v.correct = false;
-                                        } 
+                                        }
                                     })
                                 })
 

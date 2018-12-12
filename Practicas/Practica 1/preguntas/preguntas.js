@@ -253,7 +253,7 @@ preguntas.get("/adivinar_pregunta", middlewares.middlewareLogin, function (reque
     pregunta.id = request.query.id;
     pregunta.texto = request.query.texto;
 
-    daoPreguntas.getRespuestas(pregunta.id, function (error, respuestas) {
+    /*daoPreguntas.getRespuestas(pregunta.id, function (error, respuestas) {
         if (error) {
             response.status(500);
             console.log(`${error.message}`);
@@ -268,6 +268,45 @@ preguntas.get("/adivinar_pregunta", middlewares.middlewareLogin, function (reque
                 } else {
                     response.status(200);
                     response.render("adivinar_pregunta", { pregunta: pregunta, respuestas: respuestas, amigo: amigo, user: usuario });
+                }
+            })
+        }
+    })*/
+
+    daoPreguntas.get3RandomAnswers(pregunta.id, function(error, respuestas){
+        if (error) {
+            response.status(500);
+            console.log(`${error.message}`);
+            response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
+        } else {
+            daoPreguntas.getCorrectAnswer(id_amigo, pregunta.id, function(error, respuesta){
+                if (error) {
+                    response.status(500);
+                    console.log(`${error.message}`);
+                    response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
+                }else{
+                    let respuesta_nueva = {};
+                    respuesta_nueva.texto = respuesta;
+
+                    let pos_aleatoria = Math.floor(Math.random()*4);
+                    let aux;
+                    if(pos_aleatoria !== 3){
+                        aux = respuestas[pos_aleatoria];
+                        respuestas[pos_aleatoria] = respuesta_nueva;
+                        respuestas.push(aux);
+                    }else
+                        respuestas.push(respuesta_nueva);
+
+                    daoUsers.getUser(id_amigo, function (error, amigo) {
+                        if (error) {
+                            response.status(500);
+                            console.log(`${error.message}`);
+                            response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
+                        } else {
+                            response.status(200);
+                            response.render("adivinar_pregunta", { pregunta: pregunta, respuestas: respuestas, amigo: amigo, user: usuario });
+                        }
+                    })
                 }
             })
         }
