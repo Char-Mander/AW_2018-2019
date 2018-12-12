@@ -156,10 +156,10 @@ preguntas.get("/responder_pregunta", middlewares.middlewareLogin, function (requ
     usuario.img = request.session.currentUserImg;
 
     let errorMsg = request.query.error;
-    if(errorMsg === undefined) {
+    if (errorMsg === undefined) {
         errorMsg = null;
     }
-    
+
     let pregunta = {};
     pregunta.id = request.query.id;
     pregunta.texto = request.query.texto;
@@ -170,7 +170,7 @@ preguntas.get("/responder_pregunta", middlewares.middlewareLogin, function (requ
             response.redirect("/preguntas/info_pregunta?id=" + pregunta.id + null);
         } else {
             response.status(200);
-            response.render("responder_pregunta", {errorMsg: errorMsg, pregunta: pregunta, respuestas: respuestas, user: usuario });
+            response.render("responder_pregunta", { errorMsg: errorMsg, pregunta: pregunta, respuestas: respuestas, user: usuario });
         }
     })
 
@@ -183,39 +183,48 @@ preguntas.post("/responder_pregunta", middlewares.middlewareLogin, function (req
     usuario.img = request.session.currentUserImg;
 
     let respuesta_propia = {};
+    let otra_respuesta = {};
     let pregunta = {};
     pregunta.id = request.body.pregunta_id;
     console.log("ID pregunta: " + pregunta.id);
     pregunta.texto = request.body.pregunta_texto;
     respuesta_propia.id_user = request.session.currentUserId;
     respuesta_propia.id_pregunta = request.body.pregunta_id;
+    otra_respuesta.id_pregunta = request.body.pregunta_id;
+    otra_respuesta.id_user = request.session.currentUserId;
 
     request.checkBody("respuesta_texto", "El campo de respuesta no puede estar vacío").notEmpty();
     request.getValidationResult().then(function (result) {
         if (result.isEmpty()) {
-            respuesta_propia.texto = request.body.respuesta_texto;
-            daoPreguntas.insertRespuestaPropia(respuesta_propia, function (error) {
-                if (error) {
-                    response.status(500);
-                    console.log("Error en insertar respuesta propia");
-                    console.log(`${error.message}`);
-                } else if (error === null) {
-                    response.status(200);
-                    response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
-                }
-                else {
-                    daoPreguntas.insertRespuestaPersonalizada(respuesta_propia, function (error) {
-                        if (error) {
-                            response.status(500);
-                            console.log("Error al insertar la respuesta personalizada");
-                            console.log(`${error.message}`);
-                        } else {
-                            response.status(200);
-                            response.render("/preguntas/info_pregunta?id=" + pregunta.id);
-                        }
-                    });
-                }
-            });
+
+            console.log(request.body.otra);
+            if (request.body.otra === "on") {
+                otra_respuesta.texto = request.body.respuesta_texto;
+
+                daoPreguntas.insertRespuestaPersonalizada(otra_respuesta, function (error) {
+                    if (error) {
+                        response.status(500);
+                        console.log("Error al insertar la respuesta personalizada");
+                        console.log(`${error.message}`);
+                    } else {
+                        response.status(200);
+                        response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
+                    }
+                });
+            } else {
+                respuesta_propia.texto = request.body.respuesta_texto;
+
+                daoPreguntas.insertRespuestaPropia(respuesta_propia, function (error) {
+                    if (error) {
+                        response.status(500);
+                        console.log("Error en insertar respuesta propia");
+                        console.log(`${error.message}`);
+                    } else {
+                        response.status(200);
+                        response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
+                    }
+                });
+            }
         } else {
             response.status(200);
             daoPreguntas.getRespuestas(pregunta.id, function (error, respuestas) {
@@ -225,7 +234,7 @@ preguntas.post("/responder_pregunta", middlewares.middlewareLogin, function (req
                     response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
                 } else {
                     response.status(200);
-                   //Se meten todos los mensajes de error en un array
+                    //Se meten todos los mensajes de error en un array
                     let mensaje = result.array().map(n => " " + n.msg);
                     response.redirect("/preguntas/responder_pregunta?id=" + pregunta.id + "&error=" + mensaje + "&texto=" + pregunta.texto);
                 }

@@ -67,10 +67,10 @@
                         <% }); %>
                         <li>
                             <div class="respuesta_opcional">
-                                <!--<label class="eleccion">
-                                </label>-->
-
                                 <form class="responder_pregunta" method="post" action="/preguntas/responder_pregunta">
+                                    <label class="eleccion">Otra
+                                        <input type="radio" name="otra">
+                                    </label>
                                     <input class="input_opcional" type="text" name="respuesta_texto">
                                     <input type="hidden" name="pregunta_id" value=<%= pregunta.id %>>
                                     <input type="hidden" name="pregunta_texto" value="<%= pregunta.texto %>">

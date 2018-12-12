@@ -26,6 +26,7 @@ users.get("/signin", middlewares.middlewareLogged, function (request, response) 
 users.post("/signin", function (request, response) {
     //  Comprobar que los campos obligatorios no estén vacíos
     request.checkBody("email_user", "El email del usuario está vacío").notEmpty();
+    request.checkBody("email_user", "Dirección de correo no válida").isEmail();
     request.checkBody("password_user", "La contraseña está vacía").notEmpty();
     request.getValidationResult().then(function (result) {
         // El método isEmpty() devuelve true si las comprobaciones

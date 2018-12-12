@@ -94,7 +94,7 @@ class DAOPreguntas {
                             else {
                                 console.log("Sacado el id de la nueva respuesta correctamente");
                                 const sql = `INSERT INTO respuestas_propias(id_pregunta, id_respuesta, id_user) VALUES (?,?,?)`;
-                                let elems = [Number(respuesta_propia.id_pregunta), resultado[0], respuesta_propia.id_user];
+                                let elems = [Number(respuesta_propia.id_pregunta), resultado[0].id, respuesta_propia.id_user];
                                 connection.query(sql, elems, function (err) {
                                     connection.release();
                                     if (err)
