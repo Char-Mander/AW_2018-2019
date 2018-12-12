@@ -182,13 +182,12 @@ users.get("/modificar_perfil", middlewares.middlewareLogin, function (request, r
         puntos: request.session.currentUserPoints,
         imagen_perfil: request.session.currentUserImg
     }
-    console.log("Imagen en el sesion: " + request.session.currentUserImg)
+   
     response.render("modificar_perfil", { errorMsg: null, user: user });
 });
 
 users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.single("user_img"), function (request, response) {
     let user = {};
-    console.log("Imagen en el sesion: " + request.session.currentUserImg);
 
     user.email = request.session.currentUserEmail;
     user.password = request.body.password_user;
