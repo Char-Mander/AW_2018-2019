@@ -303,13 +303,13 @@ class DAOPreguntas {
     }
 
 
-    insertRespuestaAdivinada(id_pregunta, id_respuesta, id_amigo, id_propio, correct, callback) {
+    insertRespuestaAdivinada(id_pregunta, id_respuesta, id_amigo, id_propio, correct, vista, callback) {
         this.pool.getConnection(function (err, connection) {
             if (err)
                 callback(new Error("Error de conexión a la base de datos"));
             else {
                 const sql = `INSERT INTO respuestas_adivinadas(id_pregunta, id_respuesta, id_amigo, id_propio, correct, vista) VALUES (?,?,?,?,?,?)`;
-                let elems = [id_pregunta, id_respuesta, id_amigo, id_propio, correct, false];
+                let elems = [id_pregunta, id_respuesta, id_amigo, id_propio, correct, vista];
 
                 connection.query(sql, elems, function (err) {
                     connection.release();

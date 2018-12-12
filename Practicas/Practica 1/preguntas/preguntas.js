@@ -186,7 +186,6 @@ preguntas.post("/responder_pregunta", middlewares.middlewareLogin, function (req
     let otra_respuesta = {};
     let pregunta = {};
     pregunta.id = request.body.pregunta_id;
-    console.log("ID pregunta: " + pregunta.id);
     pregunta.texto = request.body.pregunta_texto;
     respuesta_propia.id_user = request.session.currentUserId;
     respuesta_propia.id_pregunta = request.body.pregunta_id;
@@ -300,8 +299,17 @@ preguntas.post("/adivinar_pregunta", middlewares.middlewareLogin, function (requ
             response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
         } else {
             let correct = respuesta.id == id_respuesta.id_respuesta;
+            let vista = false;
+            if(correct)
+                request.session.currentUserPoints = request.session.currentUserPoints + 50;
+            else{
+                if(request.session.currentUserPoints - 50 < 0)
+                    request.session.currentUserPoints = 0;
+                else
+                    request.session.currentUserPoints = request.session.currentUserPoints - 50;
+            }
 
-            daoPreguntas.insertRespuestaAdivinada(pregunta.id, respuesta.id, id_amigo, request.session.currentUserId, correct, function (error) {
+            daoPreguntas.insertRespuestaAdivinada(pregunta.id, respuesta.id, id_amigo, request.session.currentUserId, correct, vista, function (error) {
                 if (error) {
                     response.status(500);
                     console.log(`${error.message}`);

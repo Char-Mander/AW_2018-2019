@@ -154,9 +154,18 @@ users.get("/no_profile_pic", middlewares.middlewareLogin, function (request, res
 
 //  Desconexión del usuario
 users.get("/signout", middlewares.middlewareLogin, function (request, response) {
-    response.status(200);
-    request.session.destroy();
-    response.redirect("/users/signin");
+    let user = {};
+    user.puntos = request.session.currentUserPoints;
+    user.email = request.session.currentUserEmail;
+    daoUsers.updatePoints(user, function(error){
+        if(error){
+            response.status(500);
+        }else{
+            response.status(200);
+            request.session.destroy();
+            response.redirect("/users/signin");
+        }
+    })
 });
 
 users.get("/imagen/:id", middlewares.middlewareLogin, function (request, response) {

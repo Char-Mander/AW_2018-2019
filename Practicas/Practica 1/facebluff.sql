@@ -95,7 +95,7 @@ CREATE TABLE `respuestas_propias` (
 
 CREATE TABLE `respuestas_adivinadas` (
   `id_pregunta` int(11) UNSIGNED NOT NULL,
-  `id_respuesta` int(11) UNSIGNED NOT NULL PRIMARY KEY,
+  `id_respuesta` int(11) UNSIGNED NOT NULL,
   `id_amigo` int(11) UNSIGNED NOT NULL,
   `id_propio` int(11) UNSIGNED NOT NULL,
   `correct` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
