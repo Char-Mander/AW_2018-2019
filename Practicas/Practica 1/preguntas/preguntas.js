@@ -22,7 +22,7 @@ preguntas.get("/nueva_pregunta", middlewares.middlewareLogin, function (request,
     usuario.puntos = request.session.currentUserPoints;
     usuario.id = request.session.currentUserId;
     usuario.img = request.session.currentUserImg;
-    
+
     response.render("nueva_pregunta", { errorMsg: null, user: usuario });
 });
 
@@ -137,7 +137,7 @@ preguntas.get("/info_pregunta", middlewares.middlewareLogin, function (request, 
                             console.log(`${error.message}`);
                             response.render("preguntas", { preguntas: null, errorMsg: `${error.message}`, user: usuario });
                         } else {
-                            
+
                             console.log(amigos);
                             response.render("info_pregunta", { pregunta: pregunta[0], respondida: respondida, amigos: amigos, user: usuario });
                         }
@@ -155,6 +155,11 @@ preguntas.get("/responder_pregunta", middlewares.middlewareLogin, function (requ
     usuario.id = request.session.currentUserId;
     usuario.img = request.session.currentUserImg;
 
+    let errorMsg = request.query.error;
+    if(errorMsg === undefined) {
+        errorMsg = null;
+    }
+    
     let pregunta = {};
     pregunta.id = request.query.id;
     pregunta.texto = request.query.texto;
@@ -162,10 +167,10 @@ preguntas.get("/responder_pregunta", middlewares.middlewareLogin, function (requ
         if (error) {
             response.status(500);
             console.log(`${error.message}`);
-            response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
+            response.redirect("/preguntas/info_pregunta?id=" + pregunta.id + null);
         } else {
             response.status(200);
-            response.render("responder_pregunta", { pregunta: pregunta, respuestas: respuestas, user: usuario });
+            response.render("responder_pregunta", {errorMsg: errorMsg, pregunta: pregunta, respuestas: respuestas, user: usuario });
         }
     })
 
@@ -180,11 +185,12 @@ preguntas.post("/responder_pregunta", middlewares.middlewareLogin, function (req
     let respuesta_propia = {};
     let pregunta = {};
     pregunta.id = request.body.pregunta_id;
+    console.log("ID pregunta: " + pregunta.id);
     pregunta.texto = request.body.pregunta_texto;
     respuesta_propia.id_user = request.session.currentUserId;
     respuesta_propia.id_pregunta = request.body.pregunta_id;
 
-    request.checkBody("respuesta_texto", "Las respuestas no pueden ser vacías").notEmpty();
+    request.checkBody("respuesta_texto", "El campo de respuesta no puede estar vacío").notEmpty();
     request.getValidationResult().then(function (result) {
         if (result.isEmpty()) {
             respuesta_propia.texto = request.body.respuesta_texto;
@@ -212,9 +218,18 @@ preguntas.post("/responder_pregunta", middlewares.middlewareLogin, function (req
             });
         } else {
             response.status(200);
-            //Se meten todos los mensajes de error en un array
-            let mensaje = result.array().map(n => " " + n.msg);
-            response.redirect("/preguntas/responder_pregunta", { errorMsg: mensaje, user: usuario });
+            daoPreguntas.getRespuestas(pregunta.id, function (error, respuestas) {
+                if (error) {
+                    response.status(500);
+                    console.log(`${error.message}`);
+                    response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
+                } else {
+                    response.status(200);
+                   //Se meten todos los mensajes de error en un array
+                    let mensaje = result.array().map(n => " " + n.msg);
+                    response.redirect("/preguntas/responder_pregunta?id=" + pregunta.id + "&error=" + mensaje + "&texto=" + pregunta.texto);
+                }
+            })
         }
     });
 });

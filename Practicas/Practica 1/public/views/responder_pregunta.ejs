@@ -82,6 +82,13 @@
                         <% } %>
 
                     </ul>
+                    <% if (errorMsg !== null) { %>
+                        <div class="mensaje_error">
+                            <h4>
+                                <%= errorMsg %>
+                            </h4>
+                        </div>
+                    <% } %>
                 </div>
                 <div class="contenedor_añadir_pregunta">
                     <div class="botones">
