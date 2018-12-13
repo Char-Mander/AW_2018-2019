@@ -161,7 +161,7 @@ users.get("/sesion", middlewares.middlewareLogin, function (request, response) {
                         }
                         else {
                             response.status(200);
-                            response.render("sesion", { user: usuario, notificaciones: listado });
+                            response.render("sesion", { user: usuario, notificaciones: listado, es_amigo : false, user_sesion : undefined });
                         }
                     });
                 }
@@ -257,7 +257,7 @@ users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.singl
                     user.edad = calcularEdad(user.fecha_nacimiento);
                     if(user.imagen_perfil)
                         request.session.currentUserImg = true;
-                    response.render("sesion", { user: user, notificaciones : undefined });
+                    response.render("sesion", { user: user, notificaciones : undefined, es_amigo : false, user_sesion : undefined });
                 }
             });
         }

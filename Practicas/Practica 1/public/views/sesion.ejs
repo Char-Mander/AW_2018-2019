@@ -23,11 +23,20 @@
                 <div class="enlace desconectar"> <a href="/users/signout"> Desconectar </a> </div>
                 <div class="enlace puntuacion">
                     <div class="user_icon">
-                       <% if(user.imagen_perfil){ %>
-                        <img class="icon" src="/users/imagen/<%= user.id_user %>"> 
+                        <% if (es_amigo) { %>
+                        <% if(user_sesion.img){ %>
+                        <img class="icon" src="/users/imagen/<%= user_sesion.id %>">
                         <% } else { %>
                         <img class="icon" src="/users/no_profile_pic">
                         <% } %>
+                        <% } else { %>
+                        <% if(user.imagen_perfil){ %>
+                        <img class="icon" src="/users/imagen/<%= user.id_user %>">
+                        <% } else { %>
+                        <img class="icon" src="/users/no_profile_pic">
+                        <% } %>
+                        <% } %>
+
                     </div>
                     <div class="ptos">
                         <%= user.puntos %> ptos</div>
@@ -35,7 +44,7 @@
             </div>
         </div>
         <div class="body">
-           
+
             <div class="contenedor_ventana">
 
                 <div class="titulo_ventana">
@@ -45,7 +54,8 @@
                 <div class="contenedor_datos">
                     <div class="imagen_usuario">
                         <% if(user.imagen_perfil){ %>
-                        <img src="/users/imagen/<%= user.id_user %>"> <% } else { %>
+                        <img src="/users/imagen/<%= user.id_user %>">
+                        <% } else { %>
                         <img src="/users/no_profile_pic">
                         <% } %>
                     </div>
@@ -70,53 +80,59 @@
                                     <%= user.puntos %> puntos</h4>
                             </div>
                         </div>
+                        <%if(!es_amigo){ %>
                         <div class="boton">
-                            <button class="boton_aceptar" onclick="location.href='/users/modificar_perfil'"> Modificar perfil
+                            <button class="boton_aceptar" onclick="location.href='/users/modificar_perfil'"> Modificar
+                                perfil
                             </button>
                         </div>
+                        <% } %>
                     </div>
                 </div>
             </div>
-             <% if(notificaciones !== undefined && notificaciones.length>0) { %> 
+            <% if(notificaciones !== undefined && notificaciones.length>0) { %>
             <div class="contenedor_notificaciones">
                 <div class="titulo_notificacion">
                     <h2>Notificaciones</h2>
                 </div>
                 <div class="contenedor_datos_notificaciones">
-                   
-                        <ul class="lista_amigos">
-                             <% notificaciones.forEach(function(amigo){ %> 
-                            <li>
-                                <div class="amigo">
 
-                                     <% if(amigo.imagen_perfil !== null){ %>
-                                    <img class="icon" src="/users/imagen/<%= amigo.id_user %>">
-                                    <% } else { %>
-                                    <img class="icon" src="/users/no_profile_pic">
-                                    <% } %>
-                                    <div class="info">
-                                        <p>
-                                        <%= amigo.nombre_completo %> ha 
+                    <ul class="lista_amigos">
+                        <% notificaciones.forEach(function(amigo){ %>
+                        <li>
+                            <div class="amigo">
+
+                                <% if(amigo.imagen_perfil !== null){ %>
+                                <img class="icon" src="/users/imagen/<%= amigo.id_user %>">
+                                <% } else { %>
+                                <img class="icon" src="/users/no_profile_pic">
+                                <% } %>
+                                <div class="info">
+                                    <p>
+                                        <%= amigo.nombre_completo %> ha
                                         <% if (amigo.correct === 0) { %>
-                                            fallado
+                                        fallado
                                         <% } else { %>
-                                            acertado
-                                        <% } %> 
-                                        la pregunta: " <%= amigo.texto_pregunta %> ". 
-                                        <br/>
-                                        Respondió: " <%= amigo.texto_respuesta %> " 
-                                        <br/>
-                                        La respuesta correcta era: " <%= amigo.respuesta_correcta %> "
-                                        </p>
-                                    </div> 
+                                        acertado
+                                        <% } %>
+                                        la pregunta: "
+                                        <%= amigo.texto_pregunta %> ".
+                                        <br />
+                                        Respondió: "
+                                        <%= amigo.texto_respuesta %> "
+                                        <br />
+                                        La respuesta correcta era: "
+                                        <%= amigo.respuesta_correcta %> "
+                                    </p>
                                 </div>
-    
-                            </li>
-                             <% }); %> 
-                        </ul>
+                            </div>
+
+                        </li>
+                        <% }); %>
+                    </ul>
                 </div>
             </div>
-            <% } %> 
+            <% } %>
         </div>
 </body>
 

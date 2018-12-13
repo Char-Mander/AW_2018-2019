@@ -44,6 +44,19 @@ li{
     margin:0.5%;
 }
 
+div.nombre_solicitud a{
+    color: black;
+    cursor:pointer;
+}
+
+div.nombre_solicitud a:hover{
+    color:rgb(83, 83, 83);
+}
+
+div.nombre_solicitud a:active{
+    color:rgb(104, 102, 102);
+}
+
 div.no_found{
     font-size: 1.5vw;
     width: 100%;

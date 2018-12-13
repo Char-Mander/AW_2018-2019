@@ -46,16 +46,18 @@
                         <div class="resultado 1">
                             <div class="info_user">
                                 <% if(amigo.imagen_perfil !== null){ %>
-                                    <img class="icon" src="/users/imagen/<%= amigo.id_user %>">
-                                    <% } else { %>
-                                    <img class="icon" src="/users/no_profile_pic">
-                                    <% } %>
+                                <img class="icon" src="/users/imagen/<%= amigo.id_user %>">
+                                <% } else { %>
+                                <img class="icon" src="/users/no_profile_pic">
+                                <% } %>
                                 <div class="nombre_solicitud">
-                                    <%= amigo.nombre_completo %>
+                                    <a href="/amigos/perfil_amigo?id_amigo=<%= amigo.id_user %>">
+                                        <%= amigo.nombre_completo %>
+                                    </a>
                                 </div>
                             </div>
                             <form class="botones" method="post" action="/amigos/enviar_peticion">
-                                    <input type="hidden" name="id_amig" value=<%=amigo.id_user%>>
+                                <input type="hidden" name="id_amig" value=<%=amigo.id_user%>>
                                 <button class="aceptar" type=submit> Solicitar amistad </button>
                             </form>
                         </div>

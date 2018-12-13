@@ -137,4 +137,34 @@ amigos.post("/rechazar_peticion", middlewares.middlewareLogin, function (request
     });
 });
 
+amigos.get("/perfil_amigo", function (request, response) {
+    let id_amigo = request.query.id_amigo;
+    let user_sesion = {};
+    user_sesion.id = request.session.currentUserId;
+    user_sesion.img = request.session.currentUserImg;
+
+    daoUsers.getUser(id_amigo, function (error, usuario) {
+        if (error) {
+            response.status(500);
+        } else {
+            response.status(200);
+            usuario.edad = calcularEdad(usuario.fecha_nacimiento);
+            response.render("sesion", { user: usuario, notificaciones: undefined, es_amigo : true, user_sesion : user_sesion });
+        }
+    });
+})
+
+function calcularEdad(fecha) {
+    var hoy = new Date();
+    var cumpleanos = new Date(fecha);
+    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    var m = hoy.getMonth() - cumpleanos.getMonth();
+
+    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
+    }
+
+    return edad;
+}
+
 module.exports = amigos;

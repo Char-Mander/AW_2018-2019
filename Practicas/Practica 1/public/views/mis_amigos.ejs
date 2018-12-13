@@ -50,7 +50,9 @@
                                 <img class="icon" src="/users/no_profile_pic">
                                 <% } %>
                                 <div class="nombre_solicitud">
-                                    <%= solicitud.nombre_completo %>
+                                    <a href="/amigos/perfil_amigo?id_amigo=<%= solicitud.id_user %>">
+                                        <%= solicitud.nombre_completo %>
+                                    </a>
                                 </div>
                             </div>
                             <div class="botones">
@@ -96,7 +98,9 @@
                                 <img class="icon" src="/users/no_profile_pic">
                                 <% } %>
                                 <div class="nombre_amigo">
-                                    <%= amigo.nombre_completo %>
+                                    <a href="/amigos/perfil_amigo?id_amigo=<%= amigo.id_user %>">
+                                        <%= amigo.nombre_completo %>
+                                    </a>
                                 </div>
                             </div>
 

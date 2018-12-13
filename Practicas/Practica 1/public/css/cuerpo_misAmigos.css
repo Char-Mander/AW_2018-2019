@@ -73,6 +73,19 @@ div.info_user{
     height: 2.5vw
 }
 
+div.nombre_amigo a, div.nombre_solicitud a{
+    color: black;
+    cursor:pointer;
+}
+
+div.nombre_amigo a:hover, div.nombre_solicitud a:hover{
+    color:rgb(83, 83, 83);
+}
+
+div.nombre_amigo a:active, div.nombre_solicitud a:active{
+    color:rgb(104, 102, 102);
+}
+
 div.botones{
     display: flex;
     width: 50%;
