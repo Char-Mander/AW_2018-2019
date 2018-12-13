@@ -245,7 +245,7 @@ preguntas.get("/adivinar_pregunta", middlewares.middlewareLogin, function (reque
     pregunta.id = request.query.id;
     pregunta.texto = request.query.texto;
 
-    daoPreguntas.get3RandomAnswers(pregunta.id, function (error, respuestas) {
+    daoPreguntas.get3RandomAnswers(pregunta.id, id_amigo, function (error, respuestas) {
         if (error) {
             response.status(500);
             console.log(`${error.message}`);
@@ -257,17 +257,14 @@ preguntas.get("/adivinar_pregunta", middlewares.middlewareLogin, function (reque
                     console.log(`${error.message}`);
                     response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
                 } else {
-                    let respuesta_nueva = {};
-                    respuesta_nueva.texto = respuesta;
-
                     let pos_aleatoria = Math.floor(Math.random() * 4);
                     let aux;
                     if (pos_aleatoria !== 3) {
                         aux = respuestas[pos_aleatoria];
-                        respuestas[pos_aleatoria] = respuesta_nueva;
+                        respuestas[pos_aleatoria] = respuesta;
                         respuestas.push(aux);
                     } else
-                        respuestas.push(respuesta_nueva);
+                        respuestas.push(respuesta);
 
                     daoUsers.getUser(id_amigo, function (error, amigo) {
                         if (error) {
@@ -294,7 +291,6 @@ preguntas.post("/adivinar_pregunta", middlewares.middlewareLogin, function (requ
 
     let respuesta = {};
     let pregunta = {};
-    let correct = false;
     let id_amigo = request.body.id_amigo;
 
     respuesta.id = request.body.respuesta_id;

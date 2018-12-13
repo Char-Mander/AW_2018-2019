@@ -135,14 +135,19 @@ class DAOPreguntas {
         })
     }
 
-    get3RandomAnswers(id_pregunta, callback) {
+    get3RandomAnswers(id_pregunta, id_amigo, callback) {
         this.pool.getConnection(function (err, connection) {
             if (err)
                 callback(new Error("Error de conexión a la base de datos"), null);
             else {
-                const sql = `SELECT * FROM respuestas WHERE id_pregunta = ? ORDER BY RAND() LIMIT 3`;
+                const sql = `SELECT DISTINCT * FROM respuestas WHERE id_pregunta = ?
+                                AND respuestas.id NOT IN (SELECT id_respuesta FROM respuestas_propias 
+                                                            WHERE respuestas_propias.id_pregunta = ?
+                                                            AND respuestas_propias.id_user = ?)
+                                ORDER BY RAND() LIMIT 3`;
+                const elems = [id_pregunta, id_pregunta, id_amigo];
 
-                connection.query(sql, id_pregunta, function (err, respuestas) {
+                connection.query(sql, elems, function (err, respuestas) {
                     connection.release();
                     if (err)
                         callback(new Error("Error de acceso a la base de datos"), null);
@@ -175,8 +180,12 @@ class DAOPreguntas {
                         connection.query(sql_texto, id_respuesta_correcta[0].id_respuesta, function (err, texto_respuesta) {
                             if (err)
                                 callback(new Error("Error de acceso a la base de datos"), null);
-                            else
-                                callback(null, texto_respuesta[0].texto);
+                            else{
+                                let respuesta_correcta = {};
+                                respuesta_correcta.id = id_respuesta_correcta[0].id_respuesta;
+                                respuesta_correcta.texto = texto_respuesta[0].texto;
+                                callback(null, respuesta_correcta);
+                            }
                         })
                     }
                 })
