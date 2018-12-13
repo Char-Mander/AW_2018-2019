@@ -6,26 +6,27 @@
     <title>Juego de cartas</title>
     <meta name = "viewport" content="width=device-width, initial-scale=1">
     <link rel = "stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src = "index.js"></script>
 </head>
 <body>
     <div class = "contenedor_principal">
         <div class = "barra_navegación">
             <div class = "boton">
-            <button class = "iniciar"> Iniciar </button>
+            <button id="boton_inicio"> Iniciar </button>
             </div>
             <div class = "opciones">
                 <form action = "">
-                    <input type = "radio" name="dificultad" value="Fácil"> Fácil <br>
-                    <input type = "radio" name="dificultad" value="Medio"> Medio <br>
-                    <input type = "radio" name="dificultad" value="Difícil"> Difícil
+                    <input type = "radio" name="modo" value="Fácil"> Fácil <br>
+                    <input type = "radio" name="modo" value="Medio"> Medio <br>
+                    <input type = "radio" name="modo" value="Difícil"> Difícil
                 </form>
             </div>
         </div>
         <div class = "cuerpo">
             <div class = "contenedor_cartas">
-            <ul class = "cartas">
-                <li class="carta 1">
+            <ul id="lista_cartas">
+                <!-- <li class="carta 1">
                     <div class="imagen"> 
                         <img src="./unicornio.png">
                     <div>
@@ -84,7 +85,7 @@
                     <div class="imagen"> 
                         <img src="./unicornio.png">
                     <div>
-                </li>
+                </li> -->
                 
             </ul>
             </div>
