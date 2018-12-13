@@ -133,11 +133,11 @@ div.elem{
 }
 
 div.datos{
-    display:flex;
+    display: flex;
     flex-direction: column;
     width: 96%;
-    margin:1.5%;
-    height: auto;
+    margin: 1%;
+    height: 18vw;
     justify-content: space-between;
     align-items: center;
 }
@@ -169,6 +169,7 @@ div.boton{
     justify-content: center;
     width: 15vw;
     height: 10vw;
+    margin-top: 2%;
 }
 
 button{
