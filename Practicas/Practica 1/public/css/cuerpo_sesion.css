@@ -21,10 +21,10 @@ div.contenedor_ventana{
 
 div.contenedor_notificaciones{
     position: absolute;
-    left:68%;
-    top:190px;
+    left: 68%;
+    top: 172px;
     width: 30vw;
-    height: 20vw;
+    height: 18vw;
 }
 
 ul.lista_amigos{
@@ -34,10 +34,7 @@ ul.lista_amigos{
     width: 94%;
     height: 90%;
     justify-content: space-evenly;
-    background-image: linear-gradient(to bottom right, rgb(89, 219, 89),rgb(250, 234, 201));
-    border-radius: 5px;
     padding:2%;
-    box-shadow: 2px 2px 5px rgb(82, 82, 82);
     overflow: scroll;
 }
 
@@ -50,6 +47,9 @@ li{
     justify-content: space-evenly;
 }
 
+div.amigo{
+    margin:3%;
+}
 
 div.titulo_ventana{
     display: flex;
@@ -61,14 +61,35 @@ div.titulo_ventana{
     margin-bottom: 5%;
 }
 
+div.titulo_notificacion{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 100%; 
+    font-size: 1.5vw;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
 div.contenedor_datos{
     display: flex;
     width: 90%;
-    height: auto;
+    height: 15vw;
     justify-content: space-evenly;
     background-image: linear-gradient(to bottom right, rgb(89, 219, 89),rgb(250, 234, 201));
     border-radius: 5px;
-    padding:4%;
+    padding:3%;
+    box-shadow: 2px 2px 5px rgb(82, 82, 82);
+}
+
+div.contenedor_datos_notificaciones{
+    display: flex;
+    width: 90%;
+    height: 15vw;
+    justify-content: space-evenly;
+    background-image: linear-gradient(to bottom right, rgb(89, 219, 89),rgb(250, 234, 201));
+    border-radius: 5px;
+    padding:3%;
     box-shadow: 2px 2px 5px rgb(82, 82, 82);
 }
 
