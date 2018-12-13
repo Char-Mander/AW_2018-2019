@@ -147,19 +147,19 @@ users.get("/sesion", middlewares.middlewareLogin, function (request, response) {
                 if (error) {
                     console.log(error.message);
                 }
-               // else{
-                    //response.status(200);
-                   // daoAplicacion.actualizarNotificaciones(request.session.currentUserId, function(error){
-                    //    if(error){
-                      //      response.status(500);
-                        //    console.log(error.messsage);
-                        //}
-                       // else {
+                else{
+                    response.status(200);
+                    daoAplicacion.actualizarNotificaciones(request.session.currentUserId, function(error){
+                        if(error){
+                            response.status(500);
+                            console.log(error.messsage);
+                        }
+                        else {
                             response.status(200);
                             response.render("sesion", { user: usuario, notificaciones: listado });
-                        //}
-                   // });
-                //}
+                        }
+                    });
+                }
             });
 
           
