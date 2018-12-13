@@ -35,6 +35,7 @@
             </div>
         </div>
         <div class="body">
+            <div class="contenedor_de_contenedores">
             <div class="contenedor_ventana">
 
                 <div class="titulo_ventana">
@@ -78,10 +79,10 @@
             </div>
              <% if(notificaciones !== undefined && notificaciones.length>0) { %> 
             <div class="contenedor_notificaciones">
-                <div class="titulo_ventana">
+                <div class="titulo_notificacion">
                     <h2>Notificaciones</h2>
                 </div>
-                <div class="contenedor_datos">
+                <div class="contenedor_datos_notificaciones">
                    
                         <ul class="lista_amigos">
                              <% notificaciones.forEach(function(amigo){ %> 
@@ -95,12 +96,12 @@
                                     <% } %>
                                     <div class="info">
                                         <%= amigo.nombre_completo %> ha 
-                                        <% if (amigo.correct === '0') { %>
+                                        <% if (amigo.correct === 0) { %>
                                             fallado
                                         <% } else { %>
                                             acertado
                                         <% } %> 
-                                        la pregunta: " <%= amigo.texto_pregunta %> 
+                                        la pregunta: " <%= amigo.texto_pregunta %> "
                                         <br/>
                                         Respondió: <%= amigo.texto_respuesta %>
                                         <br/> 
@@ -114,7 +115,7 @@
                 </div>
             </div>
             <% } %> 
-           
+            </div>
         </div>
 </body>
 

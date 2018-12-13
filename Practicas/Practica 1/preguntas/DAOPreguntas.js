@@ -239,7 +239,7 @@ class DAOPreguntas {
                                 });
 
                                 adivinadas.forEach(function (adivinada) {
-                                    amigos.forEach(function (v, i, a) {
+                                    amigos.forEach(function (v) {
                                         if (v.id_user == adivinada.id_amigo) {
                                             if (adivinada.correct)
                                                 v.correct = true;
