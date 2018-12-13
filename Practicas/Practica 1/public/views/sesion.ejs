@@ -80,13 +80,15 @@
                                     <%= user.puntos %> puntos</h4>
                             </div>
                         </div>
-                        <%if(!es_amigo){ %>
+
                         <div class="boton">
+                            <%if(!es_amigo){ %>
                             <button class="boton_aceptar" onclick="location.href='/users/modificar_perfil'"> Modificar
                                 perfil
                             </button>
+                            <% } %>
                         </div>
-                        <% } %>
+
                     </div>
                 </div>
             </div>
