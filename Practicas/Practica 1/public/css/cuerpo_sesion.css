@@ -41,7 +41,7 @@ li{
     display: flex;
     margin: 1%;
     height: auto;
-    width: 430px;
+    width: 100%;
     background-color: white;
     border-radius: 5px;
     overflow:hidden;
@@ -120,6 +120,7 @@ p{
    height: auto; 
     width: 100%;
     margin: 1%;
+    overflow: scroll;
 }
 
 div.elem{
