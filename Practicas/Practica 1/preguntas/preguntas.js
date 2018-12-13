@@ -309,12 +309,6 @@ preguntas.post("/adivinar_pregunta", middlewares.middlewareLogin, function (requ
             let vista = false;
             if (correct)
                 request.session.currentUserPoints = request.session.currentUserPoints + 50;
-            else {
-                if (request.session.currentUserPoints - 50 < 0)
-                    request.session.currentUserPoints = 0;
-                else
-                    request.session.currentUserPoints = request.session.currentUserPoints - 50;
-            }
 
             daoPreguntas.insertRespuestaAdivinada(pregunta.id, respuesta.id, id_amigo, request.session.currentUserId, correct, vista, function (error) {
                 if (error) {
