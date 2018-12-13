@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="body">
-            <div class="contenedor_de_contenedores">
+           
             <div class="contenedor_ventana">
 
                 <div class="titulo_ventana">
@@ -95,17 +95,19 @@
                                     <img class="icon" src="/users/no_profile_pic">
                                     <% } %>
                                     <div class="info">
+                                        <p>
                                         <%= amigo.nombre_completo %> ha 
                                         <% if (amigo.correct === 0) { %>
                                             fallado
                                         <% } else { %>
                                             acertado
                                         <% } %> 
-                                        la pregunta: " <%= amigo.texto_pregunta %> "
+                                        la pregunta: " <%= amigo.texto_pregunta %> ". 
                                         <br/>
-                                        Respondió: <%= amigo.texto_respuesta %>
-                                        <br/> 
-                                        La respuesta correcta era: <%= amigo.respuesta_correcta %>
+                                        Respondió: " <%= amigo.texto_respuesta %> " 
+                                        <br/>
+                                        La respuesta correcta era: " <%= amigo.respuesta_correcta %> "
+                                        </p>
                                     </div> 
                                 </div>
     
@@ -115,7 +117,6 @@
                 </div>
             </div>
             <% } %> 
-            </div>
         </div>
 </body>
 

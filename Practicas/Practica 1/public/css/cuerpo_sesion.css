@@ -21,34 +21,38 @@ div.contenedor_ventana{
 
 div.contenedor_notificaciones{
     position: absolute;
-    left: 68%;
-    top: 172px;
+    left: 63%;
+    top: 115px;
     width: 30vw;
     height: 18vw;
+    margin: 5%;
 }
 
 ul.lista_amigos{
     list-style-type: none;
     display: flex;
     flex-direction: column;
-    width: 94%;
-    height: 90%;
-    justify-content: space-evenly;
-    padding:2%;
+    width: 100%;
+    height: 100%;
     overflow: scroll;
 }
 
 li{
-    margin: 0.6%;
+    display: flex;
+    margin: 1%;
     height: auto;
-    width: 100%;
+    width: 430px;
     background-color: white;
     border-radius: 5px;
-    justify-content: space-evenly;
+    overflow:hidden;
+    justify-content: center;
 }
 
 div.amigo{
-    margin:3%;
+    display: flex;
+    width: 99%;
+    margin: 1%;
+    height: auto;
 }
 
 div.titulo_ventana{
@@ -106,6 +110,17 @@ img{
     border-radius: 50%;
 }
 
+div.info{
+    display:flex;
+    height: auto;
+    width: 100%;
+}
+
+p{
+   height: auto; 
+    width: 100%;
+    margin: 1%;
+}
 
 div.elem{
     display:flex;
