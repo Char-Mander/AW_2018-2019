@@ -33,7 +33,7 @@ CREATE TABLE `user` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `aplicacion`
+-- Estructura de tabla para la tabla `solicitudes`
 --
 
 CREATE TABLE `solicitudes` (
@@ -44,7 +44,7 @@ CREATE TABLE `solicitudes` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `preguntas`
+-- Estructura de tabla para la tabla `amigos`
 --
 
 CREATE TABLE `amigos` (
@@ -105,7 +105,7 @@ CREATE TABLE `respuestas_adivinadas` (
 -- --------------------------------------------------------
 
 --
--- �ndices para tablas volcadas
+-- Indices para tablas volcadas
 --
 
 --
@@ -197,14 +197,14 @@ ALTER TABLE `respuestas_adivinadas`
   ADD CONSTRAINT `id_propio_fk` FOREIGN KEY (`id_propio`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `aplicacion`
+-- Filtros para la tabla `solicitudes`
 --
 ALTER TABLE `solicitudes`
   ADD CONSTRAINT `id_user1_fk_solicitudes` FOREIGN KEY (`id_user1`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_users_fk_solicitudes` FOREIGN KEY (`action_id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
   
 --
--- Filtros para la tabla `aplicacion`
+-- Filtros para la tabla `amigos`
 --
 ALTER TABLE `amigos`
   ADD CONSTRAINT `id_user1_fk_amigos` FOREIGN KEY (`id_user1`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
