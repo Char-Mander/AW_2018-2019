@@ -58,8 +58,8 @@ preguntas.post("/nueva_pregunta", middlewares.middlewareLogin, function (request
                     console.log(`${error.message}`);
                     response.render("nueva_pregunta", { errorMsg: `${error.message}`, user: usuario });
                 } else {
-                        response.status(200);
-                        response.redirect("/preguntas/preguntas");
+                    response.status(200);
+                    response.redirect("/preguntas/preguntas");
                 }
             });
         } else {
@@ -178,13 +178,11 @@ preguntas.post("/responder_pregunta", middlewares.middlewareLogin, function (req
     otra_respuesta.id_pregunta = request.body.pregunta_id;
     otra_respuesta.id_user = request.session.currentUserId;
 
-    request.checkBody("respuesta_texto", "El campo de respuesta no puede estar vacío").notEmpty();
-    request.getValidationResult().then(function (result) {
-        if (result.isEmpty()) {
-
-            console.log(request.body.otra);
-            if (request.body.otra === "on") {
-                otra_respuesta.texto = request.body.respuesta_texto;
+    if (request.body.otra === "on") {
+        request.checkBody("respuesta_opcional_texto", "El campo de respuesta no puede estar vacío").notEmpty();
+        request.getValidationResult().then(function (result) {
+            if (result.isEmpty()) {
+                otra_respuesta.texto = request.body.respuesta_opcional_texto;
 
                 daoPreguntas.insertRespuestaPersonalizada(otra_respuesta, function (error) {
                     if (error) {
@@ -196,36 +194,44 @@ preguntas.post("/responder_pregunta", middlewares.middlewareLogin, function (req
                         response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
                     }
                 });
-            } else {
-                respuesta_propia.texto = request.body.respuesta_texto;
 
-                daoPreguntas.insertRespuestaPropia(respuesta_propia, function (error) {
-                    if (error) {
-                        response.status(500);
-                        console.log("Error en insertar respuesta propia");
-                        console.log(`${error.message}`);
-                    } else {
-                        response.status(200);
-                        response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
-                    }
-                });
+            } else {
+                response.status(200);
+                //Se meten todos los mensajes de error en un array
+                let mensaje = result.array().map(n => " " + n.msg);
+                response.redirect("/preguntas/responder_pregunta?id=" + pregunta.id + "&error=" + mensaje + "&texto=" + pregunta.texto);
             }
-        } else {
-            response.status(200);
-            daoPreguntas.getRespuestas(pregunta.id, function (error, respuestas) {
-                if (error) {
-                    response.status(500);
-                    console.log(`${error.message}`);
-                    response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
-                } else {
-                    response.status(200);
-                    //Se meten todos los mensajes de error en un array
-                    let mensaje = result.array().map(n => " " + n.msg);
-                    response.redirect("/preguntas/responder_pregunta?id=" + pregunta.id + "&error=" + mensaje + "&texto=" + pregunta.texto);
-                }
-            })
-        }
-    });
+        })
+
+    } else if (request.body.otra !== "on" && request.body.respuesta_opcional_texto !== undefined) {
+        request.checkBody("respuesta_opcional_texto", "El campo de respuesta no puede estar vacío").notEmpty();
+        request.getValidationResult().then(function (result) {
+            if (result.isEmpty()) {
+                response.status(200);
+                let mensaje = "No se ha seleccionado la opción de 'otra'";
+                response.redirect("/preguntas/responder_pregunta?id=" + pregunta.id + "&error=" + mensaje + "&texto=" + pregunta.texto);
+            } else {
+                response.status(200);
+                //Se meten todos los mensajes de error en un array
+                let mensaje = result.array().map(n => " " + n.msg);
+                response.redirect("/preguntas/responder_pregunta?id=" + pregunta.id + "&error=" + mensaje + "&texto=" + pregunta.texto);
+            }
+        })
+
+    } else {
+        respuesta_propia.texto = request.body.respuesta_texto;
+
+        daoPreguntas.insertRespuestaPropia(respuesta_propia, function (error) {
+            if (error) {
+                response.status(500);
+                console.log("Error en insertar respuesta propia");
+                console.log(`${error.message}`);
+            } else {
+                response.status(200);
+                response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
+            }
+        });
+    }
 });
 
 preguntas.get("/adivinar_pregunta", middlewares.middlewareLogin, function (request, response) {//pregunta.id, pregunta.texto, amigo.id
@@ -239,48 +245,28 @@ preguntas.get("/adivinar_pregunta", middlewares.middlewareLogin, function (reque
     pregunta.id = request.query.id;
     pregunta.texto = request.query.texto;
 
-    /*daoPreguntas.getRespuestas(pregunta.id, function (error, respuestas) {
+    daoPreguntas.get3RandomAnswers(pregunta.id, function (error, respuestas) {
         if (error) {
             response.status(500);
             console.log(`${error.message}`);
             response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
         } else {
-
-            daoUsers.getUser(id_amigo, function (error, amigo) {
+            daoPreguntas.getCorrectAnswer(id_amigo, pregunta.id, function (error, respuesta) {
                 if (error) {
                     response.status(500);
                     console.log(`${error.message}`);
                     response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
                 } else {
-                    response.status(200);
-                    response.render("adivinar_pregunta", { pregunta: pregunta, respuestas: respuestas, amigo: amigo, user: usuario });
-                }
-            })
-        }
-    })*/
-
-    daoPreguntas.get3RandomAnswers(pregunta.id, function(error, respuestas){
-        if (error) {
-            response.status(500);
-            console.log(`${error.message}`);
-            response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
-        } else {
-            daoPreguntas.getCorrectAnswer(id_amigo, pregunta.id, function(error, respuesta){
-                if (error) {
-                    response.status(500);
-                    console.log(`${error.message}`);
-                    response.redirect("/preguntas/info_pregunta?id=" + pregunta.id);
-                }else{
                     let respuesta_nueva = {};
                     respuesta_nueva.texto = respuesta;
 
-                    let pos_aleatoria = Math.floor(Math.random()*4);
+                    let pos_aleatoria = Math.floor(Math.random() * 4);
                     let aux;
-                    if(pos_aleatoria !== 3){
+                    if (pos_aleatoria !== 3) {
                         aux = respuestas[pos_aleatoria];
                         respuestas[pos_aleatoria] = respuesta_nueva;
                         respuestas.push(aux);
-                    }else
+                    } else
                         respuestas.push(respuesta_nueva);
 
                     daoUsers.getUser(id_amigo, function (error, amigo) {
@@ -325,10 +311,10 @@ preguntas.post("/adivinar_pregunta", middlewares.middlewareLogin, function (requ
         } else {
             let correct = respuesta.id == id_respuesta.id_respuesta;
             let vista = false;
-            if(correct)
+            if (correct)
                 request.session.currentUserPoints = request.session.currentUserPoints + 50;
-            else{
-                if(request.session.currentUserPoints - 50 < 0)
+            else {
+                if (request.session.currentUserPoints - 50 < 0)
                     request.session.currentUserPoints = 0;
                 else
                     request.session.currentUserPoints = request.session.currentUserPoints - 50;
