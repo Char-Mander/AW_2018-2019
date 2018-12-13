@@ -232,7 +232,6 @@ users.post("/modificar_perfil", middlewares.middlewareLogin, multerFactory.singl
     user.sexo = request.body.sexo;
     user.fecha_nacimiento = request.body.fecha;
     user.edad = calcularEdad(request.body.fecha);
-    user.imagen_perfil = request.session.currentUserImg;
     user.puntos=request.session.currentUserPoints;
     
     if (request.file) {
