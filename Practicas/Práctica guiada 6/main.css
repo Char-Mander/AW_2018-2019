@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou');
+
 *{
     margin: 0;
     padding: 0;
@@ -8,6 +10,9 @@
     div.contenedor_principal{
         width: 100%;
         height: 100%;
+        background-color: rgb(205, 248, 248);
+        font-size: 1.5vw;
+        font-family: 'ZCOOL QingKe HuangYou', cursive;
         display:flex;
         flex-direction: column;
         justify-content: space-between;
@@ -15,9 +20,21 @@
     
     div.barra_navegacion{
         display: flex; 
-        flex-direction: row;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+    }
+
+    div.boton{
+        width: 7vw;
+        height: 7vw;
     }
     
+    div.opciones{
+        width: 30%;
+        height: 30%;
+    }
+
     div.cuerpo{
         width: 100%;
         height: auto;
@@ -28,7 +45,24 @@
         justify-content: center;
     
     }
-    
+
+    button{
+        width: 100%;
+        height: 100%;
+        font-family: 'ZCOOL QingKe HuangYou', cursive;
+        font-size: 1.5vw;
+        background-color: rgb(156, 33, 156);
+        border-radius: 50%;
+    }
+
+    button:hover{
+        background-color: rgb(117, 18, 117);
+    }
+     
+    button:active{
+        background-color: rgb(95, 16, 95);
+    }
+
     ul{
         display: grid;
         grid-template-columns: 15vw 15vw 15vw 15vw 15vw 15vw;
