@@ -1,81 +1,99 @@
 @import url('https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou');
-
-*{
+* {
     margin: 0;
     padding: 0;
-    border: solid;
-    border-color: blue;
-    }
-    
-    div.contenedor_principal{
-        width: 100%;
-        height: 100%;
-        background-color: rgb(205, 248, 248);
-        font-size: 1.5vw;
-        font-family: 'ZCOOL QingKe HuangYou', cursive;
-        display:flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    
-    div.barra_navegacion{
-        display: flex; 
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
-    }
+}
 
-    div.boton{
-        width: 7vw;
-        height: 7vw;
-    }
-    
-    div.opciones{
-        width: 30%;
-        height: 30%;
-    }
+div.contenedor_principal {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(205, 248, 248);
+    font-size: 1.5vw;
+    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
-    div.cuerpo{
-        width: 100%;
-        height: auto;
-    }
-    
-    div.contenedor_cartas{
-        display:flex;
-        justify-content: center;
-    
-    }
+div.barra_navegación {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background-color: mistyrose;
+}
 
-    button{
-        width: 100%;
-        height: 100%;
-        font-family: 'ZCOOL QingKe HuangYou', cursive;
-        font-size: 1.5vw;
-        background-color: rgb(156, 33, 156);
-        border-radius: 50%;
-    }
+div.boton {
+    display: flex;
+    justify-content: center;
+    width: 10%;
+    height: 100%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
 
-    button:hover{
-        background-color: rgb(117, 18, 117);
-    }
-     
-    button:active{
-        background-color: rgb(95, 16, 95);
-    }
+div.opciones {
+    width: 20%;
+    height: 100%;
+    margin: 2%;
+}
 
-    ul{
-        display: grid;
-        grid-template-columns: 15vw 15vw 15vw 15vw 15vw 15vw;
-        grid-template-rows: 15vw 15vw;
-    }
-    
-    li{
-        display: flex;
-        justify-content: center;
-        align-content: center;
-    }
-    
-    img{
-        width: 12vw;
-        height: 12vw;
-    }
+form {
+    height: 100%;
+    width: 100%;
+}
+
+div.cuerpo {
+    width: 100%;
+    height: auto;
+}
+
+div.contenedor_cartas {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    width: 7vw;
+    height: 7vw;
+    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    font-size: 1.5vw;
+    background-color: orchid;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 2px 2px 5px #999;
+}
+
+button:hover {
+    background-color: rgb(194, 92, 190);
+}
+
+button:active {
+    background-color: rgb(160, 76, 157);
+}
+
+ul {
+    display: grid;
+    grid-template-columns: 15vw 15vw 15vw 15vw 15vw 15vw;
+    grid-template-rows: 15vw 15vw;
+}
+
+li {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+}
+
+img {
+    width: 12vw;
+    height: 12vw;
+    border-radius: 3px;
+}
+
+.img.flipped {
+    -webkit-transform: rotateY( 180deg);
+    -moz-transform: rotateY( 180deg);
+    -o-transform: rotateY( 180deg);
+    transform: rotateY( 180deg);
+}

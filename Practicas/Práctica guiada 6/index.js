@@ -33,7 +33,7 @@ function crearTablero() {
     }
 }
 
-function voltear(){
+function voltear() {
 
 }
 
@@ -43,5 +43,6 @@ $(function () {
     $("#lista_cartas").on("click", "li", (function () {
         $("img", this).attr("src", "./imgs/cupcake.png");
         //alert($(this).html());
+        //setTimeout(darLaVuelta, 5000);
     }))
 })
