@@ -13,21 +13,29 @@ function crearTablero() {
             <div class="imagen"> 
                 <img src="./imgs/unicornio.png">
             <div>
-        </li>`);
+            </li>`);
             $("#lista_cartas").append(carta);
         }
         //12 cartas
     } else if (modo === "Medio") {
         //24 cartas
-        for (let i = 0; i < 24; i++) {
-            let carta = $(`<li>Carta ${i}</li>`);
+        for (let i = 1; i <= 24; i++) {
+            let carta = $(`<li class="carta ${i}">
+            <div class="imagen"> 
+                <img src="./imgs/unicornio.png">
+            <div>
+            </li>`);
             $("#lista_cartas").append(carta);
         }
 
     } else if (modo === "Difícil") {
         //36 cartas
-        for (let i = 0; i < 36; i++) {
-            let carta = $(`<li>Carta ${i}</li>`);
+        for (let i = 1; i <= 36; i++) {
+            let carta = $(`<li class="carta ${i}">
+            <div class="imagen"> 
+                <img src="./imgs/unicornio.png">
+            <div>
+            </li>`);
             $("#lista_cartas").append(carta);
         }
 
@@ -44,12 +52,12 @@ $(function () {
 
     $("#lista_cartas").on("click", "li", (function () {
         $("img", this).attr("src", "./imgs/cupcake.png");
-       // setTimeout(voltear, 4000);
+        // setTimeout(voltear, 4000);
         //alert($(this).html());
     }))
 })
 
 function voltear() {
-   // $("img", this).attr("src", "./imgs/unicornio.png");
+    // $("img", this).attr("src", "./imgs/unicornio.png");
 
 }
