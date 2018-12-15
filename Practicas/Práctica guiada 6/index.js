@@ -10,7 +10,6 @@ function crearTablero() {
         //12 cartas
         $("ul").css("grid-template-columns", "15vw 15vw 15vw 15vw 15vw 15vw").css("grid-template-rows", "15vw 15vw");
         
-        alert("Modo de juego: " + modo);
         for (let i = 1; i <= 12; i++) {
             let carta = $(`<li class="carta ${i}">
             <div class="imagen"> 

@@ -29,16 +29,17 @@ div.barra_navegación {
 div.boton {
     display: flex;
     justify-content: center;
-    width: 10%;
+    width: 20%;
     height: 100%;
     margin-top: 2%;
     margin-bottom: 2%;
 }
 
 div.opciones {
-    width: 20%;
+    width: 18%;
     height: 100%;
-    margin: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
 form {
