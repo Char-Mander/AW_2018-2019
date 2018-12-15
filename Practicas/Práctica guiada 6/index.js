@@ -3,6 +3,9 @@
 function crearTablero() {
     let modo = $("input[name='modo']:checked").val();
 
+
+    $("li").remove();
+
     if (modo === "Fácil") {
         alert("Modo de juego: " + modo);
         for (let i = 1; i <= 12; i++) {
@@ -33,16 +36,20 @@ function crearTablero() {
     }
 }
 
-function voltear() {
 
-}
 
 $(function () {
+
     $("#boton_inicio").on("click", crearTablero);
 
     $("#lista_cartas").on("click", "li", (function () {
         $("img", this).attr("src", "./imgs/cupcake.png");
+       // setTimeout(voltear, 4000);
         //alert($(this).html());
-        //setTimeout(darLaVuelta, 5000);
     }))
 })
+
+function voltear() {
+   // $("img", this).attr("src", "./imgs/unicornio.png");
+
+}
