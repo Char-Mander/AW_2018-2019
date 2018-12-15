@@ -38,7 +38,7 @@ function crearTablero() {
             </li>`);
             $("#lista_cartas").append(carta);
         }
-        
+
         $("img").css("width", "10vw")
                 .css("height", "10vw");
 
@@ -63,6 +63,8 @@ function crearTablero() {
     } else {
         alert("No se ha seleccionado modo de juego");
     }
+
+    //Oculta el div de las cartas que están bocarriba
     $("div.front").hide();
 }
 
