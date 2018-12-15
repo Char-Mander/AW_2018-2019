@@ -74,13 +74,20 @@ $(function () {
     $("#boton_inicio").on("click", crearTablero);
 
     $("#lista_cartas").on("click", "li", (function () {
-        $("img", this).attr("src", "./imgs/cupcake.png");
-        // setTimeout(voltear, 4000);
-        //alert($(this).html());
+        //let frontElems = document.getElementsByClassName("front");
+        //if(frontElems.length<2){
+            $("img", this).attr("src", "./imgs/cupcake.png");
+            //$("div.front", this).show();
+            //$("div.back", this).hide();
+            /*if(frontElems.length==1){
+             setTimeout(voltear, 4000);
+            }*/
+            //alert($(this).html());
+        //}
     }))
 })
 
 function voltear() {
-    // $("img", this).attr("src", "./imgs/unicornio.png");
-
+     $("div.front").hide();
+     $("div.back").show();
 }
