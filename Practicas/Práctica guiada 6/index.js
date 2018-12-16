@@ -79,11 +79,11 @@ function voltear() {
     $back.hide();
 
     setTimeout(function () {
-        voltear2($front, $back);
+        voltearCarta($front, $back);
     }, 1000);
 }
 
-function voltear2(front, back) {
+function voltearCarta(front, back) {
     front.hide();
     back.show();
 }
