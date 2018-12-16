@@ -2,8 +2,6 @@
 * {
     margin: 0;
     padding: 0;
-    border: solid;
-    border-color: black;
 }
 body{
     background-color: rgb(205, 248, 248);
@@ -31,14 +29,14 @@ div.barra_navegación {
 div.boton {
     display: flex;
     justify-content: center;
-    width: 20%;
+    width: 13%;
     height: 100%;
     margin-top: 2%;
     margin-bottom: 2%;
 }
 
 div.opciones {
-    width: 18%;
+    width: 10%;
     height: 100%;
     margin-top: 2%;
     margin-bottom: 2%;
@@ -47,8 +45,8 @@ div.opciones {
 div.num_clicks{
     display: flex;
     flex-direction: row;
-    justify-content: center; 
-    width: 18%;
+    justify-content: center;
+    width: 10%;
     height: 100%;
     margin-top: 2%;
     margin-bottom: 2%;
@@ -66,17 +64,20 @@ div.imagenes_adivinadas{
     justify-content: center;
     width: auto;
     height: 100%;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
 div.imagen_adivinada{
-    margin: 0.5%;
+    margin: 3%;
 }
 
 
 div.imagen_adivinada img{
     margin: 0.5%;
-    width: 3vw;
-    height: 3vw;
+    width: 2.6vw;
+    height: 2.6vw;
+    border-radius: 3px;
 }
 
 
