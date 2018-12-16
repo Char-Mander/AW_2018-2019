@@ -8,6 +8,10 @@ function crearTablero() {
 
     //Borra todos los elementos, por si había uno cargado anteriormente
     $("li").remove();
+    $("div.imagen_adivinada").remove();
+    //Reiniciamos el contador
+    let num = parseInt($(".num_clicks").find(".num").text(), 10);
+    $(".num_clicks").find(".num").text(0);
 
     if (modo === "Fácil") {
         //12 cartas
