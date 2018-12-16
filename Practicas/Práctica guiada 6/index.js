@@ -23,7 +23,9 @@ function crearTablero() {
             $("#lista_cartas").append(carta);
         }
 
-        $("img").css("width", "12vw")
+        $("div.front img").css("width", "12vw")
+            .css("height", "12vw");
+        $("div.back img").css("width", "12vw")
             .css("height", "12vw");
 
     } else if (modo === "Medio") {
@@ -41,7 +43,9 @@ function crearTablero() {
             $("#lista_cartas").append(carta);
         }
 
-        $("img").css("width", "10vw")
+        $("div.front img").css("width", "10vw")
+            .css("height", "10vw");
+        $("div.back img").css("width", "10vw")
             .css("height", "10vw");
 
     } else if (modo === "Difícil") {
@@ -59,7 +63,9 @@ function crearTablero() {
             $("#lista_cartas").append(carta);
         }
 
-        $("img").css("width", "7vw")
+        $("div.front img").css("width", "7vw")
+            .css("height", "7vw");
+        $("div.back img").css("width", "7vw")
             .css("height", "7vw");
 
     } else {
@@ -122,6 +128,12 @@ function quitarCarta(){
         $carta2 = imagenes.shift();
 
         if($carta1.img === $carta2.img){
+            //Se muestra la imagen adivinada arriba a la derecha
+            let imagen_adivinada = $(`<div class="imagen_adivinada">
+            <img src="./imgs/cupcake.png">
+            </div>`);
+            $("#imagenes_adivinadas").append(imagen_adivinada);
+
             $(`.${$carta1.clase}`).css("visibility", "hidden");
             $(`.${$carta2.clase}`).css("visibility", "hidden");
         }

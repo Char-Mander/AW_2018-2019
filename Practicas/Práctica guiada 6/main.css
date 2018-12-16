@@ -2,6 +2,8 @@
 * {
     margin: 0;
     padding: 0;
+    border: solid;
+    border-color: black;
 }
 body{
     background-color: rgb(205, 248, 248);
@@ -58,6 +60,26 @@ div.num{
     margin-right: 2px;
 }
 
+div.imagenes_adivinadas{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: auto;
+    height: 100%;
+}
+
+div.imagen_adivinada{
+    margin: 0.5%;
+}
+
+
+div.imagen_adivinada img{
+    margin: 0.5%;
+    width: 3vw;
+    height: 3vw;
+}
+
+
 form {
     height: 100%;
     width: 100%;
@@ -112,6 +134,6 @@ div.front, div.back{
     justify-content: center;
 }
 
-img {
+div.front img, div.back img {
     border-radius: 3px;
 }
