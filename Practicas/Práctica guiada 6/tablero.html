@@ -1,34 +1,42 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="esp">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Juego de cartas</title>
-    <meta name = "viewport" content="width=device-width, initial-scale=1">
-    <link rel = "stylesheet" type="text/css" media="screen" href="main.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src = "index.js"></script>
+    <script src="index.js"></script>
 </head>
+
 <body>
-    <div class = "contenedor_principal">
-        <div class = "barra_navegación">
-            <div class = "boton">
-            <button id="boton_inicio"> Iniciar </button>
+    <div class="contenedor_principal">
+        <div class="barra_navegación">
+            <div class="boton">
+                <button id="boton_inicio"> Iniciar </button>
             </div>
-            <div class = "opciones">
-                <form action = "">
-                    <input type = "radio" name="modo" value="Fácil"> Fácil <br>
-                    <input type = "radio" name="modo" value="Medio"> Medio <br>
-                    <input type = "radio" name="modo" value="Difícil"> Difícil
+            <div class="opciones">
+                <form action="">
+                    <input type="radio" name="modo" value="Fácil"> Fácil <br>
+                    <input type="radio" name="modo" value="Medio"> Medio <br>
+                    <input type="radio" name="modo" value="Difícil"> Difícil
                 </form>
             </div>
+
+            <div class="num_clicks">
+                <div class="num">0</div>
+                clicks
+            </div>
         </div>
-        <div class = "cuerpo">
-            <div class = "contenedor_cartas">
-            <ul id="lista_cartas">
-            </ul>
+        <div class="cuerpo">
+            <div class="contenedor_cartas">
+                <ul id="lista_cartas">
+                </ul>
             </div>
         </div>
     </div>
 </body>
+
 </html>
