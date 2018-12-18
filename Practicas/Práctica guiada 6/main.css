@@ -52,6 +52,10 @@ div.num_clicks{
     margin-bottom: 2%;
 }
 
+div.consultar_clicks{
+    display: none;
+}
+
 div.num{
     width: auto;
     height: 100%; 

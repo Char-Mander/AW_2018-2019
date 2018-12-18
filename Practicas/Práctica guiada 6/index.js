@@ -10,8 +10,9 @@ function crearTablero() {
     $("li").remove();
     $("div.imagen_adivinada").remove();
     //Reiniciamos el contador
-    let num = parseInt($(".num_clicks").find(".num").text(), 10);
+
     $(".num_clicks").find(".num").text(0);
+    $(".num_clicks").find(".consultar_clicks").text(0);
 
     if (modo === "Fácil") {
         //12 cartas
@@ -82,29 +83,42 @@ function crearTablero() {
 
 //  Da la vuelta a las cartas, y las devuelve a su posición inicial tras un segundo
 function voltear() {
-    let $front =$(this).find(".front");
-    let $back = $(this).find(".back");
+    let num = parseInt($(".num_clicks").find(".consultar_clicks").text(), 10);
+    if (num < 2) {
+        let $front = $(this).find(".front");
+        let $back = $(this).find(".back");
+        $front.show();
+        $back.hide();
 
-    $front.show();
-    $back.hide();
 
-    setTimeout(function () {
-        voltearCarta($front, $back);
-    }, 1000);
+        setTimeout(function () {
+            voltearCarta($front, $back);
+        }, 4000);
+    }
+    /*else if (num ==2){
+        setTimeout(function () {
+                    voltearCarta($front, $back);
+                }, 4000);
+    }*/
 }
 
 function voltearCarta(front, back) {
+    $(".num_clicks").find(".consultar_clicks").text(0);
     front.hide();
     back.show();
 }
 
 //  Suma 1 al número de clicks del usuario
-function sumarClick(){
+function sumarClick() {
     let num = parseInt($(".num_clicks").find(".num").text(), 10);
+    let num_comprobar_clicks = parseInt($(".num_clicks").find(".consultar_clicks").text(), 10);
     num = num + 1;
+    num_comprobar_clicks = num_comprobar_clicks + 1;
 
     $(".num_clicks").find(".num").text(num);
+    $(".num_clicks").find(".consultar_clicks").text(num_comprobar_clicks);
 }
+
 
 $(function () {
     $("#boton_inicio").on("click", crearTablero);
@@ -116,7 +130,7 @@ $(function () {
 
 })
 
-function guardarCarta(){
+function guardarCarta() {
     let $carta = {};
 
     $carta.img = $(this).find(".front").find("img").attr("src");
@@ -125,13 +139,13 @@ function guardarCarta(){
     imagenes.push($carta);
 }
 
-function quitarCarta(){
+function quitarCarta() {
     let $carta1, $carta2;
-    if(imagenes.length >= 2){
+    if (imagenes.length >= 2) {
         $carta1 = imagenes.shift();
         $carta2 = imagenes.shift();
 
-        if($carta1.img === $carta2.img){
+        if ($carta1.img === $carta2.img) {
             //Se muestra la imagen adivinada arriba a la derecha
             let imagen_adivinada = $(`<div class="imagen_adivinada">
             <img src="./imgs/cupcake.png">
