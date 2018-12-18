@@ -95,7 +95,7 @@ function voltear() {
             voltearCarta($front, $back);
         }, 4000);
     }
-    /*else if (num ==2){
+    /*else if (num == 2){
         setTimeout(function () {
                     voltearCarta($front, $back);
                 }, 4000);
