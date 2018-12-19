@@ -1,12 +1,14 @@
 "use strict";
 
 let cartas = [];
+let cartasUsadas;
 
 //  Crea el tablero del juego en base al modo de juego que elija el usuario
 function crearTablero() {
     let modo = $("input[name='modo']:checked").val();
 
     //Borra todos los elementos, por si había uno cargado anteriormente
+    cartasUsadas = [];
     $("li").remove();
     $(".imagen_adivinada").remove();
     //Reiniciamos el contador
@@ -19,24 +21,27 @@ function crearTablero() {
         
         $("ul").css("grid-template-columns", "15vw 15vw 15vw 15vw 15vw 15vw").css("grid-template-rows", "15vw 15vw");
 
-        for (let i = 1; i <= 6; i++) {
-            let carta = $(`<li class="carta${i}">
-            <div class="imagen"> 
-                <div class="front"><img src="./imgs/${i}.png"></div>
-                <div class="back"><img src="./imgs/unicornio.png"></div>
-            <div>
-            </li>`);
-            $("#lista_cartas").append(carta);
-        }
+        for (let i = 1; i <= 12; i++) {
+            let n = Math.floor(Math.random() * (13 - 1)) + 1;
+            if(cartasUsadas.some(elem => elem == n)){
+                while(cartasUsadas.some(elem => elem == n)){
+                    n = Math.floor(Math.random() * (13 - 1)) + 1;
+                }
+            }
+           
+            let cartaPar = n;
+            if(n%2==0){
+                n=n-1;
+            }
 
-        for(let i = 7; i <= 12; i++){
             let carta = $(`<li class="carta${i}">
             <div class="imagen"> 
-                <div class="front"><img src="./imgs/${13 - i}.png"></div>
+                <div class="front"><img src="./imgs/${n}.png"></div>
                 <div class="back"><img src="./imgs/unicornio.png"></div>
             <div>
             </li>`);
             $("#lista_cartas").append(carta);
+            cartasUsadas.push(cartaPar);
         }
 
         $(".front img").css("width", "12vw")
@@ -52,13 +57,26 @@ function crearTablero() {
             .css("grid-template-rows", "12vw 12vw 12vw");
 
         for (let i = 1; i <= 24; i++) {
+            let n = Math.floor(Math.random() * (25 - 1)) + 1;
+            if(cartasUsadas.some(elem => elem == n)){
+                while(cartasUsadas.some(elem => elem == n)){
+                    n = Math.floor(Math.random() * (25 - 1)) + 1;
+                }
+            }
+
+            let cartaPar = n;
+            if(n%2==0){
+                n=n-1;
+            }
+
             let carta = $(`<li class="carta${i}">
             <div class="imagen"> 
-            <div class="front"><img src="./imgs/cupcake.png"></div>
+            <div class="front"><img src="./imgs/${n}.png"></div>
             <div class="back"><img src="./imgs/unicornio.png"></div>
             <div>
             </li>`);
             $("#lista_cartas").append(carta);
+            cartasUsadas.push(cartaPar);
         }
 
         $(".front img").css("width", "10vw")
@@ -74,13 +92,27 @@ function crearTablero() {
             .css("grid-template-rows", "9vw 9vw 9vw 9vw");
 
         for (let i = 1; i <= 36; i++) {
+            let n = Math.floor(Math.random() * (37 - 1)) + 1;
+            if(cartasUsadas.some(elem => elem == n)){
+                while(cartasUsadas.some(elem => elem == n)){
+                    n = Math.floor(Math.random() * (37 - 1)) + 1;
+                }
+            }
+
+            let cartaPar = n;
+            if(n%2==0){
+                n=n-1;
+            }
+
+            
             let carta = $(`<li class="carta${i}">
             <div class="imagen"> 
-                <div class="front"><img src="./imgs/cupcake.png"></div>
+                <div class="front"><img src="./imgs/${n}.png"></div>
                 <div class="back"><img src="./imgs/unicornio.png"></div>
             <div>
             </li>`);
             $("#lista_cartas").append(carta);
+            cartasUsadas.push(cartaPar);
         }
 
         $(".front img").css("width", "7vw")
