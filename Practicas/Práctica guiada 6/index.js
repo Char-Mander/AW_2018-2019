@@ -55,7 +55,7 @@ function crearTablero() {
         $(".back img").css("width", "10vw")
             .css("height", "10vw");
 
-            $(".imagenes_adivinadas").css("grid-template-columns", "2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw")
+        $(".imagenes_adivinadas").css("grid-template-columns", "2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw")
             .css("grid-template-rows", "2.8vw");
     } else if (modo === "Difícil") {
         //36 cartas
@@ -76,7 +76,7 @@ function crearTablero() {
             .css("height", "7vw");
         $(".back img").css("width", "7vw")
             .css("height", "7vw");
-            
+
         $(".imagenes_adivinadas").css("grid-template-columns", "2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw")
             .css("grid-template-rows", "2.8vw 2.8vw");
 
@@ -91,16 +91,18 @@ function crearTablero() {
 //  Da la vuelta a las cartas, y las devuelve a su posición inicial tras un segundo
 function voltear() {
     let num = parseInt($(".num_clicks").find(".consultar_clicks").text(), 10);
-    if (num < 2) {
+    if (num <= 2) {
         let $front = $(this).find(".front");
         let $back = $(this).find(".back");
         $front.show();
         $back.hide();
 
-
-        setTimeout(function () {
-            voltearCarta($front, $back);
-        }, 4000);
+        if (num == 2) {
+            setTimeout(function () {
+                voltearCarta();
+            }, 4000);
+            console.log(num);
+        }
     }
     /*else if (num == 2){
         setTimeout(function () {
@@ -109,10 +111,10 @@ function voltear() {
     }*/
 }
 
-function voltearCarta(front, back) {
+function voltearCarta() {
     $(".num_clicks").find(".consultar_clicks").text(0);
-    front.hide();
-    back.show();
+    $("div.front").hide();
+    $("div.back").show();
 }
 
 //  Suma 1 al número de clicks del usuario
