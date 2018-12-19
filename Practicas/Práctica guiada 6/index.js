@@ -1,6 +1,8 @@
 "use strict";
 
 let cartas = [];
+let carta = undefined;
+let segunda = false;
 
 //  Crea el tablero del juego en base al modo de juego que elija el usuario
 function crearTablero() {
@@ -16,7 +18,7 @@ function crearTablero() {
 
     if (modo === "Fácil") {
         //12 cartas
-        
+
         $("ul").css("grid-template-columns", "15vw 15vw 15vw 15vw 15vw 15vw").css("grid-template-rows", "15vw 15vw");
 
         for (let i = 1; i <= 6; i++) {
@@ -29,7 +31,7 @@ function crearTablero() {
             $("#lista_cartas").append(carta);
         }
 
-        for(let i = 7; i <= 12; i++){
+        for (let i = 7; i <= 12; i++) {
             let carta = $(`<li class="carta${i}">
             <div class="imagen"> 
                 <div class="front"><img src="./imgs/${13 - i}.png"></div>
@@ -100,8 +102,9 @@ function crearTablero() {
 }
 
 //  Da la vuelta a las cartas, y las devuelve a su posición inicial tras un segundo
-function voltear() {
+/*function voltear() {
     let num = parseInt($(".num_clicks").find(".consultar_clicks").text(), 10);
+    console.log("Número de clicks: " + num);
     if (num <= 2) {
         let $front = $(this).find(".front");
         let $back = $(this).find(".back");
@@ -111,10 +114,16 @@ function voltear() {
         if (num == 2) {
             setTimeout(function () {
                 voltearCarta();
-            }, 1000);
-            console.log(num);
+            }, 2000);
         }
     }
+}*/
+
+function voltear() {
+    let $front = $(this).find(".front");
+    let $back = $(this).find(".back");
+    $front.show();
+    $back.hide();
 }
 
 function voltearCarta() {
@@ -127,11 +136,18 @@ function voltearCarta() {
 function sumarClick() {
     let num = parseInt($(".num_clicks").find(".num").text(), 10);
     let num_comprobar_clicks = parseInt($(".num_clicks").find(".consultar_clicks").text(), 10);
-    num = num + 1;
+    //let carta = cartas.shift();
 
-    if (cartas.length !== 1)
+    if (num === 0) {
         num_comprobar_clicks = num_comprobar_clicks + 1;
+        num = num + 1;
 
+    } else if ($(this).attr('class') !== carta.clase || carta === undefined) {
+        num_comprobar_clicks = num_comprobar_clicks + 1;
+        num = num + 1;
+    }
+
+    //cartas.push(carta);
     $(".num_clicks").find(".num").text(num);
     $(".num_clicks").find(".consultar_clicks").text(num_comprobar_clicks);
 }
@@ -146,11 +162,59 @@ $(function () {
     $("#lista_cartas").on("click", "li", quitar);
 })
 
-function quitar(){
-    setTimeout(quitarCarta, 500)
+function quitar() {
+    if (segunda) {
+        console.log("this en quitar: " + $(this));
+        let $otra = $(this);
+        setTimeout(function () {
+            console.log("this en setimeout: " + $(this));
+            quitarCarta($otra)
+        }, 2000)
+    }
 }
 
-function guardarCarta() {
+function quitarCarta($otra) {
+    console.log("Carta en quitarCarta: " + carta);
+    console.log($otra.attr('class'));
+
+    if (segunda) {
+
+        if (carta !== undefined && $otra.attr('class') !== carta.clase) {
+            console.log(carta.img);
+            console.log($otra.find(".front").find("img").attr('src'));
+            if (carta.img === $otra.find(".front").find("img").attr('src')) {
+                console.log("Imagenes iguales");
+                let imagen_adivinada = $(`<div class="imagen_adivinada">
+            <img src="${carta.img}">
+            </div>`);
+                $("#imagenes_adivinadas").append(imagen_adivinada);
+
+                $(`.${carta.clase}`).css("visibility", "hidden");
+                $(`.${$otra.attr('class')}`).css("visibility", "hidden");
+            } else {
+                console.log("Imágenes distintas");
+
+                /*let $front = $otra.find(".front");
+                let $back = $otra.find(".back");
+                $front.hide();
+                $back.show();*/
+
+                $otra.find(".front").hide();
+                $otra.find(".back").show();
+
+                let $front2 = carta.this.find(".front");
+                let $back2 = carta.this.find(".back");
+                $front2.hide();
+                $back2.show();
+            }
+        }
+
+        carta = undefined;
+        segunda = false;
+    }
+}
+
+/*function guardarCarta() {
     let $carta = {};
 
     $carta.img = $(this).find(".front").find("img").attr("src");
@@ -160,7 +224,7 @@ function guardarCarta() {
         let $otra = cartas.shift();
 
         if ($otra.clase === $carta.clase)
-        cartas.push($otra);
+            cartas.push($otra);
         else {
             cartas.push($otra);
             cartas.push($carta);
@@ -172,9 +236,21 @@ function guardarCarta() {
     console.log("Cartas después de guardarCarta: ");
     for (let i = 0; i < cartas.length; ++i)
         console.log(`${cartas[i].clase}`);
+}*/
+
+function guardarCarta() {
+    console.log("Carta clickada: " + carta);
+    if (carta === undefined) {
+        carta = {};
+        carta.img = $(this).find(".front").find("img").attr("src");
+        carta.clase = $(this).attr('class');
+        carta.this = $(this);
+    } else if ($(this).attr('class') !== carta.clase)
+        segunda = true;
+
 }
 
-function quitarCarta() {
+/*function quitarCarta() {
     let $carta1, $carta2;
     if (cartas.length >= 2) {
         $carta1 = cartas.shift();
@@ -192,4 +268,4 @@ function quitarCarta() {
         }
 
     }
-}
+}*/
