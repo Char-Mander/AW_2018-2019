@@ -100,7 +100,7 @@ function voltear() {
         if (num == 2) {
             setTimeout(function () {
                 voltearCarta();
-            }, 4000);
+            }, 1000);
             console.log(num);
         }
     }
@@ -122,7 +122,9 @@ function sumarClick() {
     let num = parseInt($(".num_clicks").find(".num").text(), 10);
     let num_comprobar_clicks = parseInt($(".num_clicks").find(".consultar_clicks").text(), 10);
     num = num + 1;
-    num_comprobar_clicks = num_comprobar_clicks + 1;
+
+    if (imagenes.length !== 1)
+        num_comprobar_clicks = num_comprobar_clicks + 1;
 
     $(".num_clicks").find(".num").text(num);
     $(".num_clicks").find(".consultar_clicks").text(num_comprobar_clicks);
@@ -132,12 +134,19 @@ function sumarClick() {
 $(function () {
     $("#boton_inicio").on("click", crearTablero);
 
-    $("#lista_cartas").on("click", "li", voltear);
-    $("#lista_cartas").on("click", "li", sumarClick);
     $("#lista_cartas").on("click", "li", guardarCarta);
-    $("#lista_cartas").on("click", "li", quitarCarta);
+    $("#lista_cartas").on("click", "li", sumarClick);
+    $("#lista_cartas").on("click", "li", voltear);
+    //$("#lista_cartas").on("click", "li", quitarCarta);
+    
+    $("#lista_cartas").on("click", "li", quitar);
+
 
 })
+
+function quitar(){
+    setTimeout(quitarCarta, 1000)
+}
 
 function guardarCarta() {
     let $carta = {};
@@ -145,7 +154,22 @@ function guardarCarta() {
     $carta.img = $(this).find(".front").find("img").attr("src");
     $carta.clase = $(this).attr('class');
 
-    imagenes.push($carta);
+    if (imagenes.length > 0) {
+        let $otra = imagenes.shift();
+
+        if ($otra.clase === $carta.clase)
+            imagenes.push($otra);
+        else {
+            imagenes.push($otra);
+            imagenes.push($carta);
+        }
+    } else {
+        imagenes.push($carta);
+    }
+
+    console.log("Cartas después de guardarCarta: ");
+    for (let i = 0; i < imagenes.length; ++i)
+        console.log(`${imagenes[i].clase}`);
 }
 
 function quitarCarta() {
@@ -154,7 +178,7 @@ function quitarCarta() {
         $carta1 = imagenes.shift();
         $carta2 = imagenes.shift();
 
-        if ($carta1.img === $carta2.img) {
+        if ($carta1.img === $carta2.img && $carta1.clase !== $carta2.clase) {
             //Se muestra la imagen adivinada arriba a la derecha
             let imagen_adivinada = $(`<div class="imagen_adivinada">
             <img src="./imgs/cupcake.png">
