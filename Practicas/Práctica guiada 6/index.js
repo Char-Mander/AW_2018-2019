@@ -1,6 +1,6 @@
 "use strict";
 
-let imagenes = [];
+let cartas = [];
 
 //  Crea el tablero del juego en base al modo de juego que elija el usuario
 function crearTablero() {
@@ -16,12 +16,23 @@ function crearTablero() {
 
     if (modo === "Fácil") {
         //12 cartas
+        
         $("ul").css("grid-template-columns", "15vw 15vw 15vw 15vw 15vw 15vw").css("grid-template-rows", "15vw 15vw");
 
-        for (let i = 1; i <= 12; i++) {
+        for (let i = 1; i <= 6; i++) {
             let carta = $(`<li class="carta${i}">
             <div class="imagen"> 
-                <div class="front"><img src="./imgs/cupcake.png"></div>
+                <div class="front"><img src="./imgs/${i}.png"></div>
+                <div class="back"><img src="./imgs/unicornio.png"></div>
+            <div>
+            </li>`);
+            $("#lista_cartas").append(carta);
+        }
+
+        for(let i = 7; i <= 12; i++){
+            let carta = $(`<li class="carta${i}">
+            <div class="imagen"> 
+                <div class="front"><img src="./imgs/${13 - i}.png"></div>
                 <div class="back"><img src="./imgs/unicornio.png"></div>
             <div>
             </li>`);
@@ -104,11 +115,6 @@ function voltear() {
             console.log(num);
         }
     }
-    /*else if (num == 2){
-        setTimeout(function () {
-                    voltearCarta($front, $back);
-                }, 4000);
-    }*/
 }
 
 function voltearCarta() {
@@ -123,7 +129,7 @@ function sumarClick() {
     let num_comprobar_clicks = parseInt($(".num_clicks").find(".consultar_clicks").text(), 10);
     num = num + 1;
 
-    if (imagenes.length !== 1)
+    if (cartas.length !== 1)
         num_comprobar_clicks = num_comprobar_clicks + 1;
 
     $(".num_clicks").find(".num").text(num);
@@ -137,15 +143,11 @@ $(function () {
     $("#lista_cartas").on("click", "li", guardarCarta);
     $("#lista_cartas").on("click", "li", sumarClick);
     $("#lista_cartas").on("click", "li", voltear);
-    //$("#lista_cartas").on("click", "li", quitarCarta);
-    
     $("#lista_cartas").on("click", "li", quitar);
-
-
 })
 
 function quitar(){
-    setTimeout(quitarCarta, 1000)
+    setTimeout(quitarCarta, 500)
 }
 
 function guardarCarta() {
@@ -154,34 +156,34 @@ function guardarCarta() {
     $carta.img = $(this).find(".front").find("img").attr("src");
     $carta.clase = $(this).attr('class');
 
-    if (imagenes.length > 0) {
-        let $otra = imagenes.shift();
+    if (cartas.length > 0) {
+        let $otra = cartas.shift();
 
         if ($otra.clase === $carta.clase)
-            imagenes.push($otra);
+        cartas.push($otra);
         else {
-            imagenes.push($otra);
-            imagenes.push($carta);
+            cartas.push($otra);
+            cartas.push($carta);
         }
     } else {
-        imagenes.push($carta);
+        cartas.push($carta);
     }
 
     console.log("Cartas después de guardarCarta: ");
-    for (let i = 0; i < imagenes.length; ++i)
-        console.log(`${imagenes[i].clase}`);
+    for (let i = 0; i < cartas.length; ++i)
+        console.log(`${cartas[i].clase}`);
 }
 
 function quitarCarta() {
     let $carta1, $carta2;
-    if (imagenes.length >= 2) {
-        $carta1 = imagenes.shift();
-        $carta2 = imagenes.shift();
+    if (cartas.length >= 2) {
+        $carta1 = cartas.shift();
+        $carta2 = cartas.shift();
 
         if ($carta1.img === $carta2.img && $carta1.clase !== $carta2.clase) {
             //Se muestra la imagen adivinada arriba a la derecha
             let imagen_adivinada = $(`<div class="imagen_adivinada">
-            <img src="./imgs/cupcake.png">
+            <img src="${$carta1.img}">
             </div>`);
             $("#imagenes_adivinadas").append(imagen_adivinada);
 
