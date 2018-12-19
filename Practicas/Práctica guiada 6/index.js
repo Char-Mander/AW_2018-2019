@@ -8,7 +8,7 @@ function crearTablero() {
 
     //Borra todos los elementos, por si había uno cargado anteriormente
     $("li").remove();
-    $("div.imagen_adivinada").remove();
+    $(".imagen_adivinada").remove();
     //Reiniciamos el contador
 
     $(".num_clicks").find(".num").text(0);
@@ -28,11 +28,13 @@ function crearTablero() {
             $("#lista_cartas").append(carta);
         }
 
-        $("div.front img").css("width", "12vw")
+        $(".front img").css("width", "12vw")
             .css("height", "12vw");
-        $("div.back img").css("width", "12vw")
+        $(".back img").css("width", "12vw")
             .css("height", "12vw");
 
+        $(".imagenes_adivinadas").css("grid-template-columns", "2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw")
+            .css("grid-template-rows", "2.8vw");
     } else if (modo === "Medio") {
         //24 cartas
         $("ul").css("grid-template-columns", "12vw 12vw 12vw 12vw 12vw 12vw 12vw 12vw")
@@ -48,11 +50,13 @@ function crearTablero() {
             $("#lista_cartas").append(carta);
         }
 
-        $("div.front img").css("width", "10vw")
+        $(".front img").css("width", "10vw")
             .css("height", "10vw");
-        $("div.back img").css("width", "10vw")
+        $(".back img").css("width", "10vw")
             .css("height", "10vw");
 
+            $(".imagenes_adivinadas").css("grid-template-columns", "2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw")
+            .css("grid-template-rows", "2.8vw");
     } else if (modo === "Difícil") {
         //36 cartas
         $("ul").css("grid-template-columns", "9vw 9vw 9vw 9vw 9vw 9vw 9vw 9vw 9vw")
@@ -68,17 +72,20 @@ function crearTablero() {
             $("#lista_cartas").append(carta);
         }
 
-        $("div.front img").css("width", "7vw")
+        $(".front img").css("width", "7vw")
             .css("height", "7vw");
-        $("div.back img").css("width", "7vw")
+        $(".back img").css("width", "7vw")
             .css("height", "7vw");
+            
+        $(".imagenes_adivinadas").css("grid-template-columns", "2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw 2.8vw")
+            .css("grid-template-rows", "2.8vw 2.8vw");
 
     } else {
         alert("No se ha seleccionado modo de juego");
     }
 
     //Oculta el div de las cartas que están bocarriba
-    $("div.front").hide();
+    $(".front").hide();
 }
 
 //  Da la vuelta a las cartas, y las devuelve a su posición inicial tras un segundo
