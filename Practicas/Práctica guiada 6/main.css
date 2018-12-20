@@ -89,6 +89,10 @@ form {
     width: 100%;
 }
 
+label:hover{
+    cursor: pointer;
+}
+
 div.cuerpo {
     width: 100%;
     height: 38vw;
