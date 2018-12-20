@@ -149,15 +149,11 @@ function voltear() {
 //  Suma 1 al número de clicks del usuario
 function sumarClick() {
     let num = parseInt($(".num_clicks").find(".num").text(), 10);
-    
-    if (levantar_mas_cartas) {
 
-        if (num === 0)
-            num = num + 1;
-        else if ($(this).attr('class') !== carta.clase || carta === undefined)
-            num = num + 1;
+    console.log("Levantar en sumarClick: " + levantar_mas_cartas);
 
-    }
+    if (levantar_mas_cartas)
+        num = num + 1;
 
     $(".num_clicks").find(".num").text(num);
 }
@@ -214,8 +210,11 @@ function guardarCarta() {
         carta.img = $(this).find(".front").find("img").attr("src");
         carta.clase = $(this).attr('class');
         carta.this = $(this);
-    } else if ($(this).attr('class') !== carta.clase)   //se ha clickado en dos cartas
+        sumarClick();
+    } else if ($(this).attr('class') !== carta.clase){   //se ha clickado en dos cartas
         segunda = true;
+        sumarClick();
+    }
 
 }
 
@@ -224,7 +223,6 @@ $(function () {
     $("#boton_inicio").on("click", crearTablero);
 
     $("#lista_cartas").on("click", "li", guardarCarta);
-    $("#lista_cartas").on("click", "li", sumarClick);
     $("#lista_cartas").on("click", "li", voltear);
     $("#lista_cartas").on("click", "li", quitar);
 })
