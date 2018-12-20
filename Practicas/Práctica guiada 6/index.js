@@ -150,8 +150,6 @@ function voltear() {
 function sumarClick() {
     let num = parseInt($(".num_clicks").find(".num").text(), 10);
 
-    console.log("Levantar en sumarClick: " + levantar_mas_cartas);
-
     if (levantar_mas_cartas)
         num = num + 1;
 
