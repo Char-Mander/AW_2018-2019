@@ -24,7 +24,13 @@
 // Tipos de resultado: JSON
 // Resultado: Un objeto vacío {}.
 
-//array de tareas iniciales 
+const express = require("express");
+const bodyParser = require("body-parser");
+
+app.express();
+app.use(bodyParser.json());
+
+//array de tareas iniciales
 let tasks = [
     {
         id: 1,
@@ -46,3 +52,67 @@ let tasks = [
 
 //Guarda el próximo id de la tarea insertada
 let idCounter = 5;
+
+
+/*
+// Arrancar el servidor
+app.listen(3000, function(err) {
+    if (err) {
+        console.log("ERROR al iniciar el servidor");
+    }
+    else {
+        console.log(`Servidor arrancado en el puerto 3000`);
+    }
+ });*/
+
+ //Si no se pone nada, redirige a /tasks
+app.get("/", function(request, response){
+    response.status(200);
+    response.redirect("/tasks");
+});
+
+
+//Muestra todas las tareas
+app.get("/tasks", function(request, response){
+    response.json(tasks);
+    response.status(200);
+    response.end();
+});
+
+
+//Añade una tarea nueva al array
+app.post("/tasks", function(request, response){
+ 
+    let newTask;
+    newTask.id = idCounter;
+    idCounter++;
+    newTask.text = request.body;
+    tasks.push(newTask);
+    response.status(200);
+    response.end();
+    
+});
+
+
+app.delete("/tasks/:id", function(request, response){
+
+    let id = Number(request.params.id);
+
+    if(tasks[id] === undefined){
+        response.status(404);
+    }
+    else if(!isNaN(id)){
+        response.status(400);
+    }
+    else{
+        tasks.forEach((v,i,a) => {
+            if(id===v.id){
+                tasks.splice(i, 1);
+            }
+        });
+        response.status(200);
+    }
+
+    response.end();
+
+});
