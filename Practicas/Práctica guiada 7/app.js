@@ -26,6 +26,7 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const config = require("./config");
 
 app.express();
 app.use(bodyParser.json());
@@ -54,16 +55,16 @@ let tasks = [
 let idCounter = 5;
 
 
-/*
+
 // Arrancar el servidor
-app.listen(3000, function(err) {
+app.listen(config.port, function(err) {
     if (err) {
         console.log("ERROR al iniciar el servidor");
     }
     else {
-        console.log(`Servidor arrancado en el puerto 3000`);
+        console.log(`Servidor arrancado en el puerto ${config.port}`);
     }
- });*/
+ });
 
  //Si no se pone nada, redirige a /tasks
 app.get("/", function(request, response){
