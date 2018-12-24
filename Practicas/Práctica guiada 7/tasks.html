@@ -45,7 +45,7 @@ del cliente.  La funcionalidad en el lado del servidor se implementará en el fi
                     <button class="button" id="botón_añadir_tarea" type="submit">Añadir</button>
                 </form>
                 <ul>
-                    <% taskList.forEach(function(task){ %>
+                    <% tasks.forEach(function(task){ %>
                     <li>
                             <div class="st">
                                 <div class="nombre">
@@ -54,7 +54,7 @@ del cliente.  La funcionalidad en el lado del servidor se implementará en el fi
                                     </h3>
                                 </div>
                                 <div class="marcar">
-                                    <button class="button" id="botón_eliminar_tarea" onclick=location.href="/finish/<%=task.id %>">Finalizar tarea </button>
+                                    <button class="button" id="botón_eliminar_tarea" onclick=location.href="/tasks/<%=task.id %>"> Finalizar tarea </button>
                                 </div>
                             </div>
                     </li>
