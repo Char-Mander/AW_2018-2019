@@ -23,3 +23,26 @@
 // Códigos de respuesta: 200 (OK) si el :id indicado es un número, 404 (Not found) si no existe el elemento, o 400 (Bad request) si el :id indicado no es un número.
 // Tipos de resultado: JSON
 // Resultado: Un objeto vacío {}.
+
+//array de tareas iniciales 
+let tasks = [
+    {
+        id: 1,
+        text: "Comprar billetes de avión"
+    },
+    {
+        id: 2,
+        text: "Hacer las maletas"
+    },
+    {
+        id: 3,
+        text: "Comprar regalos de reyes"
+    },
+    {
+        id: 4,
+        text: "Reservar coche"
+    }
+];
+
+//Guarda el próximo id de la tarea insertada
+let idCounter = 5;
