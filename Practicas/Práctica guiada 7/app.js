@@ -1,34 +1,11 @@
 "use strict";
 
-// Servicio 1: Devolver todas las entradas contenidas en la lista de tareas:
-// Método: GET
-// URL: /tasks
-// Parámetros de entrada: Ninguno
-// Códigos de respuesta: 200 (OK)
-// Tipo de resultado: JSON
-// Resultado: Array con las tareas de la lista. Cada tarea es un objeto con dos atributos: id y text.
-
-// Servicio 2: Añadir una nueva entrada a la lista de tareas.
-// Método: POST
-// URL: /tasks
-// Parámetros de entrada: Un objeto JSON con un único atributo (text), que contendrá el texto de la tarea a insertar.
-// Códigos de respuesta: 200 (OK)
-// Tipo de resultado: JSON
-// Resultado: Objeto tarea insertado, con dos atributos: id y text. El identificador de la tarea será generado automáticamente por el servidor. El texto será el mismo que el especificado en el parámetro de entrada.
-
-// Servicio 3: Eliminar una entrada a la lista de tareas.
-// Método: DELETE
-// URL paramétrica: /tasks/:id
-// Parámetros de entrada: El parámetro :id de la URL paramétrica contiene el identificador de la tarea a eliminar.
-// Códigos de respuesta: 200 (OK) si el :id indicado es un número, 404 (Not found) si no existe el elemento, o 400 (Bad request) si el :id indicado no es un número.
-// Tipos de resultado: JSON
-// Resultado: Un objeto vacío {}.
 
 const express = require("express");
 const bodyParser = require("body-parser");
 const config = require("./config");
 
-app.express();
+const app = express();
 app.use(bodyParser.json());
 
 //array de tareas iniciales
@@ -54,8 +31,6 @@ let tasks = [
 //Guarda el próximo id de la tarea insertada
 let idCounter = 5;
 
-
-
 // Arrancar el servidor
 app.listen(config.port, function(err) {
     if (err) {
@@ -66,6 +41,7 @@ app.listen(config.port, function(err) {
     }
  });
 
+
  //Si no se pone nada, redirige a /tasks
 app.get("/", function(request, response){
     response.status(200);
@@ -73,6 +49,13 @@ app.get("/", function(request, response){
 });
 
 
+// Servicio 1: Devolver todas las entradas contenidas en la lista de tareas:
+// Método: GET
+// URL: /tasks
+// Parámetros de entrada: Ninguno
+// Códigos de respuesta: 200 (OK)
+// Tipo de resultado: JSON
+// Resultado: Array con las tareas de la lista. Cada tarea es un objeto con dos atributos: id y text.
 //Muestra todas las tareas
 app.get("/tasks", function(request, response){
     response.json(tasks);
@@ -81,10 +64,18 @@ app.get("/tasks", function(request, response){
 });
 
 
+// Servicio 2: Añadir una nueva entrada a la lista de tareas.
+// Método: POST
+// URL: /tasks
+// Parámetros de entrada: Un objeto JSON con un único atributo (text), que contendrá el texto de la tarea a insertar.
+// Códigos de respuesta: 200 (OK)
+// Tipo de resultado: JSON
+// Resultado: Objeto tarea insertado, con dos atributos: id y text. El identificador de la tarea será generado automáticamente por el servidor. 
+// El texto será el mismo que el especificado en el parámetro de entrada.
 //Añade una tarea nueva al array
 app.post("/tasks", function(request, response){
- 
-    let newTask;
+    let newTask = {};
+
     newTask.id = idCounter;
     idCounter++;
     newTask.text = request.body;
@@ -95,19 +86,26 @@ app.post("/tasks", function(request, response){
 });
 
 
+// Servicio 3: Eliminar una entrada a la lista de tareas.
+// Método: DELETE
+// URL paramétrica: /tasks/:id
+// Parámetros de entrada: El parámetro :id de la URL paramétrica contiene el identificador de la tarea a eliminar.
+// Códigos de respuesta: 200 (OK) si el :id indicado es un número, 404 (Not found) si no existe el elemento, 
+// o 400 (Bad request) si el :id indicado no es un número.
+// Tipos de resultado: JSON
+// Resultado: Un objeto vacío {}.
 app.delete("/tasks/:id", function(request, response){
-
     let id = Number(request.params.id);
 
-    if(tasks[id] === undefined){
+    if(!tasks.some(n => n.id === id))
         response.status(404);
-    }
-    else if(!isNaN(id)){
+
+    else if(isNaN(id))
         response.status(400);
-    }
+
     else{
         tasks.forEach((v,i,a) => {
-            if(id===v.id){
+            if(id === v.id){
                 tasks.splice(i, 1);
             }
         });
@@ -115,5 +113,4 @@ app.delete("/tasks/:id", function(request, response){
     }
 
     response.end();
-
 });
