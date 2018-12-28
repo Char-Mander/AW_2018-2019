@@ -40,15 +40,14 @@ function taskToDOMElement(task) {
 // servidor para insertar la tarea en la lista de tareas. Además, debe añadir el elemento del DOM correspondiente.
 function onAddButtonClick(event){
 
-    let id_tarea = $(event.target).data("id_tarea");
-
     $.ajax({
-        method: "DELETE",
-        url: "/tasks/" + id_tarea,
+        method: "POST",
+        url: "/tasks",
 
         success: function (data) {
-            //  Hay que añadir el elemento al DOM
-            loadTasks();
+            //Se añade la tarea al DOM
+            let tarea = taskToDOMElement(data);
+            $('#tareas').append(tarea);
         },
 
         error: function (jqXHR, testStatus, errorThrown) {
@@ -80,8 +79,8 @@ function onRemoveButtonClick(event){
         url: "/tasks/" + id_tarea,
 
         success: function (data) {
-            //  Hay que borrar el elemento del DOM
-            loadTasks();
+            //  Hay que borrar la tarea del DOM
+            $("#tarea_" + id_tarea + "").remove();
         },
 
         error: function (jqXHR, testStatus, errorThrown) {
@@ -92,12 +91,11 @@ function onRemoveButtonClick(event){
     event.preventDefault();
 }
 
-
+/*
 function createTask(texto){
     let task = {
         text: "",
-        tags: [],
-        done: 0
+        id: ""
     };
 
     let array = texto.split(" ");
@@ -106,6 +104,6 @@ function createTask(texto){
     task.tags = task.tags.map(t => t.slice(1, t.length));
 
     return task;
-}
+}*/
 
 
