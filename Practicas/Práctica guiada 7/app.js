@@ -3,10 +3,20 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const path = require("path");
 const config = require("./config");
 
+// Crear un servidor Express.js
 const app = express();
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "public", "views"));
+
 app.use(bodyParser.json());
+
+
+//  Ficheros estáticos
+const ficherosEstaticos = path.join(__dirname, "public");
+app.use(express.static(ficherosEstaticos));
 
 //array de tareas iniciales
 let tasks = [
@@ -58,8 +68,8 @@ app.get("/", function(request, response){
 // Resultado: Array con las tareas de la lista. Cada tarea es un objeto con dos atributos: id y text.
 //Muestra todas las tareas
 app.get("/tasks", function(request, response){
-    response.json(tasks);
     response.status(200);
+    response.json(tasks);
     response.end();
 });
 
