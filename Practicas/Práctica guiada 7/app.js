@@ -11,12 +11,13 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "public", "views"));
 
-app.use(bodyParser.json());
-
 
 //  Ficheros estáticos
 const ficherosEstaticos = path.join(__dirname, "public");
 app.use(express.static(ficherosEstaticos));
+
+app.use(bodyParser.json());
+
 
 //array de tareas iniciales
 let tasks = [
