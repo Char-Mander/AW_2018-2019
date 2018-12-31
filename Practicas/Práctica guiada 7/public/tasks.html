@@ -1,0 +1,43 @@
+<!-- El código HTML correspondiente debe construirse a partir de la página HTML desarrollada en entregas anteriores (se llamará tasks.html). 
+Este fichero debe hacer referencia, mediante una etiqueta <script>, a un fichero index.js que contendrá el código a ejecutar en el lado 
+del cliente.  La funcionalidad en el lado del servidor se implementará en el fichero app.js. -->
+<!DOCTYPE <!DOCTYPE html>
+<html>
+
+<head lang="es-ES">
+    <meta charset="utf-8" />
+    <title> Gestor de tareas </title>
+    <link rel="shortcut icon" href="./img/icon.png">
+    <link rel="stylesheet" type="text/css" media="screen" href="./public/css/tasks.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="./public/css/tasksImpr.css" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="index.js"></script>
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <div class="header">
+
+            <div class="título">
+                <h1> <span> Lista de </span> tareas </h1>
+            </div>
+        </div>
+
+        <div class="cuerpo">
+
+            <div class="contenedorb">
+                <form class="añadir" method="post" action="/addTask">
+                    <input type="text" name="Tarea_añadida" placeholder="Escriba la tarea y sus etiquetas con un '@'">
+                    <button class="button" id="botón_añadir_tarea" type="submit">Añadir</button>
+                </form>
+                <ul id="tareas">
+    
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
