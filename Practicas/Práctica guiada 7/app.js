@@ -80,6 +80,7 @@ app.post("/tasks", function(request, response){
     idCounter++;
     newTask.text = request.body;
     tasks.push(newTask);
+    //response.json({data : newTask});
     response.status(200);
     response.end();
     

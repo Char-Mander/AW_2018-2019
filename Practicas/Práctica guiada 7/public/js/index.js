@@ -5,10 +5,11 @@
 function loadTasks() {
     $.ajax({
         method: "GET",
-        url: "http://localhost:3000/tasks",
+        url: "/tasks",
 
         success: function (data, textStatus, jqXHR) {
             data.forEach((task) => {
+
                 let tarea = taskToDOMElement(task);
                 $('#tareas').append(tarea);
             })
@@ -28,7 +29,7 @@ function loadTasks() {
 function taskToDOMElement(task) {
     let x = '<li id="tarea_' + task.id + '" > <div class="st"><div class="nombre"><h3>' + task.text + '</h3> </div> <div class="marcar" id="botón"> <button class="button" id="botón_eliminar_tarea"> Eliminar </button> </div> </div> </li>';
     $("#tarea_" + task.id + "").data("id_tarea", task.id);
-
+   // console.log(task.id + " " + task.text);
     return x;
 }
 
@@ -62,12 +63,11 @@ function onAddButtonClick(event){
 // Manejador de inicialización del DOM, que se limita a llamar a la función loadTasks() y a asignar sendos manejadores de eventos a 
 // los botones [Eliminar] y al botón [Añadir] de la página. 
 $(function () {
-
-    loadTasks();
+    $(loadTasks());
     $("#botón").on("click", "button", onRemoveButtonClick);
     $("#botón_añadir_tarea").on("click", onAddButtonClick);
 
-})
+});
 
 // onRemoveButtonClick(event) Maneja los eventos de clic en un botón [Eliminar]. Debe enviar una petición AJAX para 
 // eliminar la tarea correspondiente del servidor y eliminar dicha tarea del DOM.
