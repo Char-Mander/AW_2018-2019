@@ -9,7 +9,6 @@ function loadTasks() {
 
         success: function (data, textStatus, jqXHR) {
             data.forEach((task) => {
-
                 let tarea = taskToDOMElement(task);
                 $('#tareas').append(tarea);
             })
@@ -29,7 +28,7 @@ function loadTasks() {
 function taskToDOMElement(task) {
     let x = '<li id="tarea_' + task.id + '" > <div class="st"><div class="nombre"><h3>' + task.text + '</h3> </div> <div class="marcar" id="botón"> <button class="button" id="botón_eliminar_tarea"> Eliminar </button> </div> </div> </li>';
     $("#tarea_" + task.id + "").data("id_tarea", task.id);
-   // console.log(task.id + " " + task.text);
+
     return x;
 }
 
@@ -44,6 +43,8 @@ function onAddButtonClick(event){
     $.ajax({
         method: "POST",
         url: "/tasks",
+        contentType: "application/json",
+        data: JSON.stringify({text: text}),
 
         success: function (data) {
             //Se añade la tarea al DOM
@@ -63,9 +64,9 @@ function onAddButtonClick(event){
 // Manejador de inicialización del DOM, que se limita a llamar a la función loadTasks() y a asignar sendos manejadores de eventos a 
 // los botones [Eliminar] y al botón [Añadir] de la página. 
 $(function () {
-    $(loadTasks());
-    $("#botón").on("click", "button", onRemoveButtonClick);
-    $("#botón_añadir_tarea").on("click", onAddButtonClick);
+    loadTasks();
+    $("#botón").on("click", "button", onRemoveButtonClick(event));
+    $("#botón_añadir_tarea").on("click", onAddButtonClick(event));
 
 });
 
@@ -80,7 +81,7 @@ function onRemoveButtonClick(event){
 
         success: function (data) {
             //  Hay que borrar la tarea del DOM
-            $("#tarea_" + id_tarea + "").remove();
+            $(event.target).parent().remove();
         },
 
         error: function (jqXHR, testStatus, errorThrown) {
